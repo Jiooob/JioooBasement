@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文件结构方案</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+    <header>
+        <h1>我的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h1>文件结构方案</h1>
+            <p class="meta">2025-09-21</p>
+            <div class="content">
+                
+<h3>文件结构方案</h3>
+<p><code>/my-blog
+│
+├── builder/             # 构建脚本目录
+│   ├── __init__.py
+│   ├── main.py          # 主构建脚本
+│   ├── config.py        # 全局配置文件 (替代 globalVar.py)
+│   ├── page_parser.py   # 页面解析与处理 (替代 page.py)
+│   ├── index_updater.py # 索引页更新 (替代 updateIndex.py)
+│   └── rss_generator.py # RSS 生成 (替代 RSSgenerator.py)
+│
+├── content/             # 内容源文件目录
+│   ├── articles/        # 分类：文章
+│   │   ├── my-first-article.html
+│   │   └── index.html   # 该分类的索引页模板
+│   ├── weekly/          # 分类：周报
+│   │   ├── week-1.html
+│   │   └── index.html
+│   └── notes/           # 分类：笔记
+│       ├── some-notes.html
+│       └── index.html
+│
+├── static/              # 静态资源目录
+│   ├── css/
+│   │   ├── main.css     # 全局和主页样式
+│   │   └── article.css  # 文章页样式
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── sigil.svg
+│
+├── templates/           # 页面模板目录
+│   └── article.template # 文章页的HTML模板
+│
+├── output/              # 【重要】输出目录
+│   │
+│   ├── articles/
+│   │   ├── my-first-article.html
+│   │   └── index.html
+│   ├── weekly/
+│   │   ├── week-1.html
+│   │   └── index.html
+│   ├── notes/
+│   │   ├── some-notes.html
+│   │   └── index.html
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── index.html
+│   └── feed.xml
+│
+├── index.html           # 主页源文件
+├── CNAME                # (可选) 自定义域名文件
+└── run_build.py         # (可选) 用于执行构建的脚本</code></p>
+<h3>结构解析</h3>
+<ol>
+<li><strong><code>builder/</code> (构建脚本):</strong> 这是站点的引擎。所有自动化处理逻辑都应封装于此。<code>main.py</code> 作为入口，协调 <code>page_parser.py</code>（读取并处理 <code>content/</code> 中的文章）、<code>index_updater.py</code>（更新各级索引页）和 <code>rss_generator.py</code> 的工作。<code>config.py</code> 用于存放分类名称、路径等全局变量，便于统一管理。</li>
+<li><strong><code>content/</code> (内容源文件):</strong> 所有博客文章的原始 <code>.html</code> 文件，按自定义分类存放在不同的子目录中。每个子目录的 <code>index.html</code> 是该分类列表页面的<strong>源文件</strong>，构建脚本会读取它并填入文章列表。这是与构建系统分离的内容库。</li>
+<li><strong><code>static/</code> (静态资源):</strong> 存放无需处理、只需直接复制到最终站点的文件，如 CSS、JavaScript 和图片。</li>
+<li><strong><code>templates/</code> (页面模板):</strong> 存放 HTML 骨架文件。构建脚本会读取 <code>content/</code> 目录下的源文件，将其内容填充到这里的模板中，最终生成完整的文章页面。</li>
+<li><strong><code>output/</code> (输出目录):</strong> 这是一个至关重要的补充。构建完成后，所有生成的静态站点文件（包括所有文章页面、索引页、CSS/JS/图片、<code>index.html</code> 和 <code>feed.xml</code>）都应存放在此目录。<strong>关键在于将源码与生成结果分离</strong>，这能有效避免在构建过程中污染原始文件，极大降低了操作风险。你最终需要部署到服务器上的，就是这个 <code>output/</code> 目录的全部内容。</li>
+<li><strong>根目录文件:</strong></li>
+<li><code>index.html</code>: 你主页的源文件，构建脚本会读取它并注入最新的文章列表。</li>
+<li><code>CNAME</code>: 如果你使用 GitHub Pages 并需要绑定自定义域名，则需要此文件。</li>
+</ol>
+<h3>工作流程推演</h3>
+<ol>
+<li>在 <code>content/weekly/</code> 目录下创建一个新的 <code>week-2.html</code> 文件并撰写内容。</li>
+<li>执行根目录的 <code>run_build.py</code>（或直接运行 <code>builder/main.py</code>）。</li>
+<li>脚本启动：</li>
+<li>读取所有 <code>content/</code> 目录下的文章，解析元数据。</li>
+<li>使用 <code>templates/article.template</code> 为 <code>week-2.html</code> 生成一个完整的、格式化的 HTML 文件，并将其保存到 <code>output/weekly/</code> 目录。</li>
+<li>更新 <code>content/weekly/index.html</code> 和根目录的 <code>index.html</code>，将新文章的链接和摘要添加进去，并将更新后的版本保存到 <code>output/</code> 目录对应位置。</li>
+<li>重新生成 <code>feed.xml</code> 并保存到 <code>output/</code>。</li>
+<li>将 <code>static/</code> 目录下的所有资源复制到 <code>output/</code>。</li>
+<li>将 <code>output/</code> 目录下的所有内容部署到你的服务器。</li>
+</ol>
+
+            </div>
+        </article>
+    </main>
+</body>
+</html>
