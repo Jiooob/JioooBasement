@@ -1,0 +1,1653 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+文件结构方案.md
+builder/config.py
+builder/index_updater.py
+builder/main.py
+builder/page_parser.py
+content/articles/文件结构方案.html
+content/articles/index.html
+content/articles/my-first-article.html
+content/articles/my-second-article.html
+content/articles/test_delete_after_converte.html
+content/articles/test.html
+index.html
+md_converter.py
+output/articles/文件结构方案.html
+output/articles/index.html
+output/articles/my-first-article.html
+output/articles/my-second-article.html
+output/articles/test_delete_after_converte.html
+output/articles/test.html
+output/index.html
+output/static/css/main.css
+run_build.py
+static/css/main.css
+templates/article.template
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="文件结构方案.md">
+### 文件结构方案
+
+
+
+```
+/my-blog
+│
+├── builder/             # 构建脚本目录
+│   ├── __init__.py
+│   ├── main.py          # 主构建脚本
+│   ├── config.py        # 全局配置文件 (替代 globalVar.py)
+│   ├── page_parser.py   # 页面解析与处理 (替代 page.py)
+│   ├── index_updater.py # 索引页更新 (替代 updateIndex.py)
+│   └── rss_generator.py # RSS 生成 (替代 RSSgenerator.py)
+│
+├── content/             # 内容源文件目录
+│   ├── articles/        # 分类：文章
+│   │   ├── my-first-article.html
+│   │   └── index.html   # 该分类的索引页模板
+│   ├── weekly/          # 分类：周报
+│   │   ├── week-1.html
+│   │   └── index.html
+│   └── notes/           # 分类：笔记
+│       ├── some-notes.html
+│       └── index.html
+│
+├── static/              # 静态资源目录
+│   ├── css/
+│   │   ├── main.css     # 全局和主页样式
+│   │   └── article.css  # 文章页样式
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── sigil.svg
+│
+├── templates/           # 页面模板目录
+│   └── article.template # 文章页的HTML模板
+│
+├── output/              # 【重要】输出目录
+│   │
+│   ├── articles/
+│   │   ├── my-first-article.html
+│   │   └── index.html
+│   ├── weekly/
+│   │   ├── week-1.html
+│   │   └── index.html
+│   ├── notes/
+│   │   ├── some-notes.html
+│   │   └── index.html
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── index.html
+│   └── feed.xml
+│
+├── index.html           # 主页源文件
+├── CNAME                # (可选) 自定义域名文件
+└── run_build.py         # (可选) 用于执行构建的脚本
+```
+
+
+
+### 结构解析
+
+
+
+1. **`builder/` (构建脚本):** 这是站点的引擎。所有自动化处理逻辑都应封装于此。`main.py` 作为入口，协调 `page_parser.py`（读取并处理 `content/` 中的文章）、`index_updater.py`（更新各级索引页）和 `rss_generator.py` 的工作。`config.py` 用于存放分类名称、路径等全局变量，便于统一管理。
+2. **`content/` (内容源文件):** 所有博客文章的原始 `.html` 文件，按自定义分类存放在不同的子目录中。每个子目录的 `index.html` 是该分类列表页面的**源文件**，构建脚本会读取它并填入文章列表。这是与构建系统分离的内容库。
+3. **`static/` (静态资源):** 存放无需处理、只需直接复制到最终站点的文件，如 CSS、JavaScript 和图片。
+4. **`templates/` (页面模板):** 存放 HTML 骨架文件。构建脚本会读取 `content/` 目录下的源文件，将其内容填充到这里的模板中，最终生成完整的文章页面。
+5. **`output/` (输出目录):** 这是一个至关重要的补充。构建完成后，所有生成的静态站点文件（包括所有文章页面、索引页、CSS/JS/图片、`index.html` 和 `feed.xml`）都应存放在此目录。**关键在于将源码与生成结果分离**，这能有效避免在构建过程中污染原始文件，极大降低了操作风险。你最终需要部署到服务器上的，就是这个 `output/` 目录的全部内容。
+6. **根目录文件:**
+   - `index.html`: 你主页的源文件，构建脚本会读取它并注入最新的文章列表。
+   - `CNAME`: 如果你使用 GitHub Pages 并需要绑定自定义域名，则需要此文件。
+
+
+
+### 工作流程推演
+
+
+
+1. 在 `content/weekly/` 目录下创建一个新的 `week-2.html` 文件并撰写内容。
+2. 执行根目录的 `run_build.py`（或直接运行 `builder/main.py`）。
+3. 脚本启动：
+   - 读取所有 `content/` 目录下的文章，解析元数据。
+   - 使用 `templates/article.template` 为 `week-2.html` 生成一个完整的、格式化的 HTML 文件，并将其保存到 `output/weekly/` 目录。
+   - 更新 `content/weekly/index.html` 和根目录的 `index.html`，将新文章的链接和摘要添加进去，并将更新后的版本保存到 `output/` 目录对应位置。
+   - 重新生成 `feed.xml` 并保存到 `output/`。
+   - 将 `static/` 目录下的所有资源复制到 `output/`。
+4. 将 `output/` 目录下的所有内容部署到你的服务器。
+</file>
+
+<file path="builder/config.py">
+from pathlib import Path
+
+# 项目根目录
+BASE_DIR = Path(__file__).parent.parent
+
+# 源文件目录
+CONTENT_DIR = BASE_DIR / "content"
+STATIC_DIR = BASE_DIR / "static"
+TEMPLATES_DIR = BASE_DIR / "templates"
+
+# 输出目录
+OUTPUT_DIR = BASE_DIR / "output"
+
+# 需要处理的内容分类
+CATEGORIES = ["articles", "weekly", "notes"]
+
+# 网站基本信息 (用于RSS等)
+SITE_URL = "https://your-domain.com"
+SITE_TITLE = "我的博客"
+SITE_DESCRIPTION = "一个简约的博客"
+</file>
+
+<file path="builder/index_updater.py">
+def update_indexes(pages):
+    # 按日期对所有页面进行降序排序，这是确保逻辑一致性的必要步骤
+    pages.sort(key=lambda p: p.date, reverse=True)
+
+    print("开始更新索引页...")
+
+    # 更新主索引页
+    update_main_index(pages)
+
+    # 更新分类索引页
+    update_category_indexes(pages)
+    
+    print("索引页更新完毕。")
+
+
+def update_main_index(pages):
+    from . import config
+
+    # 生成文章列表的HTML
+    post_list_html = ""
+    # 确保这里只有一个 for 循环
+    for page in pages:
+        # 路径需要相对于输出目录的根，所以要去掉 content/
+        relative_path = page.path.relative_to(config.CONTENT_DIR)
+        post_list_html += f"""
+        <article>
+            <h2><a href="{relative_path}">{page.title}</a></h2>
+            <p class="date">{page.date}</p>
+            <p class="summary">{page.summary}</p>
+        </article>
+        """
+    
+    # 读取主页模板并注入列表
+    main_index_path = config.BASE_DIR / "index.html"
+    with open(main_index_path, 'r', encoding='utf-8') as f:
+        template = f.read()
+    
+    final_html = template.replace("{{POST_LIST}}", post_list_html)
+
+    # 写入最终的主页文件
+    output_path = config.OUTPUT_DIR / "index.html"
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(final_html)
+    print("  - 主索引页 [index.html] 已更新。")
+
+
+def update_category_indexes(pages):
+    from . import config
+
+    for category in config.CATEGORIES:
+        # 筛选出属于当前分类的文章
+        category_pages = [p for p in pages if p.path.parent.name == category]
+        
+        if not category_pages:
+            continue
+
+        # 生成文章列表的HTML
+        post_list_html = ""
+        # 确保这里也只有一个 for 循环
+        for page in category_pages:
+            # 在分类页中，链接是相对的
+            post_list_html += f"""
+            <article>
+                <h2><a href="{page.path.name}">{page.title}</a></h2>
+                <p class="date">{page.date}</p>
+                <p class="summary">{page.summary}</p>
+            </article>
+            """
+
+        # 读取分类索引页模板并注入
+        category_index_path = config.CONTENT_DIR / category / "index.html"
+        if category_index_path.exists():
+            with open(category_index_path, 'r', encoding='utf-8') as f:
+                template = f.read()
+            
+            final_html = template.replace("{{POST_LIST}}", post_list_html)
+
+            # 写入最终的分类索引页
+            output_path = config.OUTPUT_DIR / category / "index.html"
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(final_html)
+            print(f"  - 分类索引页 [{category}/index.html] 已更新。")
+</file>
+
+<file path="builder/main.py">
+import os
+import shutil
+from pathlib import Path
+from . import config
+from .page_parser import Page
+from . import index_updater # 导入索引更新器
+
+def build():
+    print("演算开始：开始构建站点...")
+
+    # 1. 清空输出目录
+    if config.OUTPUT_DIR.exists():
+        shutil.rmtree(config.OUTPUT_DIR)
+    os.makedirs(config.OUTPUT_DIR)
+    
+    # 2. 复制静态文件
+    shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
+    print("静态文件已复制。")
+
+    # 3. 读取模板
+    try:
+        with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
+            article_template = f.read()
+        print("文章模板已加载。")
+    except FileNotFoundError:
+        print("错误：未找到文章模板。构建中止。")
+        return
+
+    # 4. 解析所有页面
+    all_pages = []
+    print("开始处理内容文件...")
+    for category in config.CATEGORIES:
+        category_path = config.CONTENT_DIR / category
+        output_cat_dir = config.OUTPUT_DIR / category
+        if not output_cat_dir.exists():
+            os.makedirs(output_cat_dir)
+            
+        for file_path in category_path.glob("*.html"):
+            if file_path.name == "index.html":
+                continue
+            
+            page = Page(file_path)
+            all_pages.append(page)
+            
+            rendered_html = page.render(article_template)
+            
+            output_file_path = output_cat_dir / file_path.name
+            with open(output_file_path, 'w', encoding='utf-8') as f:
+                f.write(rendered_html)
+    print("所有页面已处理并生成。")
+
+    # 5. 更新所有索引页
+    index_updater.update_indexes(all_pages)
+
+    print("构建流程完毕。系统功能完整。")
+
+if __name__ == '__main__':
+    build()
+</file>
+
+<file path="builder/page_parser.py">
+from bs4 import BeautifulSoup
+
+class Page:
+    def __init__(self, file_path):
+        self.path = file_path
+        self.title = ""
+        self.date = ""
+        self.summary = ""
+        self.body = ""
+        self.metadata = {}
+        self.parse()
+
+    def parse(self):
+        with open(self.path, 'r', encoding='utf-8') as f:
+            soup = BeautifulSoup(f.read(), 'html.parser')
+
+        # 解析元数据
+        meta_tags = soup.find_all('meta')
+        for tag in meta_tags:
+            if tag.get('name', '').startswith('blog-'):
+                key = tag['name'].replace('blog-', '')
+                self.metadata[key] = tag['content']
+        
+        self.title = self.metadata.get('title', '无标题')
+        self.date = self.metadata.get('date', '')
+        self.summary = self.metadata.get('summary', '')
+
+        # 解析正文
+        if soup.body:
+            # get_text() 方法可以提取纯文本内容，而 str(soup.body) 会保留HTML标签
+            self.body = ''.join(str(child) for child in soup.body.children)
+        else:
+            self.body = str(soup)
+
+    def render(self, template_content):
+        """使用页面数据渲染模板"""
+        content = template_content.replace('$title$', self.title)
+        content = content.replace('$date$', self.date)
+        content = content.replace('$body$', self.body)
+        return content
+</file>
+
+<file path="content/articles/文件结构方案.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="文件结构方案">
+    <meta name="blog-date" content="2025-09-21">
+    <meta name="blog-summary" content="这是转化的md测试">
+</head>
+<body>
+<h3>文件结构方案</h3>
+<p><code>/my-blog
+│
+├── builder/             # 构建脚本目录
+│   ├── __init__.py
+│   ├── main.py          # 主构建脚本
+│   ├── config.py        # 全局配置文件 (替代 globalVar.py)
+│   ├── page_parser.py   # 页面解析与处理 (替代 page.py)
+│   ├── index_updater.py # 索引页更新 (替代 updateIndex.py)
+│   └── rss_generator.py # RSS 生成 (替代 RSSgenerator.py)
+│
+├── content/             # 内容源文件目录
+│   ├── articles/        # 分类：文章
+│   │   ├── my-first-article.html
+│   │   └── index.html   # 该分类的索引页模板
+│   ├── weekly/          # 分类：周报
+│   │   ├── week-1.html
+│   │   └── index.html
+│   └── notes/           # 分类：笔记
+│       ├── some-notes.html
+│       └── index.html
+│
+├── static/              # 静态资源目录
+│   ├── css/
+│   │   ├── main.css     # 全局和主页样式
+│   │   └── article.css  # 文章页样式
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── sigil.svg
+│
+├── templates/           # 页面模板目录
+│   └── article.template # 文章页的HTML模板
+│
+├── output/              # 【重要】输出目录
+│   │
+│   ├── articles/
+│   │   ├── my-first-article.html
+│   │   └── index.html
+│   ├── weekly/
+│   │   ├── week-1.html
+│   │   └── index.html
+│   ├── notes/
+│   │   ├── some-notes.html
+│   │   └── index.html
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── index.html
+│   └── feed.xml
+│
+├── index.html           # 主页源文件
+├── CNAME                # (可选) 自定义域名文件
+└── run_build.py         # (可选) 用于执行构建的脚本</code></p>
+<h3>结构解析</h3>
+<ol>
+<li><strong><code>builder/</code> (构建脚本):</strong> 这是站点的引擎。所有自动化处理逻辑都应封装于此。<code>main.py</code> 作为入口，协调 <code>page_parser.py</code>（读取并处理 <code>content/</code> 中的文章）、<code>index_updater.py</code>（更新各级索引页）和 <code>rss_generator.py</code> 的工作。<code>config.py</code> 用于存放分类名称、路径等全局变量，便于统一管理。</li>
+<li><strong><code>content/</code> (内容源文件):</strong> 所有博客文章的原始 <code>.html</code> 文件，按自定义分类存放在不同的子目录中。每个子目录的 <code>index.html</code> 是该分类列表页面的<strong>源文件</strong>，构建脚本会读取它并填入文章列表。这是与构建系统分离的内容库。</li>
+<li><strong><code>static/</code> (静态资源):</strong> 存放无需处理、只需直接复制到最终站点的文件，如 CSS、JavaScript 和图片。</li>
+<li><strong><code>templates/</code> (页面模板):</strong> 存放 HTML 骨架文件。构建脚本会读取 <code>content/</code> 目录下的源文件，将其内容填充到这里的模板中，最终生成完整的文章页面。</li>
+<li><strong><code>output/</code> (输出目录):</strong> 这是一个至关重要的补充。构建完成后，所有生成的静态站点文件（包括所有文章页面、索引页、CSS/JS/图片、<code>index.html</code> 和 <code>feed.xml</code>）都应存放在此目录。<strong>关键在于将源码与生成结果分离</strong>，这能有效避免在构建过程中污染原始文件，极大降低了操作风险。你最终需要部署到服务器上的，就是这个 <code>output/</code> 目录的全部内容。</li>
+<li><strong>根目录文件:</strong></li>
+<li><code>index.html</code>: 你主页的源文件，构建脚本会读取它并注入最新的文章列表。</li>
+<li><code>CNAME</code>: 如果你使用 GitHub Pages 并需要绑定自定义域名，则需要此文件。</li>
+</ol>
+<h3>工作流程推演</h3>
+<ol>
+<li>在 <code>content/weekly/</code> 目录下创建一个新的 <code>week-2.html</code> 文件并撰写内容。</li>
+<li>执行根目录的 <code>run_build.py</code>（或直接运行 <code>builder/main.py</code>）。</li>
+<li>脚本启动：</li>
+<li>读取所有 <code>content/</code> 目录下的文章，解析元数据。</li>
+<li>使用 <code>templates/article.template</code> 为 <code>week-2.html</code> 生成一个完整的、格式化的 HTML 文件，并将其保存到 <code>output/weekly/</code> 目录。</li>
+<li>更新 <code>content/weekly/index.html</code> 和根目录的 <code>index.html</code>，将新文章的链接和摘要添加进去，并将更新后的版本保存到 <code>output/</code> 目录对应位置。</li>
+<li>重新生成 <code>feed.xml</code> 并保存到 <code>output/</code>。</li>
+<li>将 <code>static/</code> 目录下的所有资源复制到 <code>output/</code>。</li>
+<li>将 <code>output/</code> 目录下的所有内容部署到你的服务器。</li>
+</ol>
+</body>
+</html>
+</file>
+
+<file path="content/articles/index.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>分类：文章</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+    <header>
+        <h1>分类：文章</h1>
+    </header>
+    <main id="post-list">
+        {{POST_LIST}}
+    </main>
+</body>
+</html>
+</file>
+
+<file path="content/articles/my-first-article.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="我的第一篇文章">
+    <meta name="blog-date" content="2025-09-21">
+    <meta name="blog-summary" content="这是第一篇文章的摘要。">
+    </head>
+<body>
+    <p>这是文章的第一段。演算表明，开始一件事的失败率极高，但这第一步是无法规避的。</p>
+    <p>这是第二段，用于填充内容。</p>
+</body>
+</html>
+</file>
+
+<file path="content/articles/my-second-article.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="第二篇文章">
+    <meta name="blog-date" content="2025-09-22">
+    <meta name="blog-summary" content="这是第二篇，用于测试多文件处理。">
+</head>
+<body>
+    <p>系统的鲁棒性需要通过处理多个输入单元来验证。</p>
+    <p>如果此页面成功生成，说明循环和渲染逻辑基本正确。</p>
+</body>
+</html>
+</file>
+
+<file path="content/articles/test_delete_after_converte.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="test for feature which remove md from source_md after converte to html into output">
+    <meta name="blog-date" content="2025-9-21">
+    <meta name="blog-summary" content="False">
+</head>
+<body>
+<h1>test</h1>
+<p>no no no no</p>
+</body>
+</html>
+</file>
+
+<file path="content/articles/test.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="test">
+    <meta name="blog-date" content="2025-09-20">
+</head>
+<body>
+
+</body>
+</html>
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的博客 - 主页</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title-left">JioooBasement</h1>
+            <h1 class="hero-title-right">Jio基地</h1>
+            <p class="hero-subtitle-center">自由 自由 freedom freiheit ..。。。</p>
+        </div>
+        <div class="scroll-down-arrow" onclick="document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})">
+            <span class="scroll-text">scroll</span>
+            <div class="arrow-container">
+                <span class="arrow-symbol">↓</span>
+                <span class="side-text">scrollllllllll</span>
+            </div>
+        </div>
+        <div class="outside-text">OUTSIDE-DANGEROUS WORLD</div>
+        <div class="border-line">
+            <div class="border-text">0 meter depth here</div>
+        </div>
+        <div class="inside-text">INSIDE-BASEMENT, YOUR HOME</div>
+    </section>
+
+    <main id="main-content">
+        {{POST_LIST}}
+    </main>
+
+    <!-- 深度指示器 -->
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <script>
+        // 深度指示器功能
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const heroHeight = document.querySelector('.hero').offsetHeight;
+
+            // 计算相对于边界线的深度（以边界线为0点）
+            const depth = Math.max(0, scrollTop - heroHeight + 50); // 50px是边界线距离底部的偏移
+
+            // 将像素转换为米（假设1米 = 100像素）
+            const depthInMeters = Math.round(depth / 100);
+
+            // 更新深度显示
+            const depthText = document.querySelector('.depth-text');
+            depthText.textContent = depthInMeters + 'm';
+
+            // 根据深度改变指示器颜色
+            const depthLine = document.querySelector('.depth-line');
+            if (depthInMeters > 10) {
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+            } else if (depthInMeters > 5) {
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+            }
+        }
+
+        // 监听滚动事件
+        window.addEventListener('scroll', updateDepthIndicator);
+
+        // 初始化
+        updateDepthIndicator();
+    </script>
+
+</body>
+</html>
+</file>
+
+<file path="md_converter.py">
+import os
+import frontmatter
+import markdown
+import argparse
+from pathlib import Path
+
+def convert_md_to_html(md_file_path, output_dir):
+    """
+    读取单个 Markdown 文件，解析其元数据和内容，
+    将其转换为符合博客系统格式的 HTML 文件，并在成功后删除源文件。
+    """
+    try:
+        # 读取并解析 Markdown 文件
+        with open(md_file_path, 'r', encoding='utf-8') as f:
+            post = frontmatter.load(f)
+
+        # 将 Markdown 内容部分转换为 HTML
+        html_content = markdown.markdown(post.content)
+
+        # 构建符合系统要求的 HTML 结构
+        meta_tags = ""
+        for key, value in post.metadata.items():
+            meta_tags += f'    <meta name="blog-{key}" content="{value}">\n'
+
+        final_html = f"""<!DOCTYPE html>
+<html>
+<head>
+{meta_tags}</head>
+<body>
+{html_content}
+</body>
+</html>"""
+
+        # 确定输出文件名
+        base_filename = Path(md_file_path).stem
+        output_filename = base_filename + ".html"
+        output_path = Path(output_dir) / output_filename
+
+        # 写入最终的 HTML 文件
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+        
+        # 在成功写入后，删除源文件
+        os.remove(md_file_path)
+        
+        # 在日志中注明源文件已被删除
+        print(f"成功: {md_file_path} -> {output_path} (源文件已删除)")
+
+    except Exception as e:
+        print(f"错误: 处理文件 {md_file_path} 时发生错误: {e} (源文件未删除)")
+
+def main():
+    """
+    主函数，处理命令行参数并根据输入是文件还是目录来执行转换。
+    """
+    parser = argparse.ArgumentParser(description="将 Markdown 文件转换为博客专用的 HTML 格式，并删除源文件。")
+    parser.add_argument("input_path", type=str, help="源 Markdown 文件或目录的路径。")
+    parser.add_argument("output_dir", type=str, help="存放转换后的 HTML 文件的目录。")
+    args = parser.parse_args()
+
+    input_path = Path(args.input_path)
+    output_path = Path(args.output_dir)
+
+    # 确保输出目录存在
+    if not output_path.exists():
+        print(f"信息: 输出目录 '{output_path}' 不存在，将自动创建。")
+        os.makedirs(output_path)
+
+    # --- 核心变更：判断输入路径是文件还是目录 ---
+    if input_path.is_file():
+        if input_path.suffix == '.md':
+            print(f"开始单文件处理: '{input_path}'...")
+            convert_md_to_html(input_path, output_path)
+        else:
+            print(f"错误: 输入文件 '{input_path}' 不是一个 Markdown (.md) 文件。")
+            return
+    elif input_path.is_dir():
+        print(f"开始从目录 '{input_path}' 进行批量处理...")
+        md_files = list(input_path.glob("*.md"))
+        if not md_files:
+            print("警告: 在目录中未找到任何 .md 文件。")
+        else:
+            for md_file in md_files:
+                convert_md_to_html(md_file, output_path)
+    else:
+        print(f"错误: 输入路径 '{input_path}' 无效或不存在。")
+        return
+    
+    print("转换完成。")
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path="output/articles/文件结构方案.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文件结构方案</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+    <header>
+        <h1>我的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h1>文件结构方案</h1>
+            <p class="meta">2025-09-21</p>
+            <div class="content">
+                
+<h3>文件结构方案</h3>
+<p><code>/my-blog
+│
+├── builder/             # 构建脚本目录
+│   ├── __init__.py
+│   ├── main.py          # 主构建脚本
+│   ├── config.py        # 全局配置文件 (替代 globalVar.py)
+│   ├── page_parser.py   # 页面解析与处理 (替代 page.py)
+│   ├── index_updater.py # 索引页更新 (替代 updateIndex.py)
+│   └── rss_generator.py # RSS 生成 (替代 RSSgenerator.py)
+│
+├── content/             # 内容源文件目录
+│   ├── articles/        # 分类：文章
+│   │   ├── my-first-article.html
+│   │   └── index.html   # 该分类的索引页模板
+│   ├── weekly/          # 分类：周报
+│   │   ├── week-1.html
+│   │   └── index.html
+│   └── notes/           # 分类：笔记
+│       ├── some-notes.html
+│       └── index.html
+│
+├── static/              # 静态资源目录
+│   ├── css/
+│   │   ├── main.css     # 全局和主页样式
+│   │   └── article.css  # 文章页样式
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── sigil.svg
+│
+├── templates/           # 页面模板目录
+│   └── article.template # 文章页的HTML模板
+│
+├── output/              # 【重要】输出目录
+│   │
+│   ├── articles/
+│   │   ├── my-first-article.html
+│   │   └── index.html
+│   ├── weekly/
+│   │   ├── week-1.html
+│   │   └── index.html
+│   ├── notes/
+│   │   ├── some-notes.html
+│   │   └── index.html
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── index.html
+│   └── feed.xml
+│
+├── index.html           # 主页源文件
+├── CNAME                # (可选) 自定义域名文件
+└── run_build.py         # (可选) 用于执行构建的脚本</code></p>
+<h3>结构解析</h3>
+<ol>
+<li><strong><code>builder/</code> (构建脚本):</strong> 这是站点的引擎。所有自动化处理逻辑都应封装于此。<code>main.py</code> 作为入口，协调 <code>page_parser.py</code>（读取并处理 <code>content/</code> 中的文章）、<code>index_updater.py</code>（更新各级索引页）和 <code>rss_generator.py</code> 的工作。<code>config.py</code> 用于存放分类名称、路径等全局变量，便于统一管理。</li>
+<li><strong><code>content/</code> (内容源文件):</strong> 所有博客文章的原始 <code>.html</code> 文件，按自定义分类存放在不同的子目录中。每个子目录的 <code>index.html</code> 是该分类列表页面的<strong>源文件</strong>，构建脚本会读取它并填入文章列表。这是与构建系统分离的内容库。</li>
+<li><strong><code>static/</code> (静态资源):</strong> 存放无需处理、只需直接复制到最终站点的文件，如 CSS、JavaScript 和图片。</li>
+<li><strong><code>templates/</code> (页面模板):</strong> 存放 HTML 骨架文件。构建脚本会读取 <code>content/</code> 目录下的源文件，将其内容填充到这里的模板中，最终生成完整的文章页面。</li>
+<li><strong><code>output/</code> (输出目录):</strong> 这是一个至关重要的补充。构建完成后，所有生成的静态站点文件（包括所有文章页面、索引页、CSS/JS/图片、<code>index.html</code> 和 <code>feed.xml</code>）都应存放在此目录。<strong>关键在于将源码与生成结果分离</strong>，这能有效避免在构建过程中污染原始文件，极大降低了操作风险。你最终需要部署到服务器上的，就是这个 <code>output/</code> 目录的全部内容。</li>
+<li><strong>根目录文件:</strong></li>
+<li><code>index.html</code>: 你主页的源文件，构建脚本会读取它并注入最新的文章列表。</li>
+<li><code>CNAME</code>: 如果你使用 GitHub Pages 并需要绑定自定义域名，则需要此文件。</li>
+</ol>
+<h3>工作流程推演</h3>
+<ol>
+<li>在 <code>content/weekly/</code> 目录下创建一个新的 <code>week-2.html</code> 文件并撰写内容。</li>
+<li>执行根目录的 <code>run_build.py</code>（或直接运行 <code>builder/main.py</code>）。</li>
+<li>脚本启动：</li>
+<li>读取所有 <code>content/</code> 目录下的文章，解析元数据。</li>
+<li>使用 <code>templates/article.template</code> 为 <code>week-2.html</code> 生成一个完整的、格式化的 HTML 文件，并将其保存到 <code>output/weekly/</code> 目录。</li>
+<li>更新 <code>content/weekly/index.html</code> 和根目录的 <code>index.html</code>，将新文章的链接和摘要添加进去，并将更新后的版本保存到 <code>output/</code> 目录对应位置。</li>
+<li>重新生成 <code>feed.xml</code> 并保存到 <code>output/</code>。</li>
+<li>将 <code>static/</code> 目录下的所有资源复制到 <code>output/</code>。</li>
+<li>将 <code>output/</code> 目录下的所有内容部署到你的服务器。</li>
+</ol>
+
+            </div>
+        </article>
+    </main>
+</body>
+</html>
+</file>
+
+<file path="output/articles/index.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>分类：文章</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+    <header>
+        <h1>分类：文章</h1>
+    </header>
+    <main id="post-list">
+        
+            <article>
+                <h2><a href="test_delete_after_converte.html">test for feature which remove md from source_md after converte to html into output</a></h2>
+                <p class="date">2025-9-21</p>
+                <p class="summary">False</p>
+            </article>
+            
+            <article>
+                <h2><a href="my-second-article.html">第二篇文章</a></h2>
+                <p class="date">2025-09-22</p>
+                <p class="summary">这是第二篇，用于测试多文件处理。</p>
+            </article>
+            
+            <article>
+                <h2><a href="my-first-article.html">我的第一篇文章</a></h2>
+                <p class="date">2025-09-21</p>
+                <p class="summary">这是第一篇文章的摘要。</p>
+            </article>
+            
+            <article>
+                <h2><a href="文件结构方案.html">文件结构方案</a></h2>
+                <p class="date">2025-09-21</p>
+                <p class="summary">这是转化的md测试</p>
+            </article>
+            
+            <article>
+                <h2><a href="test.html">test</a></h2>
+                <p class="date">2025-09-20</p>
+                <p class="summary"></p>
+            </article>
+            
+    </main>
+</body>
+</html>
+</file>
+
+<file path="output/articles/my-first-article.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的第一篇文章</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+    <header>
+        <h1>我的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h1>我的第一篇文章</h1>
+            <p class="meta">2025-09-21</p>
+            <div class="content">
+                
+<p>这是文章的第一段。演算表明，开始一件事的失败率极高，但这第一步是无法规避的。</p>
+<p>这是第二段，用于填充内容。</p>
+
+            </div>
+        </article>
+    </main>
+</body>
+</html>
+</file>
+
+<file path="output/articles/my-second-article.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>第二篇文章</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+    <header>
+        <h1>我的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h1>第二篇文章</h1>
+            <p class="meta">2025-09-22</p>
+            <div class="content">
+                
+<p>系统的鲁棒性需要通过处理多个输入单元来验证。</p>
+<p>如果此页面成功生成，说明循环和渲染逻辑基本正确。</p>
+
+            </div>
+        </article>
+    </main>
+</body>
+</html>
+</file>
+
+<file path="output/articles/test_delete_after_converte.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>test for feature which remove md from source_md after converte to html into output</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+    <header>
+        <h1>我的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h1>test for feature which remove md from source_md after converte to html into output</h1>
+            <p class="meta">2025-9-21</p>
+            <div class="content">
+                
+<h1>test</h1>
+<p>no no no no</p>
+
+            </div>
+        </article>
+    </main>
+</body>
+</html>
+</file>
+
+<file path="output/articles/test.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+    <header>
+        <h1>我的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h1>test</h1>
+            <p class="meta">2025-09-20</p>
+            <div class="content">
+                
+
+            </div>
+        </article>
+    </main>
+</body>
+</html>
+</file>
+
+<file path="output/index.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的博客 - 主页</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title-left">JioooBasement</h1>
+            <h1 class="hero-title-right">Jio基地</h1>
+            <p class="hero-subtitle-center">自由 自由 freedom freiheit ..。。。</p>
+        </div>
+        <div class="scroll-down-arrow" onclick="document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})">
+            <span class="scroll-text">scroll</span>
+            <div class="arrow-container">
+                <span class="arrow-symbol">↓</span>
+                <span class="side-text">scrollllllllll</span>
+            </div>
+        </div>
+        <div class="outside-text">OUTSIDE-DANGEROUS WORLD</div>
+        <div class="border-line">
+            <div class="border-text">0 meter depth here</div>
+        </div>
+        <div class="inside-text">INSIDE-BASEMENT, YOUR HOME</div>
+    </section>
+
+    <main id="main-content">
+        
+        <article>
+            <h2><a href="articles\test_delete_after_converte.html">test for feature which remove md from source_md after converte to html into output</a></h2>
+            <p class="date">2025-9-21</p>
+            <p class="summary">False</p>
+        </article>
+        
+        <article>
+            <h2><a href="articles\my-second-article.html">第二篇文章</a></h2>
+            <p class="date">2025-09-22</p>
+            <p class="summary">这是第二篇，用于测试多文件处理。</p>
+        </article>
+        
+        <article>
+            <h2><a href="articles\my-first-article.html">我的第一篇文章</a></h2>
+            <p class="date">2025-09-21</p>
+            <p class="summary">这是第一篇文章的摘要。</p>
+        </article>
+        
+        <article>
+            <h2><a href="articles\文件结构方案.html">文件结构方案</a></h2>
+            <p class="date">2025-09-21</p>
+            <p class="summary">这是转化的md测试</p>
+        </article>
+        
+        <article>
+            <h2><a href="articles\test.html">test</a></h2>
+            <p class="date">2025-09-20</p>
+            <p class="summary"></p>
+        </article>
+        
+    </main>
+
+    <!-- 深度指示器 -->
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <script>
+        // 深度指示器功能
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const heroHeight = document.querySelector('.hero').offsetHeight;
+
+            // 计算相对于边界线的深度（以边界线为0点）
+            const depth = Math.max(0, scrollTop - heroHeight + 50); // 50px是边界线距离底部的偏移
+
+            // 将像素转换为米（假设1米 = 100像素）
+            const depthInMeters = Math.round(depth / 100);
+
+            // 更新深度显示
+            const depthText = document.querySelector('.depth-text');
+            depthText.textContent = depthInMeters + 'm';
+
+            // 根据深度改变指示器颜色
+            const depthLine = document.querySelector('.depth-line');
+            if (depthInMeters > 10) {
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+            } else if (depthInMeters > 5) {
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+            }
+        }
+
+        // 监听滚动事件
+        window.addEventListener('scroll', updateDepthIndicator);
+
+        // 初始化
+        updateDepthIndicator();
+    </script>
+
+</body>
+</html>
+</file>
+
+<file path="output/static/css/main.css">
+/* --- 核心布局逻辑 --- */
+
+/* 确保 html 和 body 能够支撑全屏高度 */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* 启用平滑滚动行为 */
+    scroll-behavior: smooth;
+}
+
+/* 模块一：Hero Section 布局 */
+.hero {
+    /* 关键：高度等于视窗高度的100%，实现全屏效果 */
+    height: 100vh;
+    /* 使用 Flexbox 实现内容垂直和水平居中 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    /* 为内部绝对定位的箭头提供参照系 */
+    position: relative;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* 添加蓝色渐变背景，从上往下变浅 */
+    background: linear-gradient(to bottom, #00aaff, transparent);
+}
+
+/* 模块二：文章列表区的间距 */
+#main-content {
+    /* 在文章列表顶部和底部留出足够的呼吸空间 */
+    padding: 80px 20px;
+    /* 限制最大宽度，提高可读性 */
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+
+/* --- 视觉样式整合 (采纳你的暗色主题) --- */
+
+body {
+    background-color: #1a1a1a;
+    color: #c5c5c5;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+}
+
+/* Hero 区域内的文本样式 */
+.hero-title-left {
+    font-size: 5rem;
+    font-weight: normal;
+    margin: 0;
+    letter-spacing: 2px; /* 增加字符间距 */
+    text-align: left;
+}
+
+.hero-title-right {
+    font-size: 5rem;
+    font-weight: normal;
+    margin: 0;
+    letter-spacing: 2px; /* 增加字符间距 */
+    text-align: right;
+}
+
+.hero-subtitle-center {
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 20px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* 向下滚动箭头样式 */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.scroll-down-arrow {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #555;
+    text-decoration: none;
+    animation: bounce 2s infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.scroll-text {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+}
+
+.arrow-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.arrow-symbol {
+    font-size: 42rem;
+}
+
+.side-text {
+    position: absolute;
+    left: 60%;
+    margin-left: 0px;
+    font-size: 5rem;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.scroll-down-arrow:hover {
+    color: #c5c5c5;
+}
+
+/* 国境线样式的边界线 */
+.border-line {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        #666 0px,
+        #666 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed #666;
+}
+
+.border-text {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a1a1a;
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* 边界线上方文字 - OUTSIDE */
+.outside-text {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #ff6b6b;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(255, 107, 107, 0.3);
+}
+
+/* 边界线下方文字 - INSIDE */
+.inside-text {
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #4ecdc4;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(78, 205, 196, 0.3);
+}
+
+/* 深度指示器 */
+.depth-indicator {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.depth-line {
+    width: 3px;
+    height: 60px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #666 0px,
+        #666 8px,
+        transparent 8px,
+        transparent 12px
+    );
+    border-left: 1px solid #666;
+    border-right: 1px solid #666;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.depth-text {
+    font-size: 1rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #666;
+    min-width: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 文章列表部分的样式 (之前 index_updater.py 生成) */
+#main-content article {
+    border-bottom: 1px solid #333;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#main-content h2 {
+    margin-bottom: 0.5rem;
+}
+
+#main-content h2 a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#main-content h2 a:hover {
+    color: #00aaff;
+}
+
+#main-content .date {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+#main-content .summary {
+    color: #c5c5c5;
+    line-height: 1.7;
+}
+</file>
+
+<file path="run_build.py">
+from builder.main import build
+
+if __name__ == '__main__':
+    build()
+</file>
+
+<file path="static/css/main.css">
+/* --- 核心布局逻辑 --- */
+
+/* 确保 html 和 body 能够支撑全屏高度 */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* 启用平滑滚动行为 */
+    scroll-behavior: smooth;
+}
+
+/* 模块一：Hero Section 布局 */
+.hero {
+    /* 关键：高度等于视窗高度的100%，实现全屏效果 */
+    height: 100vh;
+    /* 使用 Flexbox 实现内容垂直和水平居中 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    /* 为内部绝对定位的箭头提供参照系 */
+    position: relative;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* 添加蓝色渐变背景，从上往下变浅 */
+    background: linear-gradient(to bottom, #00aaff, transparent);
+}
+
+/* 模块二：文章列表区的间距 */
+#main-content {
+    /* 在文章列表顶部和底部留出足够的呼吸空间 */
+    padding: 80px 20px;
+    /* 限制最大宽度，提高可读性 */
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+
+/* --- 视觉样式整合 (采纳你的暗色主题) --- */
+
+body {
+    background-color: #1a1a1a;
+    color: #c5c5c5;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+}
+
+/* Hero 区域内的文本样式 */
+.hero-title-left {
+    font-size: 5rem;
+    font-weight: normal;
+    margin: 0;
+    letter-spacing: 2px; /* 增加字符间距 */
+    text-align: left;
+}
+
+.hero-title-right {
+    font-size: 5rem;
+    font-weight: normal;
+    margin: 0;
+    letter-spacing: 2px; /* 增加字符间距 */
+    text-align: right;
+}
+
+.hero-subtitle-center {
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 20px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* 向下滚动箭头样式 */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.scroll-down-arrow {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #555;
+    text-decoration: none;
+    animation: bounce 2s infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.scroll-text {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+}
+
+.arrow-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.arrow-symbol {
+    font-size: 42rem;
+}
+
+.side-text {
+    position: absolute;
+    left: 60%;
+    margin-left: 0px;
+    font-size: 5rem;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.scroll-down-arrow:hover {
+    color: #c5c5c5;
+}
+
+/* 国境线样式的边界线 */
+.border-line {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        #666 0px,
+        #666 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed #666;
+}
+
+.border-text {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a1a1a;
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* 边界线上方文字 - OUTSIDE */
+.outside-text {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #ff6b6b;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(255, 107, 107, 0.3);
+}
+
+/* 边界线下方文字 - INSIDE */
+.inside-text {
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #4ecdc4;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(78, 205, 196, 0.3);
+}
+
+/* 深度指示器 */
+.depth-indicator {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.depth-line {
+    width: 3px;
+    height: 60px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #666 0px,
+        #666 8px,
+        transparent 8px,
+        transparent 12px
+    );
+    border-left: 1px solid #666;
+    border-right: 1px solid #666;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.depth-text {
+    font-size: 1rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #666;
+    min-width: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 文章列表部分的样式 (之前 index_updater.py 生成) */
+#main-content article {
+    border-bottom: 1px solid #333;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#main-content h2 {
+    margin-bottom: 0.5rem;
+}
+
+#main-content h2 a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#main-content h2 a:hover {
+    color: #00aaff;
+}
+
+#main-content .date {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+#main-content .summary {
+    color: #c5c5c5;
+    line-height: 1.7;
+}
+</file>
+
+<file path="templates/article.template">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>$title$</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+    <header>
+        <h1>我的博客</h1>
+    </header>
+    <main>
+        <article>
+            <h1>$title$</h1>
+            <p class="meta">$date$</p>
+            <div class="content">
+                $body$
+            </div>
+        </article>
+    </main>
+</body>
+</html>
+</file>
+
+</files>

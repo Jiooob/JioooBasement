@@ -1,0 +1,265 @@
+/* --- 核心布局逻辑 --- */
+
+/* 确保 html 和 body 能够支撑全屏高度 */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* 启用平滑滚动行为 */
+    scroll-behavior: smooth;
+}
+
+/* 模块一：Hero Section 布局 */
+.hero {
+    /* 关键：高度等于视窗高度的100%，实现全屏效果 */
+    height: 100vh;
+    /* 使用 Flexbox 实现内容垂直和水平居中 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    /* 为内部绝对定位的箭头提供参照系 */
+    position: relative;
+    padding-left: 50px;
+    padding-right: 50px;
+    /* 添加蓝色渐变背景，从上往下变浅 */
+    background: linear-gradient(to bottom, #00aaff, transparent);
+}
+
+/* 模块二：文章列表区的间距 */
+#main-content {
+    /* 在文章列表顶部和底部留出足够的呼吸空间 */
+    padding: 80px 20px;
+    /* 限制最大宽度，提高可读性 */
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+
+/* --- 视觉样式整合 (采纳你的暗色主题) --- */
+
+body {
+    background-color: #1a1a1a;
+    color: #c5c5c5;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+}
+
+/* Hero 区域内的文本样式 */
+.hero-title-left {
+    font-size: 5rem;
+    font-weight: normal;
+    margin: 0;
+    letter-spacing: 2px; /* 增加字符间距 */
+    text-align: left;
+}
+
+.hero-title-right {
+    font-size: 5rem;
+    font-weight: normal;
+    margin: 0;
+    letter-spacing: 2px; /* 增加字符间距 */
+    text-align: right;
+}
+
+.hero-subtitle-center {
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 20px;
+    line-height: 1.8;
+    text-align: center;
+}
+
+/* 向下滚动箭头样式 */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.scroll-down-arrow {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #555;
+    text-decoration: none;
+    animation: bounce 2s infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.scroll-text {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+}
+
+.arrow-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.arrow-symbol {
+    font-size: 42rem;
+}
+
+.side-text {
+    position: absolute;
+    left: 60%;
+    margin-left: 0px;
+    font-size: 5rem;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.scroll-down-arrow:hover {
+    color: #c5c5c5;
+}
+
+/* 国境线样式的边界线 */
+.border-line {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        #666 0px,
+        #666 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed #666;
+}
+
+.border-text {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a1a1a;
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* 边界线上方文字 - OUTSIDE */
+.outside-text {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #ff6b6b;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(255, 107, 107, 0.3);
+}
+
+/* 边界线下方文字 - INSIDE */
+.inside-text {
+    position: absolute;
+    bottom: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #4ecdc4;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(78, 205, 196, 0.3);
+}
+
+/* --- 深度指示器 (核心修改区域) --- */
+.depth-indicator {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    /* 修改：将主轴方向改为水平 */
+    flex-direction: row;
+    align-items: center;
+}
+
+.depth-line {
+    /* 修改：交换宽高，变为水平线 */
+    width: 60px;
+    height: 3px;
+    /* 修改：渐变方向改为水平 */
+    background: repeating-linear-gradient(
+        to right,
+        #666 0px,
+        #666 8px,
+        transparent 8px,
+        transparent 12px
+    );
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+    /* 修改：调整为右边距 */
+    margin-right: 10px;
+    opacity: 0.8;
+}
+
+.depth-text {
+    font-size: 1rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 5px 10px;
+    border-radius: 3px;
+    border: 1px solid #666;
+    min-width: 40px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 文章列表部分的样式 (之前 index_updater.py 生成) */
+#main-content article {
+    border-bottom: 1px solid #333;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#main-content h2 {
+    margin-bottom: 0.5rem;
+}
+
+#main-content h2 a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#main-content h2 a:hover {
+    color: #00aaff;
+}
+
+#main-content .date {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+#main-content .summary {
+    color: #c5c5c5;
+    line-height: 1.7;
+}

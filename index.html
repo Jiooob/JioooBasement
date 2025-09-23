@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的博客 - 主页</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title-left">JioooBasement</h1>
+            <h1 class="hero-title-right">Jio基地</h1>
+            <p class="hero-subtitle-center">自由 自由 freedom freiheit ..。。。</p>
+        </div>
+        <div class="scroll-down-arrow" onclick="document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})">
+            <span class="scroll-text">scroll</span>
+            <div class="arrow-container">
+                <span class="arrow-symbol">↓</span>
+                <span class="side-text">scrollllllllll</span>
+            </div>
+        </div>
+        <div class="outside-text">OUTSIDE-DANGEROUS WORLD</div>
+        <div class="border-line">
+            <div class="border-text">0 meter depth here</div>
+        </div>
+        <div class="inside-text">INSIDE-BASEMENT, YOUR HOME</div>
+    </section>
+
+    <main id="main-content">
+        {{POST_LIST}}
+    </main>
+
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <script>
+        // 深度指示器功能
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const heroElement = document.querySelector('.hero');
+            const heroHeight = heroElement.offsetHeight;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+
+            // --- 逻辑重构开始 ---
+
+            // 1. 将边界线的位置定义为深度零点。它距离页面顶部为 heroHeight - 5px。
+            const zeroPoint = heroHeight - 5;
+
+            // 2. 计算当前视窗中心点相对于零点的距离。
+            //    - 当视窗中心在边界线上方时 (viewCenter < zeroPoint)，结果为正数。
+            //    - 当视窗中心在边界线下方时 (viewCenter > zeroPoint)，结果为负数。
+            const depthInPixels = zeroPoint - viewCenter;
+
+            // 3. 将像素转换为米（假设1米 = 100像素）
+            const depthInMeters = Math.round(depthInPixels / 10);
+
+            // --- 逻辑重构结束 ---
+
+            // 更新深度显示
+            const depthText = document.querySelector('.depth-text');
+            depthText.textContent = depthInMeters + 'm';
+
+            // 根据新的负数深度调整指示器颜色
+            const depthLine = document.querySelector('.depth-line');
+            if (depthInMeters < -10) { // 在边界线下方超过10米
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+            } else if (depthInMeters < -5) { // 在边界线下方超过5米
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+            } else { // 在边界线上方，或下方不足5米
+                depthLine.style.background = 'repeating-linear-gradient(to bottom, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+            }
+        }
+
+        // 监听滚动事件
+        window.addEventListener('scroll', updateDepthIndicator);
+
+        // 初始化
+        updateDepthIndicator();
+    </script>
+
+</body>
+</html>
