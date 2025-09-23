@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  # 当推送到 main 分支时触发
+  push:
+    branches:
+      - main
+  # 允许手动触发
+  workflow_dispatch:
+
+# 允许此工作流创建和推送一个 git commit
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Set up Python 🐍
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # 可根据需要调整版本
+
+      - name: Install dependencies 📦
+        run: |
+          python -m pip install --upgrade pip
+          pip install python-markdown python-frontmatter beautifulsoup4
+
+      - name: Build the site ⚙️
+        run: python run_build.py
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # 部署到的目标分支
+          folder: output  # 从 output 目录部署
