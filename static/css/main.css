@@ -233,6 +233,59 @@ body {
     font-weight: bold;
 }
 
+/* 子页面链接样式 - 以边境线为参照 */
+.nav-link-container {
+    position: absolute;
+    /* 以边境线为参照，边境线位置是 100vh - 5px */
+    top: calc(100vh - 5px + 100px); /* 边境线下方100px处 */
+    left: 50px; /* 文章列表左侧空白区域 */
+    z-index: 100;
+}
+
+/* 竖直排列的偏移量 */
+.nav-link-2 { top: calc(100vh - 5px + 140px); }
+.nav-link-3 { top: calc(100vh - 5px + 180px); }
+.nav-link-4 { top: calc(100vh - 5px + 220px); }
+.nav-link-5 { top: calc(100vh - 5px + 260px); }
+.nav-link-6 { top: calc(100vh - 5px + 300px); }
+.nav-link-7 { top: calc(100vh - 5px + 340px); }
+.nav-link-8 { top: calc(100vh - 5px + 380px); }
+
+.nav-link {
+    position: relative;
+    display: inline-block;
+    background-color: #1a1a1a;
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #4ecdc4;
+}
+
+.nav-border-line {
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    right: -50px;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        #666 0px,
+        #666 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed #666;
+    z-index: -1;
+}
+
 /* 文章列表部分的样式 (之前 index_updater.py 生成) */
 #main-content article {
     border-bottom: 1px solid #333;
