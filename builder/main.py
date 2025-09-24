@@ -17,6 +17,12 @@ def build():
     shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
     print("静态文件已复制。")
 
+    # 复制 pages 目录
+    pages_dir = config.BASE_DIR / "pages"
+    if pages_dir.exists():
+        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
+        print("Pages 目录已复制。")
+
     # 3. 读取模板
     try:
         with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
