@@ -1,5 +1,6 @@
 # 忽略所有 output 目录下的内容
 output/
+.claude/
 
 # 忽略 Python 缓存
 __pycache__/
