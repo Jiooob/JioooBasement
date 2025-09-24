@@ -6,17 +6,18 @@
     <link rel="stylesheet" href="../static/css/article.css">
 </head>
 <body>
-    <header>
-        <h1>我的博客</h1>
-    </header>
-    <main>
-        <article>
-            <h1>$title$</h1>
-            <p class="meta">$date$</p>
-            <div class="content">
-                $body$
-            </div>
-        </article>
-    </main>
+
+    <div class="article-container">
+        <header class="article-header">
+            <a href="../index.html" class="back-link">返回基地</a>
+            <h1 class="article-title">$title$</h1>
+            <p class="article-meta">记录于：$date$</p>
+        </header>
+
+        <main class="article-content">
+            $body$
+        </main>
+    </div>
+
 </body>
 </html>

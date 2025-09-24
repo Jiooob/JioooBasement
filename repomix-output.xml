@@ -405,67 +405,6 @@ def update_category_indexes(pages):
             print(f"  - 分类索引页 [{category}/index.html] 已更新。")
 </file>
 
-<file path="builder/main.py">
-import os
-import shutil
-from pathlib import Path
-from . import config
-from .page_parser import Page
-from . import index_updater # 导入索引更新器
-
-def build():
-    print("演算开始：开始构建站点...")
-
-    # 1. 清空输出目录
-    if config.OUTPUT_DIR.exists():
-        shutil.rmtree(config.OUTPUT_DIR)
-    os.makedirs(config.OUTPUT_DIR)
-    
-    # 2. 复制静态文件
-    shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
-    print("静态文件已复制。")
-
-    # 3. 读取模板
-    try:
-        with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
-            article_template = f.read()
-        print("文章模板已加载。")
-    except FileNotFoundError:
-        print("错误：未找到文章模板。构建中止。")
-        return
-
-    # 4. 解析所有页面
-    all_pages = []
-    print("开始处理内容文件...")
-    for category in config.CATEGORIES:
-        category_path = config.CONTENT_DIR / category
-        output_cat_dir = config.OUTPUT_DIR / category
-        if not output_cat_dir.exists():
-            os.makedirs(output_cat_dir)
-            
-        for file_path in category_path.glob("*.html"):
-            if file_path.name == "index.html":
-                continue
-            
-            page = Page(file_path)
-            all_pages.append(page)
-            
-            rendered_html = page.render(article_template)
-            
-            output_file_path = output_cat_dir / file_path.name
-            with open(output_file_path, 'w', encoding='utf-8') as f:
-                f.write(rendered_html)
-    print("所有页面已处理并生成。")
-
-    # 5. 更新所有索引页
-    index_updater.update_indexes(all_pages)
-
-    print("构建流程完毕。系统功能完整。")
-
-if __name__ == '__main__':
-    build()
-</file>
-
 <file path="builder/page_parser.py">
 from bs4 import BeautifulSoup
 
@@ -974,155 +913,71 @@ __pycache__/
 *.pyc
 </file>
 
-<file path="index.html">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>我的博客 - 主页</title>
-    <link rel="stylesheet" href="static/css/main.css">
-</head>
-<body>
+<file path="builder/main.py">
+import os
+import shutil
+from pathlib import Path
+from . import config
+from .page_parser import Page
+from . import index_updater # 导入索引更新器
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title-left">JioooBasement</h1>
-            <h1 class="hero-title-right">Jio基地</h1>
-            <p class="hero-subtitle-center">自由 自由 freedom freiheit ..。。。</p>
-        </div>
-        <div class="scroll-down-arrow" onclick="document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})">
-            <span class="scroll-text">scroll</span>
-            <div class="arrow-container">
-                <span class="arrow-symbol">↓</span>
-                <span class="side-text">scrollllllllll</span>
-            </div>
-        </div>
-        <div class="outside-text">OUTSIDE-DANGEROUS WORLD</div>
-        <div class="border-line">
-            <div class="border-text">0 meter depth here</div>
-        </div>
-        <div class="inside-text">INSIDE-BASEMENT, YOUR HOME</div>
-    </section>
+def build():
+    print("演算开始：开始构建站点...")
 
-    <!-- 子页面链接导航 -->
-    <div class="nav-link-container">
-        <a href="pages/page1.html" class="nav-link">子页面1</a>
-        <div class="nav-border-line"></div>
-    </div>
+    # 1. 清空输出目录
+    if config.OUTPUT_DIR.exists():
+        shutil.rmtree(config.OUTPUT_DIR)
+    os.makedirs(config.OUTPUT_DIR)
+    
+    # 2. 复制静态文件
+    shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
+    print("静态文件已复制。")
 
-    <div class="nav-link-container nav-link-2">
-        <a href="pages/page2.html" class="nav-link">子页面2</a>
-        <div class="nav-border-line"></div>
-    </div>
+    # 复制 pages 目录
+    pages_dir = config.BASE_DIR / "pages"
+    if pages_dir.exists():
+        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
+        print("Pages 目录已复制。")
 
-    <div class="nav-link-container nav-link-3">
-        <a href="pages/page3.html" class="nav-link">子页面3</a>
-        <div class="nav-border-line"></div>
-    </div>
+    # 3. 读取模板
+    try:
+        with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
+            article_template = f.read()
+        print("文章模板已加载。")
+    except FileNotFoundError:
+        print("错误：未找到文章模板。构建中止。")
+        return
 
-    <div class="nav-link-container nav-link-4">
-        <a href="pages/page4.html" class="nav-link">子页面4</a>
-        <div class="nav-border-line"></div>
-    </div>
+    # 4. 解析所有页面
+    all_pages = []
+    print("开始处理内容文件...")
+    for category in config.CATEGORIES:
+        category_path = config.CONTENT_DIR / category
+        output_cat_dir = config.OUTPUT_DIR / category
+        if not output_cat_dir.exists():
+            os.makedirs(output_cat_dir)
+            
+        for file_path in category_path.glob("*.html"):
+            if file_path.name == "index.html":
+                continue
+            
+            page = Page(file_path)
+            all_pages.append(page)
+            
+            rendered_html = page.render(article_template)
+            
+            output_file_path = output_cat_dir / file_path.name
+            with open(output_file_path, 'w', encoding='utf-8') as f:
+                f.write(rendered_html)
+    print("所有页面已处理并生成。")
 
-    <div class="nav-link-container nav-link-5">
-        <a href="pages/page5.html" class="nav-link">子页面5</a>
-        <div class="nav-border-line"></div>
-    </div>
+    # 5. 更新所有索引页
+    index_updater.update_indexes(all_pages)
 
-    <div class="nav-link-container nav-link-6">
-        <a href="pages/page6.html" class="nav-link">子页面6</a>
-        <div class="nav-border-line"></div>
-    </div>
+    print("构建流程完毕。系统功能完整。")
 
-    <div class="nav-link-container nav-link-7">
-        <a href="pages/page7.html" class="nav-link">子页面7</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <div class="nav-link-container nav-link-8">
-        <a href="pages/page8.html" class="nav-link">子页面8</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <main id="main-content">
-        {{POST_LIST}}
-    </main>
-
-    <div class="depth-indicator">
-        <div class="depth-line"></div>
-        <div class="depth-text">0m</div>
-    </div>
-
-    <!-- 左侧深度指示器 -->
-    <div class="depth-indicator-left">
-        <div class="depth-text-left">0m</div>
-        <div class="depth-line-left"></div>
-    </div>
-
-    <script>
-        // 深度指示器功能
-        function updateDepthIndicator() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const heroElement = document.querySelector('.hero');
-            const heroHeight = heroElement.offsetHeight;
-            const viewCenter = scrollTop + (window.innerHeight / 2);
-
-            // --- 逻辑重构开始 ---
-
-            // 1. 将边界线的位置定义为深度零点。它距离页面顶部为 heroHeight - 5px。
-            const zeroPoint = heroHeight - 5;
-
-            // 2. 计算当前视窗中心点相对于零点的距离。
-            //    - 当视窗中心在边界线上方时 (viewCenter < zeroPoint)，结果为正数。
-            //    - 当视窗中心在边界线下方时 (viewCenter > zeroPoint)，结果为负数。
-            const depthInPixels = zeroPoint - viewCenter;
-
-            // 3. 将像素转换为米（假设1米 = 100像素）
-            const depthInMeters = Math.round(depthInPixels / 10);
-
-            // --- 逻辑重构结束 ---
-
-            // 更新右侧深度显示
-            const depthText = document.querySelector('.depth-text');
-            depthText.textContent = depthInMeters + 'm';
-
-            // 更新左侧深度显示
-            const depthTextLeft = document.querySelector('.depth-text-left');
-            depthTextLeft.textContent = depthInMeters + 'm';
-
-            // 根据新的负数深度调整右侧指示器颜色
-            const depthLine = document.querySelector('.depth-line');
-            // 根据新的负数深度调整左侧指示器颜色
-            const depthLineLeft = document.querySelector('.depth-line-left');
-
-            if (depthInMeters < -10) { // 在边界线下方超过10米
-                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
-                depthText.style.color = '#ff6b6b';
-                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
-                depthTextLeft.style.color = '#ff6b6b';
-            } else if (depthInMeters < -5) { // 在边界线下方超过5米
-                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
-                depthText.style.color = '#ffaa44';
-                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
-                depthTextLeft.style.color = '#ffaa44';
-            } else { // 在边界线上方，或下方不足5米
-                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
-                depthText.style.color = '#4ecdc4';
-                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
-                depthTextLeft.style.color = '#4ecdc4';
-            }
-        }
-
-        // 监听滚动事件
-        window.addEventListener('scroll', updateDepthIndicator);
-
-        // 初始化
-        updateDepthIndicator();
-    </script>
-
-</body>
-</html>
+if __name__ == '__main__':
+    build()
 </file>
 
 <file path="static/css/main.css">
@@ -1487,6 +1342,157 @@ body {
     color: #c5c5c5;
     line-height: 1.7;
 }
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的博客 - 主页</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title-left">JioooBasement</h1>
+            <h1 class="hero-title-right">Jio基地</h1>
+            <p class="hero-subtitle-center">自由 自由 freedom freiheit ..。。。</p>
+        </div>
+        <div class="scroll-down-arrow" onclick="document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})">
+            <span class="scroll-text">scroll</span>
+            <div class="arrow-container">
+                <span class="arrow-symbol">↓</span>
+                <span class="side-text">scrollllllllll</span>
+            </div>
+        </div>
+        <div class="outside-text">OUTSIDE-WORLD, HELL</div>
+        <div class="border-line">
+            <div class="border-text">0 meter depth here</div>
+        </div>
+        <div class="inside-text">INSIDE-BASEMENT, HOME</div>
+    </section>
+
+    <!-- 子页面链接导航 -->
+    <div class="nav-link-container">
+        <a href="pages/page1.html" class="nav-link">子页面1</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <div class="nav-link-container nav-link-2">
+        <a href="pages/page2.html" class="nav-link">子页面2</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <div class="nav-link-container nav-link-3">
+        <a href="pages/page3.html" class="nav-link">子页面3</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <div class="nav-link-container nav-link-4">
+        <a href="pages/page4.html" class="nav-link">子页面4</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <div class="nav-link-container nav-link-5">
+        <a href="pages/page5.html" class="nav-link">子页面5</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <div class="nav-link-container nav-link-6">
+        <a href="pages/page6.html" class="nav-link">子页面6</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <div class="nav-link-container nav-link-7">
+        <a href="pages/page7.html" class="nav-link">子页面7</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <div class="nav-link-container nav-link-8">
+        <a href="pages/page8.html" class="nav-link">子页面8</a>
+        <div class="nav-border-line"></div>
+    </div>
+
+    <main id="main-content">
+        {{POST_LIST}}
+    </main>
+
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <!-- 左侧深度指示器 -->
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器功能
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const heroElement = document.querySelector('.hero');
+            const heroHeight = heroElement.offsetHeight;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+
+            // --- 逻辑重构开始 ---
+
+            // 1. 将边界线的位置定义为深度零点。它距离页面顶部为 heroHeight - 5px。
+            const zeroPoint = heroHeight - 5;
+
+            // 2. 计算当前视窗中心点相对于零点的距离。
+            //    - 当视窗中心在边界线上方时 (viewCenter < zeroPoint)，结果为正数。
+            //    - 当视窗中心在边界线下方时 (viewCenter > zeroPoint)，结果为负数。
+            const depthInPixels = zeroPoint - viewCenter;
+
+            // 3. 将像素转换为米（假设1米 = 100像素）
+            const depthInMeters = Math.round(depthInPixels / 10);
+
+            // --- 逻辑重构结束 ---
+
+            // 更新右侧深度显示
+            const depthText = document.querySelector('.depth-text');
+            depthText.textContent = depthInMeters + 'm';
+
+            // 更新左侧深度显示
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthTextLeft.textContent = depthInMeters + 'm';
+
+            // 根据新的负数深度调整右侧指示器颜色
+            const depthLine = document.querySelector('.depth-line');
+            // 根据新的负数深度调整左侧指示器颜色
+            const depthLineLeft = document.querySelector('.depth-line-left');
+
+            if (depthInMeters < -10) { // 在边界线下方超过10米
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (depthInMeters < -5) { // 在边界线下方超过5米
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else { // 在边界线上方，或下方不足5米
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+        }
+
+        // 监听滚动事件
+        window.addEventListener('scroll', updateDepthIndicator);
+
+        // 初始化
+        updateDepthIndicator();
+    </script>
+
+</body>
+</html>
 </file>
 
 </files>
