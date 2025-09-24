@@ -77,6 +77,12 @@
         <div class="depth-text">0m</div>
     </div>
 
+    <!-- 左侧深度指示器 -->
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
     <script>
         // 深度指示器功能
         function updateDepthIndicator() {
@@ -100,21 +106,34 @@
 
             // --- 逻辑重构结束 ---
 
-            // 更新深度显示
+            // 更新右侧深度显示
             const depthText = document.querySelector('.depth-text');
             depthText.textContent = depthInMeters + 'm';
 
-            // 根据新的负数深度调整指示器颜色
+            // 更新左侧深度显示
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthTextLeft.textContent = depthInMeters + 'm';
+
+            // 根据新的负数深度调整右侧指示器颜色
             const depthLine = document.querySelector('.depth-line');
+            // 根据新的负数深度调整左侧指示器颜色
+            const depthLineLeft = document.querySelector('.depth-line-left');
+
             if (depthInMeters < -10) { // 在边界线下方超过10米
-                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
                 depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
             } else if (depthInMeters < -5) { // 在边界线下方超过5米
-                depthLine.style.background = 'repeating-linear-gradient(to bottom, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
                 depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
             } else { // 在边界线上方，或下方不足5米
-                depthLine.style.background = 'repeating-linear-gradient(to bottom, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
                 depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
             }
         }
 
