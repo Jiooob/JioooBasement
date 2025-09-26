@@ -65,6 +65,7 @@ pages/page7.html
 pages/page8.html
 pages/test-page.html
 run_build.py
+static/css/article.css
 static/css/main.css
 templates/article.template
 </directory_structure>
@@ -878,31 +879,6 @@ if __name__ == '__main__':
     build()
 </file>
 
-<file path="templates/article.template">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>$title$</title>
-    <link rel="stylesheet" href="../static/css/article.css">
-</head>
-<body>
-    <header>
-        <h1>我的博客</h1>
-    </header>
-    <main>
-        <article>
-            <h1>$title$</h1>
-            <p class="meta">$date$</p>
-            <div class="content">
-                $body$
-            </div>
-        </article>
-    </main>
-</body>
-</html>
-</file>
-
 <file path=".gitignore">
 # 忽略所有 output 目录下的内容
 output/
@@ -978,6 +954,185 @@ def build():
 
 if __name__ == '__main__':
     build()
+</file>
+
+<file path="static/css/article.css">
+/* --- 全局与基础设定 --- */
+body {
+    background-color: #1a1a1a;
+    color: #c5c5c5;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 布局容器 --- */
+.article-container {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 40px 20px 80px 20px;
+}
+
+/* --- "返回基地"按钮 (核心修改区域) --- */
+.back-link {
+    /* 定位逻辑 */
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+
+    /* 视觉风格 */
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 2px;
+    padding: 8px 15px;
+    color: #4ecdc4;
+    text-decoration: none;
+    font-family: 'Courier New', monospace; /* 切换为等宽字体 */
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase; /* 全部大写 */
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.back-link:hover {
+    color: #fff;
+    border-color: #4ecdc4;
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.5); /* 添加辉光效果 */
+}
+
+
+/* --- 页头与导航 --- */
+.article-header {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+    /* 移除 text-align: center，恢复左对齐 */
+}
+
+.article-title {
+    font-size: 2.8rem;
+    color: #e0e0e0;
+    margin: 0 0 10px 0;
+}
+
+.article-meta {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0;
+    font-style: italic;
+}
+
+/* --- 文章正文排版 --- */
+.article-content {
+    font-size: 1.1rem;
+}
+
+.article-content h2,
+.article-content h3 {
+    color: #00aaff;
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    margin-top: 40px;
+}
+
+.article-content p {
+    margin: 0 0 1.5em 0;
+}
+
+.article-content a {
+    color: #4ecdc4;
+    text-decoration: none;
+    border-bottom: 1px dashed #4ecdc4;
+    transition: all 0.3s ease;
+}
+
+.article-content a:hover {
+    background-color: rgba(78, 205, 196, 0.1);
+    border-bottom: 1px solid #4ecdc4;
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 25px;
+}
+
+/* --- 引用块样式 --- */
+.article-content blockquote {
+    margin: 2em 0;
+    padding: 1em 1.5em;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #444;
+    color: #aaa;
+    font-style: italic;
+}
+
+.article-content blockquote p {
+    margin: 0;
+}
+
+/* --- 代码块样式 --- */
+.article-content pre {
+    background-color: #222;
+    border: 1px solid #333;
+    padding: 1em;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+    border-radius: 4px;
+}
+
+.article-content code {
+    font-family: 'Courier New', 'Fira Code', monospace;
+    background-color: #333;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.article-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* --- 图像样式 --- */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2em auto;
+    border-radius: 4px;
+    border: 1px solid #444;
+}
+</file>
+
+<file path="templates/article.template">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>$title$</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <a href="../index.html" class="back-link">返回基地</a>
+            <h1 class="article-title">$title$</h1>
+            <p class="article-meta">记录于：$date$</p>
+        </header>
+
+        <main class="article-content">
+            $body$
+        </main>
+    </div>
+
+</body>
+</html>
 </file>
 
 <file path="static/css/main.css">
@@ -1376,42 +1531,42 @@ body {
 
     <!-- 子页面链接导航 -->
     <div class="nav-link-container">
-        <a href="pages/page1.html" class="nav-link">子页面1</a>
+        <a href="pages/page1.html" class="nav-link">子 -125m</a>
         <div class="nav-border-line"></div>
     </div>
 
     <div class="nav-link-container nav-link-2">
-        <a href="pages/page2.html" class="nav-link">子页面2</a>
+        <a href="pages/page2.html" class="nav-link">子 -546m</a>
         <div class="nav-border-line"></div>
     </div>
 
     <div class="nav-link-container nav-link-3">
-        <a href="pages/page3.html" class="nav-link">子页面3</a>
+        <a href="pages/page3.html" class="nav-link">子 -1236m</a>
         <div class="nav-border-line"></div>
     </div>
 
     <div class="nav-link-container nav-link-4">
-        <a href="pages/page4.html" class="nav-link">子页面4</a>
+        <a href="pages/page4.html" class="nav-link">子 -6515m</a>
         <div class="nav-border-line"></div>
     </div>
 
     <div class="nav-link-container nav-link-5">
-        <a href="pages/page5.html" class="nav-link">子页面5</a>
+        <a href="pages/page5.html" class="nav-link">子 -785m</a>
         <div class="nav-border-line"></div>
     </div>
 
     <div class="nav-link-container nav-link-6">
-        <a href="pages/page6.html" class="nav-link">子页面6</a>
+        <a href="pages/page6.html" class="nav-link">子 -655m</a>
         <div class="nav-border-line"></div>
     </div>
 
     <div class="nav-link-container nav-link-7">
-        <a href="pages/page7.html" class="nav-link">子页面7</a>
+        <a href="pages/page7.html" class="nav-link">子 -62m</a>
         <div class="nav-border-line"></div>
     </div>
 
     <div class="nav-link-container nav-link-8">
-        <a href="pages/page8.html" class="nav-link">子页面8</a>
+        <a href="pages/page8.html" class="nav-link">子 -565m</a>
         <div class="nav-border-line"></div>
     </div>
 

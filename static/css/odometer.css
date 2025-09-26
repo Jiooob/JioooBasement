@@ -1,0 +1,59 @@
+/* static/css/odometer.css */
+.odometer-container {
+    /* --- 核心修正 --- */
+    /* 从 'flex' 改为 'inline-flex'，使其宽度自适应内容 */
+    display: inline-flex;
+    
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #111;
+    border: 2px solid #333;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 15px rgba(0, 170, 255, 0.2) inset;
+}
+
+/* 数字的“视窗” */
+.odometer-digit {
+    width: 40px;
+    height: 60px;
+    background-color: #0A0A0A;
+    margin: 0 3px;
+    border-radius: 3px;
+    overflow: hidden; /* 关键：隐藏滚轮的其余部分 */
+    position: relative;
+    border: 1px solid #000;
+}
+
+/* 包含 0-9 的数字带（滚轮） */
+.digit-reel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 核心：过渡效果，持续2.5秒，使用 ease-out 缓动函数 */
+    transition: transform 2.5s ease-out;
+}
+
+/* 单个数字的样式 */
+.digit-reel > div {
+    height: 60px;
+    line-height: 60px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #4ecdc4;
+    text-shadow: 0 0 10px rgba(78, 205, 196, 0.7);
+}
+
+.odometer-symbol {
+    font-size: 2.5rem;
+    color: #888;
+    margin: 0 10px;
+    align-self: center;
+    line-height: 60px;
+}
