@@ -3,18 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>子页面1 - JioooBasement</title>
-    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
 </head>
 <body>
     <div class="page-container">
         <header class="page-header">
+            <!-- 结构变更：将仪表盘移动至页头 -->
             <h1>子页面1</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
             <a href="../index.html" class="back-home">← 返回主页</a>
         </header>
 
         <main class="page-content">
+            <!-- 仪表盘已从此区域移除 -->
             <p>这里是子页面1的内容。</p>
         </main>
     </div>
+
+    <script src="../static/js/odometer.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pageDepth = -125;
+            createOdometer('depth-odometer', pageDepth);
+        });
+    </script>
 </body>
 </html>
+

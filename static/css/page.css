@@ -1,0 +1,78 @@
+/* static/css/page.css */
+
+/* --- 全局与基础设定 (与 main.css 保持一致) --- */
+body {
+    background-color: #1a1a1a;
+    color: #c5c5c5;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 页面布局容器 --- */
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* --- 页头样式 --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #333;
+}
+
+.page-header h1 {
+    /* --- 核心修改：减小字号 --- */
+    font-size: 2.2rem;
+    color: #e0e0e0;
+    margin: 0;
+    font-weight: normal;
+}
+
+/* --- 返回主页链接 --- */
+.back-home {
+    display: inline-block;
+    color: #4ecdc4;
+    text-decoration: none;
+    font-size: 1rem;
+    /* --- 核心修改：增加内边距 --- */
+    padding: 10px 18px;
+    border: 1px solid #4ecdc4;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+}
+
+.back-home:hover {
+    background-color: rgba(78, 205, 196, 0.1);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+}
+
+/* --- 页面正文内容 --- */
+.page-content {
+    font-size: 1.1rem;
+    color: #c5c5c5;
+    padding-top: 20px; /* 增加一点顶部间距 */
+}
+
+/* 统一内容区域的链接样式 */
+.page-content a {
+    color: #4ecdc4;
+    text-decoration: none;
+    border-bottom: 1px dashed #4ecdc4;
+    transition: all 0.3s ease;
+}
+
+.page-content a:hover {
+    background-color: rgba(78, 205, 196, 0.1);
+    border-bottom: 1px solid #4ecdc4;
+}
+
