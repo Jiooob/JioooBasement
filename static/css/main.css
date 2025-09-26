@@ -45,20 +45,12 @@ body {
 }
 
 /* Hero 区域内的文本样式 */
-.hero-title-left {
+.hero-title {
     font-size: 5rem;
     font-weight: normal;
     margin: 0;
     letter-spacing: 2px; /* 增加字符间距 */
-    text-align: left;
-}
-
-.hero-title-right {
-    font-size: 5rem;
-    font-weight: normal;
-    margin: 0;
-    letter-spacing: 2px; /* 增加字符间距 */
-    text-align: right;
+    text-align: center; /* 修改为居中 */
 }
 
 .hero-subtitle-center {
@@ -292,7 +284,7 @@ body {
 .nav-link-5 { top: calc(100vh - 5px + 260px); }
 .nav-link-6 { top: calc(100vh - 5px + 300px); }
 .nav-link-7 { top: calc(100vh - 5px + 340px); }
-.nav-link-8 { top: calc(100vh - 5px + 380px); }
+.nav-link-8 { top: calc(100vh - 5px + 500px); }
 
 .nav-link {
     position: relative;
