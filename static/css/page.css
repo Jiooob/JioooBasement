@@ -76,3 +76,42 @@ body {
     border-bottom: 1px solid #4ecdc4;
 }
 
+
+
+/* --- 新增：从 main.css 迁移的文章列表样式 --- */
+#post-list-container {
+    margin-top: 60px; /* 与页头分隔开 */
+    border-top: 1px solid #333;
+    padding-top: 40px;
+}
+
+#post-list-container article {
+    border-bottom: 1px solid #333;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#post-list-container h2 {
+    margin-bottom: 0.5rem;
+}
+
+#post-list-container h2 a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#post-list-container h2 a:hover {
+    color: #00aaff;
+}
+
+#post-list-container .date {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+#post-list-container .summary {
+    color: #c5c5c5;
+    line-height: 1.7;
+}

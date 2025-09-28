@@ -9,25 +9,16 @@
 <body>
     <div class="page-container">
         <header class="page-header">
-            <!-- 结构变更：将仪表盘移动至页头 -->
-            <h1>子页面1</h1>
+            <h1>扇区-01 / 日志归档</h1>
             <div id="depth-odometer" class="odometer-container"></div>
             <a href="../index.html" class="back-home">← 返回主页</a>
         </header>
 
         <main class="page-content">
-            <!-- 仪表盘已从此区域移除 -->
-            <p>这里是子页面1的内容。</p>
-        </main>
+            <div id="post-list-container">
+                {{POST_LIST}}
+            </div>
+            </main>
     </div>
-
-    <script src="../static/js/odometer.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const pageDepth = -125;
-            createOdometer('depth-odometer', pageDepth);
-        });
-    </script>
 </body>
 </html>
-
