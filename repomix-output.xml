@@ -859,68 +859,6 @@ if __name__ == '__main__':
     build()
 </file>
 
-<file path="static/css/odometer.css">
-/* static/css/odometer.css */
-.odometer-container {
-    /* --- 核心修正 --- */
-    /* 从 'flex' 改为 'inline-flex'，使其宽度自适应内容 */
-    display: inline-flex;
-    
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    background-color: #111;
-    border: 2px solid #333;
-    border-radius: 5px;
-    margin-bottom: 30px;
-    font-family: 'Courier New', monospace;
-    box-shadow: 0 0 15px rgba(0, 170, 255, 0.2) inset;
-}
-
-/* 数字的“视窗” */
-.odometer-digit {
-    width: 40px;
-    height: 60px;
-    background-color: #0A0A0A;
-    margin: 0 3px;
-    border-radius: 3px;
-    overflow: hidden; /* 关键：隐藏滚轮的其余部分 */
-    position: relative;
-    border: 1px solid #000;
-}
-
-/* 包含 0-9 的数字带（滚轮） */
-.digit-reel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* 核心：过渡效果，持续2.5秒，使用 ease-out 缓动函数 */
-    transition: transform 0.5s ease-out;
-}
-
-/* 单个数字的样式 */
-.digit-reel > div {
-    height: 60px;
-    line-height: 60px;
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #4ecdc4;
-    text-shadow: 0 0 10px rgba(78, 205, 196, 0.7);
-}
-
-.odometer-symbol {
-    font-size: 2.5rem;
-    color: #888;
-    margin: 0 10px;
-    align-self: center;
-    line-height: 60px;
-}
-</file>
-
 <file path="static/css/page.css">
 /* static/css/page.css */
 
@@ -998,6 +936,46 @@ body {
 .page-content a:hover {
     background-color: rgba(78, 205, 196, 0.1);
     border-bottom: 1px solid #4ecdc4;
+}
+
+
+
+/* --- 新增：从 main.css 迁移的文章列表样式 --- */
+#post-list-container {
+    margin-top: 60px; /* 与页头分隔开 */
+    border-top: 1px solid #333;
+    padding-top: 40px;
+}
+
+#post-list-container article {
+    border-bottom: 1px solid #333;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#post-list-container h2 {
+    margin-bottom: 0.5rem;
+}
+
+#post-list-container h2 a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#post-list-container h2 a:hover {
+    color: #00aaff;
+}
+
+#post-list-container .date {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+#post-list-container .summary {
+    color: #c5c5c5;
+    line-height: 1.7;
 }
 </file>
 
@@ -1162,16 +1140,16 @@ if __name__ == '__main__':
 <body>
     <div class="page-container">
         <header class="page-header">
-            <!-- 结构变更：将仪表盘移动至页头 -->
-            <h1>子页面1</h1>
+            <h1>扇区-01 / 日志归档</h1>
             <div id="depth-odometer" class="odometer-container"></div>
             <a href="../index.html" class="back-home">← 返回主页</a>
         </header>
 
         <main class="page-content">
-            <!-- 仪表盘已从此区域移除 -->
-            <p>这里是子页面1的内容。</p>
-        </main>
+            <div id="post-list-container">
+                {{POST_LIST}}
+            </div>
+            </main>
     </div>
 
     <script src="../static/js/odometer.js"></script>
@@ -1335,6 +1313,68 @@ body {
     margin: 2em auto;
     border-radius: 4px;
     border: 1px solid #444;
+}
+</file>
+
+<file path="static/css/odometer.css">
+/* static/css/odometer.css */
+.odometer-container {
+    /* --- 核心修正 --- */
+    /* 从 'flex' 改为 'inline-flex'，使其宽度自适应内容 */
+    display: inline-flex;
+    
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #2a0000; /* 深红色背景 */
+    border: 2px solid #551a1a; /* 暗红色边框 */
+    border-radius: 5px;
+    margin-bottom: 30px;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 15px rgba(255, 50, 50, 0.25) inset; /* 红色内发光 */
+}
+
+/* 数字的“视窗” */
+.odometer-digit {
+    width: 40px;
+    height: 60px;
+    background-color: #1a0000;
+    margin: 0 3px;
+    border-radius: 3px;
+    overflow: hidden; /* 关键：隐藏滚轮的其余部分 */
+    position: relative;
+    border: 1px solid #000;
+}
+
+/* 包含 0-9 的数字带（滚轮） */
+.digit-reel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 核心：过渡效果，持续2.5秒，使用 ease-out 缓动函数 */
+    transition: transform 0.5s ease-out;
+}
+
+/* 单个数字的样式 */
+.digit-reel > div {
+    height: 60px;
+    line-height: 60px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #e0e0e0; /* 灰白色，可读性更高 */
+    text-shadow: 0 0 8px rgba(255, 94, 94, 0.5); /* 较弱的红色辉光作为点缀 */
+}
+
+.odometer-symbol {
+    font-size: 2.5rem;
+    color: #888;
+    margin: 0 10px;
+    align-self: center;
+    line-height: 60px;
 }
 </file>
 
@@ -1718,6 +1758,162 @@ body {
     color: #c5c5c5;
     line-height: 1.7;
 }
+
+/* --- 地下室环境效果整合 --- */
+
+/* 1. CSS 变量与基础设定 */
+:root {
+    --cursor-x: 50vw;
+    --cursor-y: 50vh;
+}
+
+body {
+    /* 核心变更：应用手电筒效果背景 */
+    background: radial-gradient(
+        circle at var(--cursor-x) var(--cursor-y),
+        rgba(55, 55, 55, 0.8) 0%,   /* 稍微调亮中心点 */
+        rgba(13, 13, 13, 0) 10px,  /* [修正] 缩小核心光圈半径 */
+        #0d0d0d 10px              /* [修正] 缩小整体光照范围 */
+    );
+    background-repeat: no-repeat;     /* [修正] 强制背景不重复 */
+    background-attachment: fixed;     /* [修正] 将背景固定于视口，防止滚动 */
+    cursor: none;                     /* 隐藏默认光标 */
+}
+
+/* 2. 视觉噪点与扫描线层 */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.03),
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    background-size: 100% 2px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+    animation: noise 0.5s infinite linear;
+}
+
+@keyframes noise {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-1px); }
+    50% { transform: translateY(1px); }
+    75% { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+}
+
+/* 3. 自定义光标 */
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: #4ecdc4;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1001;
+    box-shadow: 0 0 10px #4ecdc4;
+    transition: transform 0.1s ease-out; /* 为光标移动增加平滑过渡 */
+}
+
+/* 4. 交互闪烁效果 */
+.nav-link:hover {
+    animation: flicker 0.15s infinite steps(1);
+}
+
+@keyframes flicker {
+    0% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+    25% { opacity: 0.8; }
+    50% { opacity: 1; text-shadow: none; }
+    75% { opacity: 0.6; }
+    100% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+}
+
+/* --- 新增：主内容网格布局 --- */
+.main-content-grid {
+    display: flex;
+    padding: 80px 50px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* --- 新增：页面卡片容器 --- */
+.page-cards-container {
+    flex: 2; /* 占据 2/3 宽度 */
+    display: grid;
+    /* 响应式网格：自动填充，每列最小280px */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px; /* 卡片间距 */
+}
+
+/* --- 新增：单个卡片样式 --- */
+.page-card {
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #c5c5c5;
+    transition: all 0.3s ease;
+    overflow: hidden; /* 确保内部元素不溢出 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 150px;
+}
+
+.page-card:hover {
+    transform: translateY(-5px);
+    border-color: #4ecdc4;
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+}
+
+.page-card .card-content {
+    padding: 20px;
+}
+
+.page-card h2 {
+    font-size: 1.5rem;
+    color: #e0e0e0;
+    margin: 0 0 10px 0;
+}
+
+.page-card p {
+    font-size: 1rem;
+    color: #888;
+    margin: 0;
+}
+
+/* --- 新增：右侧面板样式 --- */
+.right-panel {
+    flex: 1; /* 占据 1/3 宽度 */
+    padding-left: 50px;
+}
+
+.right-panel .panel-content {
+    border-left: 2px solid #444;
+    padding-left: 30px;
+    height: 100%;
+    font-family: 'Courier New', monospace;
+}
+
+.right-panel h3 {
+    color: #888;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.right-panel p {
+    color: #666;
+    font-size: 1rem;
+}
 </file>
 
 <file path="index.html">
@@ -1729,7 +1925,7 @@ body {
     <link rel="stylesheet" href="static/css/main.css">
 </head>
 <body>
-
+    <div class="cursor-dot"></div>
     <section class="hero">
         <div class="hero-content">
             <h1 class="hero-title">JioooBasement</h1>
@@ -1743,48 +1939,66 @@ body {
         <div class="inside-text">INSIDE-BASEMENT, HOME</div>
     </section>
 
-    <div class="nav-link-container">
-        <a href="pages/page1.html" class="nav-link">子 -125m</a>
-        <div class="nav-border-line"></div>
-    </div>
+  <main class="main-content-grid">
+        <div class="page-cards-container">
+            <a href="pages/page1.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-01 [-125m]</h2>
+                    <p>日志归档与数据接口</p>
+                </div>
+            </a>
+            <a href="pages/page2.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-02 [-546m]</h2>
+                    <p>备用能源监控</p>
+                </div>
+            </a>
+            <a href="pages/page3.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-03 [-1236m]</h2>
+                    <p>深层地质扫描</p>
+                </div>
+            </a>
+            <a href="pages/page4.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-04 [-6515m]</h2>
+                    <p>未知信号源分析</p>
+                </div>
+            </a>
+            <a href="pages/page5.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-05 [-785m]</h2>
+                    <p>维生系统A区</p>
+                </div>
+            </a>
+            <a href="pages/page6.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-06 [-655m]</h2>
+                    <p>维生系统B区</p>
+                </div>
+            </a>
+            <a href="pages/page7.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-07 [-62m]</h2>
+                    <p>通讯中继站</p>
+                </div>
+            </a>
+            <a href="pages/page8.html" class="page-card">
+                <div class="card-content">
+                    <h2>扇区-08 [-565m]</h2>
+                    <p>武器库</p>
+                </div>
+            </a>
+        </div>
 
-    <div class="nav-link-container nav-link-2">
-        <a href="pages/page2.html" class="nav-link">子 -546m</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <div class="nav-link-container nav-link-3">
-        <a href="pages/page3.html" class="nav-link">子 -1236m</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <div class="nav-link-container nav-link-4">
-        <a href="pages/page4.html" class="nav-link">子 -6515m</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <div class="nav-link-container nav-link-5">
-        <a href="pages/page5.html" class="nav-link">子 -785m</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <div class="nav-link-container nav-link-6">
-        <a href="pages/page6.html" class="nav-link">子 -655m</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <div class="nav-link-container nav-link-7">
-        <a href="pages/page7.html" class="nav-link">子 -62m</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <div class="nav-link-container nav-link-8">
-        <a href="pages/page8.html" class="nav-link">子 -565m</a>
-        <div class="nav-border-line"></div>
-    </div>
-
-    <main id="main-content">
-        {{POST_LIST}}
+        <aside class="right-panel">
+            <div class="panel-content">
+                <h3>//:SYSTEM_STATUS</h3>
+                <p>导航矩阵已激活。</p>
+                <p>所有节点链接稳定。</p>
+                <p>等待指令...</p>
+            </div>
+        </aside>
     </main>
 
     <div class="depth-indicator">
@@ -1856,6 +2070,22 @@ body {
 
         // 初始化
         updateDepthIndicator();
+
+
+        // --- 手电筒效果驱动脚本 (新增代码) ---
+    const cursorDot = document.querySelector('.cursor-dot');
+    window.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+
+        // 使用 requestAnimationFrame 优化性能，确保在下一次浏览器重绘前更新
+        requestAnimationFrame(() => {
+            document.documentElement.style.setProperty('--cursor-x', clientX + 'px');
+            document.documentElement.style.setProperty('--cursor-y', clientY + 'px');
+
+            cursorDot.style.left = clientX + 'px';
+            cursorDot.style.top = clientY + 'px';
+        });
+    });
     </script>
 
 </body>
