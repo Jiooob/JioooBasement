@@ -67,6 +67,9 @@ pages/test-page.html
 run_build.py
 static/css/article.css
 static/css/main.css
+static/css/odometer.css
+static/css/page.css
+static/js/odometer.js
 templates/article.template
 </directory_structure>
 
@@ -621,29 +624,6 @@ if __name__ == "__main__":
     main()
 </file>
 
-<file path="pages/page1.html">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>子页面1 - JioooBasement</title>
-    <link rel="stylesheet" href="../static/css/main.css">
-</head>
-<body>
-    <div class="page-container">
-        <header class="page-header">
-            <h1>子页面1</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
-        </header>
-
-        <main class="page-content">
-            <p>这里是子页面1的内容。</p>
-        </main>
-    </div>
-</body>
-</html>
-</file>
-
 <file path="pages/page2.html">
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -879,6 +859,220 @@ if __name__ == '__main__':
     build()
 </file>
 
+<file path="static/css/odometer.css">
+/* static/css/odometer.css */
+.odometer-container {
+    /* --- 核心修正 --- */
+    /* 从 'flex' 改为 'inline-flex'，使其宽度自适应内容 */
+    display: inline-flex;
+    
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #111;
+    border: 2px solid #333;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 0 15px rgba(0, 170, 255, 0.2) inset;
+}
+
+/* 数字的“视窗” */
+.odometer-digit {
+    width: 40px;
+    height: 60px;
+    background-color: #0A0A0A;
+    margin: 0 3px;
+    border-radius: 3px;
+    overflow: hidden; /* 关键：隐藏滚轮的其余部分 */
+    position: relative;
+    border: 1px solid #000;
+}
+
+/* 包含 0-9 的数字带（滚轮） */
+.digit-reel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 核心：过渡效果，持续2.5秒，使用 ease-out 缓动函数 */
+    transition: transform 0.5s ease-out;
+}
+
+/* 单个数字的样式 */
+.digit-reel > div {
+    height: 60px;
+    line-height: 60px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #4ecdc4;
+    text-shadow: 0 0 10px rgba(78, 205, 196, 0.7);
+}
+
+.odometer-symbol {
+    font-size: 2.5rem;
+    color: #888;
+    margin: 0 10px;
+    align-self: center;
+    line-height: 60px;
+}
+</file>
+
+<file path="static/css/page.css">
+/* static/css/page.css */
+
+/* --- 全局与基础设定 (与 main.css 保持一致) --- */
+body {
+    background-color: #1a1a1a;
+    color: #c5c5c5;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 页面布局容器 --- */
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* --- 页头样式 --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #333;
+}
+
+.page-header h1 {
+    /* --- 核心修改：减小字号 --- */
+    font-size: 2.2rem;
+    color: #e0e0e0;
+    margin: 0;
+    font-weight: normal;
+}
+
+/* --- 返回主页链接 --- */
+.back-home {
+    display: inline-block;
+    color: #4ecdc4;
+    text-decoration: none;
+    font-size: 1rem;
+    /* --- 核心修改：增加内边距 --- */
+    padding: 10px 18px;
+    border: 1px solid #4ecdc4;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+}
+
+.back-home:hover {
+    background-color: rgba(78, 205, 196, 0.1);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+}
+
+/* --- 页面正文内容 --- */
+.page-content {
+    font-size: 1.1rem;
+    color: #c5c5c5;
+    padding-top: 20px; /* 增加一点顶部间距 */
+}
+
+/* 统一内容区域的链接样式 */
+.page-content a {
+    color: #4ecdc4;
+    text-decoration: none;
+    border-bottom: 1px dashed #4ecdc4;
+    transition: all 0.3s ease;
+}
+
+.page-content a:hover {
+    background-color: rgba(78, 205, 196, 0.1);
+    border-bottom: 1px solid #4ecdc4;
+}
+</file>
+
+<file path="static/js/odometer.js">
+// static/js/odometer.js
+function createOdometer(elementId, targetNumber) {
+    const container = document.getElementById(elementId);
+    if (!container) {
+        console.error("演算错误: 未找到指定的容器元素。");
+        return;
+    }
+
+    const finalValueStr = String(Math.abs(targetNumber));
+    const numDigits = finalValueStr.length;
+    const digitHeight = 60; // 必须与 CSS 中的 height 保持一致
+    const extraRotations = 3; // 定义滚动的圈数
+
+    // 清空容器并构建结构
+    container.innerHTML = '';
+    
+    // 添加负号
+    const minusSign = document.createElement('span');
+    minusSign.className = 'odometer-symbol';
+    minusSign.textContent = '-';
+    container.appendChild(minusSign);
+
+    const reels = [];
+    for (let i = 0; i < numDigits; i++) {
+        const digitContainer = document.createElement('div');
+        digitContainer.className = 'odometer-digit';
+        
+        const reel = document.createElement('div');
+        reel.className = 'digit-reel';
+
+        // --- 核心修正 ---
+        // 构建一个包含多组重复数字的长滚轮
+        // 以确保动画过程中始终有数字可见
+        const repetitions = extraRotations + 2; // 确保有足够的数字填充
+        for (let k = 0; k < repetitions; k++) {
+            for (let j = 0; j < 10; j++) {
+                const numDiv = document.createElement('div');
+                // 为了让动画看起来是从一个随机位置滚下来，将第一组数字倒序排列
+                numDiv.textContent = (k === 0) ? (9 - j) : j;
+                reel.appendChild(numDiv);
+            }
+        }
+        
+        digitContainer.appendChild(reel);
+        container.appendChild(digitContainer);
+        reels.push(reel);
+    }
+    
+    // 添加单位
+    const unit = document.createElement('span');
+    unit.className = 'odometer-symbol';
+    unit.textContent = 'm';
+    container.appendChild(unit);
+
+    // 触发动画
+    // 使用 setTimeout 确保浏览器有时间渲染初始位置
+    setTimeout(() => {
+        for (let i = 0; i < numDigits; i++) {
+            const finalDigit = parseInt(finalValueStr[i], 10);
+            const reel = reels[i];
+            
+            // 计算滚轮滚动的最终位置
+            // 我们定位到最后一组数字中的目标数字上
+            const totalOffset = ((extraRotations + 1) * 10 + finalDigit) * -digitHeight;
+            
+            reel.style.transform = `translateY(${totalOffset}px)`;
+        }
+    }, 100); // 延迟100毫秒后启动
+}
+</file>
+
 <file path=".gitignore">
 # 忽略所有 output 目录下的内容
 output/
@@ -954,6 +1148,41 @@ def build():
 
 if __name__ == '__main__':
     build()
+</file>
+
+<file path="pages/page1.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>子页面1 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <!-- 结构变更：将仪表盘移动至页头 -->
+            <h1>子页面1</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回主页</a>
+        </header>
+
+        <main class="page-content">
+            <!-- 仪表盘已从此区域移除 -->
+            <p>这里是子页面1的内容。</p>
+        </main>
+    </div>
+
+    <script src="../static/js/odometer.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pageDepth = -125;
+            createOdometer('depth-odometer', pageDepth);
+        });
+    </script>
+</body>
+</html>
 </file>
 
 <file path="static/css/article.css">
@@ -1183,20 +1412,12 @@ body {
 }
 
 /* Hero 区域内的文本样式 */
-.hero-title-left {
+.hero-title {
     font-size: 5rem;
     font-weight: normal;
     margin: 0;
     letter-spacing: 2px; /* 增加字符间距 */
-    text-align: left;
-}
-
-.hero-title-right {
-    font-size: 5rem;
-    font-weight: normal;
-    margin: 0;
-    letter-spacing: 2px; /* 增加字符间距 */
-    text-align: right;
+    text-align: center; /* 修改为居中 */
 }
 
 .hero-subtitle-center {
@@ -1430,7 +1651,7 @@ body {
 .nav-link-5 { top: calc(100vh - 5px + 260px); }
 .nav-link-6 { top: calc(100vh - 5px + 300px); }
 .nav-link-7 { top: calc(100vh - 5px + 340px); }
-.nav-link-8 { top: calc(100vh - 5px + 380px); }
+.nav-link-8 { top: calc(100vh - 5px + 500px); }
 
 .nav-link {
     position: relative;
@@ -1511,16 +1732,9 @@ body {
 
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title-left">JioooBasement</h1>
-            <h1 class="hero-title-right">Jio基地</h1>
+            <h1 class="hero-title">JioooBasement</h1>
+            <h1 class="hero-title">Jio基地</h1>
             <p class="hero-subtitle-center">自由 自由 freedom freiheit ..。。。</p>
-        </div>
-        <div class="scroll-down-arrow" onclick="document.getElementById('main-content').scrollIntoView({behavior: 'smooth'})">
-            <span class="scroll-text">scroll</span>
-            <div class="arrow-container">
-                <span class="arrow-symbol">↓</span>
-                <span class="side-text">scrollllllllll</span>
-            </div>
         </div>
         <div class="outside-text">OUTSIDE-WORLD, HELL</div>
         <div class="border-line">
@@ -1529,7 +1743,6 @@ body {
         <div class="inside-text">INSIDE-BASEMENT, HOME</div>
     </section>
 
-    <!-- 子页面链接导航 -->
     <div class="nav-link-container">
         <a href="pages/page1.html" class="nav-link">子 -125m</a>
         <div class="nav-border-line"></div>
@@ -1579,7 +1792,6 @@ body {
         <div class="depth-text">0m</div>
     </div>
 
-    <!-- 左侧深度指示器 -->
     <div class="depth-indicator-left">
         <div class="depth-text-left">0m</div>
         <div class="depth-line-left"></div>

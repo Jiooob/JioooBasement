@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="static/css/main.css">
 </head>
 <body>
-
+    <div class="cursor-dot"></div>
     <section class="hero">
         <div class="hero-content">
             <h1 class="hero-title">JioooBasement</h1>
@@ -133,6 +133,22 @@
 
         // 初始化
         updateDepthIndicator();
+
+
+        // --- 手电筒效果驱动脚本 (新增代码) ---
+    const cursorDot = document.querySelector('.cursor-dot');
+    window.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+
+        // 使用 requestAnimationFrame 优化性能，确保在下一次浏览器重绘前更新
+        requestAnimationFrame(() => {
+            document.documentElement.style.setProperty('--cursor-x', clientX + 'px');
+            document.documentElement.style.setProperty('--cursor-y', clientY + 'px');
+
+            cursorDot.style.left = clientX + 'px';
+            cursorDot.style.top = clientY + 'px';
+        });
+    });
     </script>
 
 </body>
