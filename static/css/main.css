@@ -351,3 +351,81 @@ body {
     color: #c5c5c5;
     line-height: 1.7;
 }
+
+/* --- 地下室环境效果整合 --- */
+
+/* 1. CSS 变量与基础设定 */
+:root {
+    --cursor-x: 50vw;
+    --cursor-y: 50vh;
+}
+
+body {
+    /* 核心变更：应用手电筒效果背景 */
+    background: radial-gradient(
+        circle at var(--cursor-x) var(--cursor-y),
+        rgba(55, 55, 55, 0.8) 0%,   /* 稍微调亮中心点 */
+        rgba(13, 13, 13, 0) 10px,  /* [修正] 缩小核心光圈半径 */
+        #0d0d0d 10px              /* [修正] 缩小整体光照范围 */
+    );
+    background-repeat: no-repeat;     /* [修正] 强制背景不重复 */
+    background-attachment: fixed;     /* [修正] 将背景固定于视口，防止滚动 */
+    cursor: none;                     /* 隐藏默认光标 */
+}
+
+/* 2. 视觉噪点与扫描线层 */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.03),
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    background-size: 100% 2px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+    animation: noise 0.5s infinite linear;
+}
+
+@keyframes noise {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-1px); }
+    50% { transform: translateY(1px); }
+    75% { transform: translateY(-2px); }
+    100% { transform: translateY(0); }
+}
+
+/* 3. 自定义光标 */
+.cursor-dot {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background-color: #4ecdc4;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1001;
+    box-shadow: 0 0 10px #4ecdc4;
+    transition: transform 0.1s ease-out; /* 为光标移动增加平滑过渡 */
+}
+
+/* 4. 交互闪烁效果 */
+.nav-link:hover {
+    animation: flicker 0.15s infinite steps(1);
+}
+
+@keyframes flicker {
+    0% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+    25% { opacity: 0.8; }
+    50% { opacity: 1; text-shadow: none; }
+    75% { opacity: 0.6; }
+    100% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+}
