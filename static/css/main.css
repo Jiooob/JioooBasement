@@ -360,7 +360,7 @@ body {
     --cursor-y: 50vh;
 }
 
-body {
+body.homepage-effect {
     /* 核心变更：应用手电筒效果背景 */
     background: radial-gradient(
         circle at var(--cursor-x) var(--cursor-y),
@@ -374,7 +374,7 @@ body {
 }
 
 /* 2. 视觉噪点与扫描线层 */
-body::after {
+body.homepage-effect::after {
     content: "";
     position: fixed;
     top: 0;
@@ -404,7 +404,7 @@ body::after {
 }
 
 /* 3. 自定义光标 */
-.cursor-dot {
+.homepage-effect .cursor-dot {
     position: fixed;
     width: 8px;
     height: 8px;
