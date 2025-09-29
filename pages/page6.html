@@ -2,19 +2,84 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面6 - JioooBasement</title>
+    <title>扇区-06 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-655 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面6</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-06 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面6的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（基线 -655m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page6BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 655;
+                sessionStorage.setItem('page6BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+    </script>
 </body>
 </html>

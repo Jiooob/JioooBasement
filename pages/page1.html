@@ -5,20 +5,125 @@
     <title>子页面1 - JioooBasement</title>
     <link rel="stylesheet" href="../static/css/page.css">
     <link rel="stylesheet" href="../static/css/odometer.css">
+    <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+        <!-- 新增：子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-125 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
             <h1>扇区-01 / 日志归档</h1>
             <div id="depth-odometer" class="odometer-container"></div>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
             <div id="post-list-container">
-                {{POST_LIST}}
+                
+            <article>
+                <h2><a href="../content/articles/test_delete_after_converte.html">test for feature which remove md from source_md after converte to html into output</a></h2>
+                <p class="date">2025-9-21</p>
+                <p class="summary">False</p>
+            </article>
+            
+            <article>
+                <h2><a href="../content/articles/my-second-article.html">第二篇文章</a></h2>
+                <p class="date">2025-09-22</p>
+                <p class="summary">这是第二篇，用于测试多文件处理。</p>
+            </article>
+            
+            <article>
+                <h2><a href="../content/articles/my-first-article.html">我的第一篇文章</a></h2>
+                <p class="date">2025-09-21</p>
+                <p class="summary">这是第一篇文章的摘要。</p>
+            </article>
+            
+            <article>
+                <h2><a href="../content/articles/文件结构方案.html">文件结构方案</a></h2>
+                <p class="date">2025-09-21</p>
+                <p class="summary">这是转化的md测试</p>
+            </article>
+            
+            <article>
+                <h2><a href="../content/articles/test.html">test</a></h2>
+                <p class="date">2025-09-20</p>
+                <p class="summary"></p>
+            </article>
+            
             </div>
             </main>
     </div>
+        <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+// 深度指示器功能（修复双向浮动：独立相对计算 + 初始偏移）
+function updateDepthIndicator() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const viewCenter = scrollTop + (window.innerHeight / 2);
+
+    // 子页零点：页顶
+    const zeroPoint = 0;
+    const relativeDepthInPixels = zeroPoint - viewCenter;  // 相对子页：向下负，向上正（浮动）
+    const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);  // 独立相对深度
+
+    // 只在初始化用 prevDepth 设基线（不累积）
+    let baseDepth = parseInt(sessionStorage.getItem('page1BaseDepth') || '0');  // 新key防冲突
+    if (baseDepth === 0) {  // 首次进页：读主页 + 偏移
+        const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+        baseDepth = prevDepth - 125;  // 初始：主页深度 + 储藏室偏移
+        sessionStorage.setItem('page1BaseDepth', baseDepth);
+    }
+
+    // 总深度 = 固定基线 + 当前相对（双向浮动）
+    const totalDepth = baseDepth + relativeDepthInMeters;
+
+    // 更新显示
+    const depthText = document.querySelector('.depth-text');
+    const depthTextLeft = document.querySelector('.depth-text-left');
+    depthText.textContent = totalDepth + 'm';
+    depthTextLeft.textContent = totalDepth + 'm';
+
+    // 颜色逻辑（同主页）
+    const depthLine = document.querySelector('.depth-line');
+    const depthLineLeft = document.querySelector('.depth-line-left');
+    if (totalDepth < -10) {
+        depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+        depthText.style.color = '#ff6b6b';
+        depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+        depthTextLeft.style.color = '#ff6b6b';
+    } else if (totalDepth < -5) {
+        depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+        depthText.style.color = '#ffaa44';
+        depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+        depthTextLeft.style.color = '#ffaa44';
+    } else {
+        depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+        depthText.style.color = '#4ecdc4';
+        depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+        depthTextLeft.style.color = '#4ecdc4';
+    }
+
+    // 存当前总深度（供回主页用）
+    sessionStorage.setItem('basementDepth', totalDepth);
+}
+
+// 监听滚动
+window.addEventListener('scroll', updateDepthIndicator);
+
+// 初始化（触发基线设）
+updateDepthIndicator();
+</script>
+
+
 </body>
 </html>

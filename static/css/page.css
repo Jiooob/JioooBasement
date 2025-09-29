@@ -115,3 +115,40 @@ body {
     color: #c5c5c5;
     line-height: 1.7;
 }
+
+/* --- 边境线样式（移植自 main.css，子页顶锚） --- */
+.border-line {
+    position: fixed;  /* 固定在视窗顶 */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        #666 0px,
+        #666 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed #666;
+    z-index: 999;  /* 高于内容，低于指示器 */
+}
+
+.border-text {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a1a1a;
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: #888;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* 内容区顶间距补偿（防线遮挡） */
+.page-container {
+    padding-top: 80px;  /* 原60px +20px 避线+标签 */
+}
