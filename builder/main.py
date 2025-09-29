@@ -57,6 +57,34 @@ def build():
 
     # 5. 更新所有索引页
     index_updater.update_indexes(all_pages)
+    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
+    page1_path = config.BASE_DIR / "pages" / "page1.html"
+    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
+
+    if page1_path.exists():
+        # 生成文章列表HTML (复用主索引逻辑)
+        post_list_html = ""
+        for page in all_pages:
+            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
+            post_list_html += f"""
+            <article>
+                <h2><a href="{relative_path}">{page.title}</a></h2>
+                <p class="date">{page.date}</p>
+                <p class="summary">{page.summary}</p>
+            </article>
+            """
+        
+        # 读取源模板并替换
+        with open(page1_path, 'r', encoding='utf-8') as f:
+            template = f.read()
+        
+        final_html = template.replace("{{POST_LIST}}", post_list_html)
+        
+        # 写入输出
+        with open(output_page1_path, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+        
+        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
 
     print("构建流程完毕。系统功能完整。")
 

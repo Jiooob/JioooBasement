@@ -24,49 +24,49 @@
         <div class="page-cards-container">
             <a href="pages/page1.html" class="page-card">
                 <div class="card-content">
-                    <h2>储藏室 [-125m]</h2>
-                    <p>你可以在这里阅读我的思想</p>
+                    <h2>扇区-01 储藏室 [-125m]</h2>
+                    <p>文章的大归类仓库</p>
                 </div>
             </a>
             <a href="pages/page2.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-02 [-546m]</h2>
+                    <h2>扇区-02 未写入 [-546m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page3.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-03 [-1236m]</h2>
+                    <h2>扇区-03 未写入 [-1236m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page4.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-04 [-6515m]</h2>
+                    <h2>扇区-04 未写入 [-6515m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page5.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-05 [-785m]</h2>
+                    <h2>扇区-05 未写入 [-785m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page6.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-06 [-655m]</h2>
+                    <h2>扇区-06 未写入 [-655m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page7.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-07 [-62m]</h2>
+                    <h2>扇区-07 未写入 [-62m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page8.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-08 [-565m]</h2>
+                    <h2>扇区-08 未写入 [-565m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
@@ -74,9 +74,9 @@
 
         <aside class="right-panel">
             <div class="panel-content">
-                <h3>//:SYSTEM_STATUS</h3>
-                <p>导航矩阵已激活。</p>
-                <p>所有节点链接稳定。</p>
+                <h3>//:Welcome to JioooBasement</h3>
+                <p>地下室深度导航系统已激活。</p>
+                <p>节点电梯通道链接稳定</p>
                 <p>等待指令...</p>
             </div>
         </aside>
@@ -153,8 +153,25 @@
         updateDepthIndicator();
 
 
-        // --- 手电筒效果驱动脚本 (新增代码) ---
+    // --- 手电筒效果驱动脚本 (新增代码) ---
+    // 检测是否支持 hover（桌面端）
+    const supportsHover = window.matchMedia('(hover: hover)').matches;
     const cursorDot = document.querySelector('.cursor-dot');
+
+    if (supportsHover) {
+        window.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            requestAnimationFrame(() => {
+                document.documentElement.style.setProperty('--cursor-x', clientX + 'px');
+                document.documentElement.style.setProperty('--cursor-y', clientY + 'px');
+                cursorDot.style.left = clientX + 'px';
+                cursorDot.style.top = clientY + 'px';
+            });
+        });
+    }
+
+
+    
     window.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e;
 

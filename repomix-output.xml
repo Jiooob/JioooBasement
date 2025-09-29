@@ -67,9 +67,7 @@ pages/test-page.html
 run_build.py
 static/css/article.css
 static/css/main.css
-static/css/odometer.css
 static/css/page.css
-static/js/odometer.js
 templates/article.template
 </directory_structure>
 
@@ -629,20 +627,88 @@ if __name__ == "__main__":
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面2 - JioooBasement</title>
+    <title>扇区-02 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-546 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面2</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-02 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面2的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（泛化 page1 逻辑，基线 -546m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page2BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 546;
+                sessionStorage.setItem('page2BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+
+        // [预测] 若需 odometer 模拟（简单计数器，深度变化时递增）
+        // let count = 0; window.addEventListener('scroll', () => { count++; document.getElementById('depth-odometer').textContent = count; });
+    </script>
 </body>
 </html>
 </file>
@@ -652,20 +718,85 @@ if __name__ == "__main__":
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面3 - JioooBasement</title>
+    <title>扇区-03 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-1236 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面3</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-03 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面3的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（基线 -1236m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page3BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 1236;
+                sessionStorage.setItem('page3BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+    </script>
 </body>
 </html>
 </file>
@@ -675,20 +806,85 @@ if __name__ == "__main__":
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面4 - JioooBasement</title>
+    <title>扇区-04 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-6515 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面4</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-04 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面4的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（基线 -6515m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page4BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 6515;
+                sessionStorage.setItem('page4BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+    </script>
 </body>
 </html>
 </file>
@@ -698,20 +894,85 @@ if __name__ == "__main__":
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面5 - JioooBasement</title>
+    <title>扇区-05 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-785 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面5</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-05 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面5的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（基线 -785m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page5BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 785;
+                sessionStorage.setItem('page5BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+    </script>
 </body>
 </html>
 </file>
@@ -721,20 +982,85 @@ if __name__ == "__main__":
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面6 - JioooBasement</title>
+    <title>扇区-06 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-655 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面6</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-06 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面6的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（基线 -655m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page6BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 655;
+                sessionStorage.setItem('page6BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+    </script>
 </body>
 </html>
 </file>
@@ -744,20 +1070,85 @@ if __name__ == "__main__":
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面7 - JioooBasement</title>
+    <title>扇区-07 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-62 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面7</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-07 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面7的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（基线 -62m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page7BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 62;
+                sessionStorage.setItem('page7BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+    </script>
 </body>
 </html>
 </file>
@@ -767,20 +1158,85 @@ if __name__ == "__main__":
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>子页面8 - JioooBasement</title>
+    <title>扇区-08 未写入 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
     <link rel="stylesheet" href="../static/css/main.css">
 </head>
 <body>
+    <!-- 子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-565 meter depth here</div>
+    </div>
     <div class="page-container">
         <header class="page-header">
-            <h1>子页面8</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
+            <h1>扇区-08 / 未写入</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
         </header>
 
         <main class="page-content">
-            <p>这里是子页面8的内容。</p>
+            <!-- 无内容 -->
         </main>
     </div>
+    <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+        // 深度指示器（基线 -565m）
+        function updateDepthIndicator() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const viewCenter = scrollTop + (window.innerHeight / 2);
+            const zeroPoint = 0;
+            const relativeDepthInPixels = zeroPoint - viewCenter;
+            const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);
+
+            let baseDepth = parseInt(sessionStorage.getItem('page8BaseDepth') || '0');
+            if (baseDepth === 0) {
+                const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+                baseDepth = prevDepth - 565;
+                sessionStorage.setItem('page8BaseDepth', baseDepth);
+            }
+
+            const totalDepth = baseDepth + relativeDepthInMeters;
+
+            const depthText = document.querySelector('.depth-text');
+            const depthTextLeft = document.querySelector('.depth-text-left');
+            depthText.textContent = totalDepth + 'm';
+            depthTextLeft.textContent = totalDepth + 'm';
+
+            const depthLine = document.querySelector('.depth-line');
+            const depthLineLeft = document.querySelector('.depth-line-left');
+            if (totalDepth < -10) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ff6b6b';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ff6b6b';
+            } else if (totalDepth < -5) {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#ffaa44';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#ffaa44';
+            } else {
+                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthText.style.color = '#4ecdc4';
+                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+                depthTextLeft.style.color = '#4ecdc4';
+            }
+
+            sessionStorage.setItem('basementDepth', totalDepth);
+        }
+
+        window.addEventListener('scroll', updateDepthIndicator);
+        updateDepthIndicator();
+    </script>
 </body>
 </html>
 </file>
@@ -859,198 +1315,6 @@ if __name__ == '__main__':
     build()
 </file>
 
-<file path="static/css/page.css">
-/* static/css/page.css */
-
-/* --- 全局与基础设定 (与 main.css 保持一致) --- */
-body {
-    background-color: #1a1a1a;
-    color: #c5c5c5;
-    font-family: 'Times New Roman', 'Noto Sans SC', serif;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-
-/* --- 页面布局容器 --- */
-.page-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 60px 20px;
-}
-
-/* --- 页头样式 --- */
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 50px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid #333;
-}
-
-.page-header h1 {
-    /* --- 核心修改：减小字号 --- */
-    font-size: 2.2rem;
-    color: #e0e0e0;
-    margin: 0;
-    font-weight: normal;
-}
-
-/* --- 返回主页链接 --- */
-.back-home {
-    display: inline-block;
-    color: #4ecdc4;
-    text-decoration: none;
-    font-size: 1rem;
-    /* --- 核心修改：增加内边距 --- */
-    padding: 10px 18px;
-    border: 1px solid #4ecdc4;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    font-family: 'Courier New', monospace;
-    white-space: nowrap;
-}
-
-.back-home:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    color: #fff;
-    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
-}
-
-/* --- 页面正文内容 --- */
-.page-content {
-    font-size: 1.1rem;
-    color: #c5c5c5;
-    padding-top: 20px; /* 增加一点顶部间距 */
-}
-
-/* 统一内容区域的链接样式 */
-.page-content a {
-    color: #4ecdc4;
-    text-decoration: none;
-    border-bottom: 1px dashed #4ecdc4;
-    transition: all 0.3s ease;
-}
-
-.page-content a:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    border-bottom: 1px solid #4ecdc4;
-}
-
-
-
-/* --- 新增：从 main.css 迁移的文章列表样式 --- */
-#post-list-container {
-    margin-top: 60px; /* 与页头分隔开 */
-    border-top: 1px solid #333;
-    padding-top: 40px;
-}
-
-#post-list-container article {
-    border-bottom: 1px solid #333;
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
-}
-
-#post-list-container h2 {
-    margin-bottom: 0.5rem;
-}
-
-#post-list-container h2 a {
-    color: #e0e0e0;
-    text-decoration: none;
-    font-size: 1.5rem;
-}
-
-#post-list-container h2 a:hover {
-    color: #00aaff;
-}
-
-#post-list-container .date {
-    color: #888;
-    font-size: 0.9rem;
-    margin-top: 0;
-}
-
-#post-list-container .summary {
-    color: #c5c5c5;
-    line-height: 1.7;
-}
-</file>
-
-<file path="static/js/odometer.js">
-// static/js/odometer.js
-function createOdometer(elementId, targetNumber) {
-    const container = document.getElementById(elementId);
-    if (!container) {
-        console.error("演算错误: 未找到指定的容器元素。");
-        return;
-    }
-
-    const finalValueStr = String(Math.abs(targetNumber));
-    const numDigits = finalValueStr.length;
-    const digitHeight = 60; // 必须与 CSS 中的 height 保持一致
-    const extraRotations = 3; // 定义滚动的圈数
-
-    // 清空容器并构建结构
-    container.innerHTML = '';
-    
-    // 添加负号
-    const minusSign = document.createElement('span');
-    minusSign.className = 'odometer-symbol';
-    minusSign.textContent = '-';
-    container.appendChild(minusSign);
-
-    const reels = [];
-    for (let i = 0; i < numDigits; i++) {
-        const digitContainer = document.createElement('div');
-        digitContainer.className = 'odometer-digit';
-        
-        const reel = document.createElement('div');
-        reel.className = 'digit-reel';
-
-        // --- 核心修正 ---
-        // 构建一个包含多组重复数字的长滚轮
-        // 以确保动画过程中始终有数字可见
-        const repetitions = extraRotations + 2; // 确保有足够的数字填充
-        for (let k = 0; k < repetitions; k++) {
-            for (let j = 0; j < 10; j++) {
-                const numDiv = document.createElement('div');
-                // 为了让动画看起来是从一个随机位置滚下来，将第一组数字倒序排列
-                numDiv.textContent = (k === 0) ? (9 - j) : j;
-                reel.appendChild(numDiv);
-            }
-        }
-        
-        digitContainer.appendChild(reel);
-        container.appendChild(digitContainer);
-        reels.push(reel);
-    }
-    
-    // 添加单位
-    const unit = document.createElement('span');
-    unit.className = 'odometer-symbol';
-    unit.textContent = 'm';
-    container.appendChild(unit);
-
-    // 触发动画
-    // 使用 setTimeout 确保浏览器有时间渲染初始位置
-    setTimeout(() => {
-        for (let i = 0; i < numDigits; i++) {
-            const finalDigit = parseInt(finalValueStr[i], 10);
-            const reel = reels[i];
-            
-            // 计算滚轮滚动的最终位置
-            // 我们定位到最后一组数字中的目标数字上
-            const totalOffset = ((extraRotations + 1) * 10 + finalDigit) * -digitHeight;
-            
-            reel.style.transform = `translateY(${totalOffset}px)`;
-        }
-    }, 100); // 延迟100毫秒后启动
-}
-</file>
-
 <file path=".gitignore">
 # 忽略所有 output 目录下的内容
 output/
@@ -1121,46 +1385,39 @@ def build():
 
     # 5. 更新所有索引页
     index_updater.update_indexes(all_pages)
+    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
+    page1_path = config.BASE_DIR / "pages" / "page1.html"
+    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
+
+    if page1_path.exists():
+        # 生成文章列表HTML (复用主索引逻辑)
+        post_list_html = ""
+        for page in all_pages:
+            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
+            post_list_html += f"""
+            <article>
+                <h2><a href="{relative_path}">{page.title}</a></h2>
+                <p class="date">{page.date}</p>
+                <p class="summary">{page.summary}</p>
+            </article>
+            """
+        
+        # 读取源模板并替换
+        with open(page1_path, 'r', encoding='utf-8') as f:
+            template = f.read()
+        
+        final_html = template.replace("{{POST_LIST}}", post_list_html)
+        
+        # 写入输出
+        with open(output_page1_path, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+        
+        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
 
     print("构建流程完毕。系统功能完整。")
 
 if __name__ == '__main__':
     build()
-</file>
-
-<file path="pages/page1.html">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>子页面1 - JioooBasement</title>
-    <link rel="stylesheet" href="../static/css/page.css">
-    <link rel="stylesheet" href="../static/css/odometer.css">
-</head>
-<body>
-    <div class="page-container">
-        <header class="page-header">
-            <h1>扇区-01 / 日志归档</h1>
-            <div id="depth-odometer" class="odometer-container"></div>
-            <a href="../index.html" class="back-home">← 返回主页</a>
-        </header>
-
-        <main class="page-content">
-            <div id="post-list-container">
-                {{POST_LIST}}
-            </div>
-            </main>
-    </div>
-
-    <script src="../static/js/odometer.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const pageDepth = -125;
-            createOdometer('depth-odometer', pageDepth);
-        });
-    </script>
-</body>
-</html>
 </file>
 
 <file path="static/css/article.css">
@@ -1316,65 +1573,160 @@ body {
 }
 </file>
 
-<file path="static/css/odometer.css">
-/* static/css/odometer.css */
-.odometer-container {
-    /* --- 核心修正 --- */
-    /* 从 'flex' 改为 'inline-flex'，使其宽度自适应内容 */
-    display: inline-flex;
-    
-    justify-content: center;
+<file path="static/css/page.css">
+/* static/css/page.css */
+
+/* --- 全局与基础设定 (与 main.css 保持一致) --- */
+body {
+    background-color: #1a1a1a;
+    color: #c5c5c5;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 页面布局容器 --- */
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* --- 页头样式 --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #2a0000; /* 深红色背景 */
-    border: 2px solid #551a1a; /* 暗红色边框 */
-    border-radius: 5px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #333;
+}
+
+.page-header h1 {
+    /* --- 核心修改：减小字号 --- */
+    font-size: 2.2rem;
+    color: #e0e0e0;
+    margin: 0;
+    font-weight: normal;
+}
+
+/* --- 返回主页链接 --- */
+.back-home {
+    display: inline-block;
+    color: #4ecdc4;
+    text-decoration: none;
+    font-size: 1rem;
+    /* --- 核心修改：增加内边距 --- */
+    padding: 10px 18px;
+    border: 1px solid #4ecdc4;
+    border-radius: 4px;
+    transition: all 0.3s ease;
     font-family: 'Courier New', monospace;
-    box-shadow: 0 0 15px rgba(255, 50, 50, 0.25) inset; /* 红色内发光 */
+    white-space: nowrap;
 }
 
-/* 数字的“视窗” */
-.odometer-digit {
-    width: 40px;
-    height: 60px;
-    background-color: #1a0000;
-    margin: 0 3px;
-    border-radius: 3px;
-    overflow: hidden; /* 关键：隐藏滚轮的其余部分 */
-    position: relative;
-    border: 1px solid #000;
+.back-home:hover {
+    background-color: rgba(78, 205, 196, 0.1);
+    color: #fff;
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
 }
 
-/* 包含 0-9 的数字带（滚轮） */
-.digit-reel {
-    position: absolute;
+/* --- 页面正文内容 --- */
+.page-content {
+    font-size: 1.1rem;
+    color: #c5c5c5;
+    padding-top: 20px; /* 增加一点顶部间距 */
+}
+
+/* 统一内容区域的链接样式 */
+.page-content a {
+    color: #4ecdc4;
+    text-decoration: none;
+    border-bottom: 1px dashed #4ecdc4;
+    transition: all 0.3s ease;
+}
+
+.page-content a:hover {
+    background-color: rgba(78, 205, 196, 0.1);
+    border-bottom: 1px solid #4ecdc4;
+}
+
+
+
+/* --- 新增：从 main.css 迁移的文章列表样式 --- */
+#post-list-container {
+    margin-top: 60px; /* 与页头分隔开 */
+    border-top: 1px solid #333;
+    padding-top: 40px;
+}
+
+#post-list-container article {
+    border-bottom: 1px solid #333;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#post-list-container h2 {
+    margin-bottom: 0.5rem;
+}
+
+#post-list-container h2 a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#post-list-container h2 a:hover {
+    color: #00aaff;
+}
+
+#post-list-container .date {
+    color: #888;
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+#post-list-container .summary {
+    color: #c5c5c5;
+    line-height: 1.7;
+}
+
+/* --- 边境线样式（移植自 main.css，子页顶锚） --- */
+.border-line {
+    position: fixed;  /* 固定在视窗顶 */
     top: 0;
     left: 0;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* 核心：过渡效果，持续2.5秒，使用 ease-out 缓动函数 */
-    transition: transform 0.5s ease-out;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        #666 0px,
+        #666 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed #666;
+    z-index: 999;  /* 高于内容，低于指示器 */
 }
 
-/* 单个数字的样式 */
-.digit-reel > div {
-    height: 60px;
-    line-height: 60px;
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #e0e0e0; /* 灰白色，可读性更高 */
-    text-shadow: 0 0 8px rgba(255, 94, 94, 0.5); /* 较弱的红色辉光作为点缀 */
-}
-
-.odometer-symbol {
-    font-size: 2.5rem;
+.border-text {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a1a1a;
+    padding: 0 15px;
+    font-size: 1.5rem;
     color: #888;
-    margin: 0 10px;
-    align-self: center;
-    line-height: 60px;
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* 内容区顶间距补偿（防线遮挡） */
+.page-container {
+    padding-top: 80px;  /* 原60px +20px 避线+标签 */
 }
 </file>
 
@@ -1399,6 +1751,108 @@ body {
             $body$
         </main>
     </div>
+
+</body>
+</html>
+</file>
+
+<file path="pages/page1.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>子页面1 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/page.css">
+    <link rel="stylesheet" href="../static/css/odometer.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+        <!-- 新增：子页顶边境线（零点锚） -->
+    <div class="border-line">
+        <div class="border-text">-125 meter depth here</div>
+    </div>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>扇区-01 / 日志归档</h1>
+            <div id="depth-odometer" class="odometer-container"></div>
+            <a href="../index.html" class="back-home">← 返回基地主层级</a>
+        </header>
+
+        <main class="page-content">
+            <div id="post-list-container">
+                {{POST_LIST}}
+            </div>
+            </main>
+    </div>
+        <div class="depth-indicator">
+        <div class="depth-line"></div>
+        <div class="depth-text">0m</div>
+    </div>
+
+    <div class="depth-indicator-left">
+        <div class="depth-text-left">0m</div>
+        <div class="depth-line-left"></div>
+    </div>
+
+    <script>
+// 深度指示器功能（修复双向浮动：独立相对计算 + 初始偏移）
+function updateDepthIndicator() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const viewCenter = scrollTop + (window.innerHeight / 2);
+
+    // 子页零点：页顶
+    const zeroPoint = 0;
+    const relativeDepthInPixels = zeroPoint - viewCenter;  // 相对子页：向下负，向上正（浮动）
+    const relativeDepthInMeters = Math.round(relativeDepthInPixels / 10);  // 独立相对深度
+
+    // 只在初始化用 prevDepth 设基线（不累积）
+    let baseDepth = parseInt(sessionStorage.getItem('page1BaseDepth') || '0');  // 新key防冲突
+    if (baseDepth === 0) {  // 首次进页：读主页 + 偏移
+        const prevDepth = parseInt(sessionStorage.getItem('basementDepth') || '0');
+        baseDepth = prevDepth - 125;  // 初始：主页深度 + 储藏室偏移
+        sessionStorage.setItem('page1BaseDepth', baseDepth);
+    }
+
+    // 总深度 = 固定基线 + 当前相对（双向浮动）
+    const totalDepth = baseDepth + relativeDepthInMeters;
+
+    // 更新显示
+    const depthText = document.querySelector('.depth-text');
+    const depthTextLeft = document.querySelector('.depth-text-left');
+    depthText.textContent = totalDepth + 'm';
+    depthTextLeft.textContent = totalDepth + 'm';
+
+    // 颜色逻辑（同主页）
+    const depthLine = document.querySelector('.depth-line');
+    const depthLineLeft = document.querySelector('.depth-line-left');
+    if (totalDepth < -10) {
+        depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+        depthText.style.color = '#ff6b6b';
+        depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
+        depthTextLeft.style.color = '#ff6b6b';
+    } else if (totalDepth < -5) {
+        depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+        depthText.style.color = '#ffaa44';
+        depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
+        depthTextLeft.style.color = '#ffaa44';
+    } else {
+        depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+        depthText.style.color = '#4ecdc4';
+        depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
+        depthTextLeft.style.color = '#4ecdc4';
+    }
+
+    // 存当前总深度（供回主页用）
+    sessionStorage.setItem('basementDepth', totalDepth);
+}
+
+// 监听滚动
+window.addEventListener('scroll', updateDepthIndicator);
+
+// 初始化（触发基线设）
+updateDepthIndicator();
+</script>
+
 
 </body>
 </html>
@@ -1767,7 +2221,7 @@ body {
     --cursor-y: 50vh;
 }
 
-body {
+body.homepage-effect {
     /* 核心变更：应用手电筒效果背景 */
     background: radial-gradient(
         circle at var(--cursor-x) var(--cursor-y),
@@ -1781,7 +2235,7 @@ body {
 }
 
 /* 2. 视觉噪点与扫描线层 */
-body::after {
+body.homepage-effect::after {
     content: "";
     position: fixed;
     top: 0;
@@ -1811,7 +2265,7 @@ body::after {
 }
 
 /* 3. 自定义光标 */
-.cursor-dot {
+.homepage-effect .cursor-dot {
     position: fixed;
     width: 8px;
     height: 8px;
@@ -1843,6 +2297,9 @@ body::after {
     padding: 80px 50px;
     max-width: 1600px;
     margin: 0 auto;
+    /* --- 新增规则 --- */
+    box-sizing: border-box; /* 确保 padding 包含在高度计算之内 */
+    min-height: 100vh;      /* 强制此区域的最小高度为整个视口的高度 */
 }
 
 /* --- 新增：页面卡片容器 --- */
@@ -1914,6 +2371,33 @@ body::after {
     color: #666;
     font-size: 1rem;
 }
+
+/* 移动端禁用光斑效果（基于 hover 检测） */
+@media (hover: none) {
+    body.homepage-effect {
+        background: #0d0d0d !important; /* 纯色 fallback，避免手电筒 */
+        cursor: auto !important; /* 恢复默认光标 */
+    }
+    
+    body.homepage-effect::after {
+        display: none !important; /* 隐藏噪点层 */
+    }
+    
+    .homepage-effect .cursor-dot {
+        display: none !important; /* 隐藏光标点 */
+    }
+}
+
+/* 桌面端优化：增强光斑响应 */
+@media (hover: hover) {
+    body.homepage-effect {
+        cursor: none; /* 只在 hover 设备隐藏光标 */
+    }
+    
+    .homepage-effect .cursor-dot {
+        display: block; /* 确保显示 */
+    }
+}
 </file>
 
 <file path="index.html">
@@ -1924,7 +2408,7 @@ body::after {
     <title>我的博客 - 主页</title>
     <link rel="stylesheet" href="static/css/main.css">
 </head>
-<body>
+<body class="homepage-effect">
     <div class="cursor-dot"></div>
     <section class="hero">
         <div class="hero-content">
@@ -1943,59 +2427,59 @@ body::after {
         <div class="page-cards-container">
             <a href="pages/page1.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-01 [-125m]</h2>
-                    <p>日志归档与数据接口</p>
+                    <h2>扇区-01 储藏室 [-125m]</h2>
+                    <p>文章的大归类仓库</p>
                 </div>
             </a>
             <a href="pages/page2.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-02 [-546m]</h2>
-                    <p>备用能源监控</p>
+                    <h2>扇区-02 未写入 [-546m]</h2>
+                    <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page3.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-03 [-1236m]</h2>
-                    <p>深层地质扫描</p>
+                    <h2>扇区-03 未写入 [-1236m]</h2>
+                    <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page4.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-04 [-6515m]</h2>
-                    <p>未知信号源分析</p>
+                    <h2>扇区-04 未写入 [-6515m]</h2>
+                    <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page5.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-05 [-785m]</h2>
-                    <p>维生系统A区</p>
+                    <h2>扇区-05 未写入 [-785m]</h2>
+                    <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page6.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-06 [-655m]</h2>
-                    <p>维生系统B区</p>
+                    <h2>扇区-06 未写入 [-655m]</h2>
+                    <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page7.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-07 [-62m]</h2>
-                    <p>通讯中继站</p>
+                    <h2>扇区-07 未写入 [-62m]</h2>
+                    <p>Undefined</p>
                 </div>
             </a>
             <a href="pages/page8.html" class="page-card">
                 <div class="card-content">
-                    <h2>扇区-08 [-565m]</h2>
-                    <p>武器库</p>
+                    <h2>扇区-08 未写入 [-565m]</h2>
+                    <p>Undefined</p>
                 </div>
             </a>
         </div>
 
         <aside class="right-panel">
             <div class="panel-content">
-                <h3>//:SYSTEM_STATUS</h3>
-                <p>导航矩阵已激活。</p>
-                <p>所有节点链接稳定。</p>
+                <h3>//:Welcome to JioooBasement</h3>
+                <p>地下室深度导航系统已激活。</p>
+                <p>节点电梯通道链接稳定</p>
                 <p>等待指令...</p>
             </div>
         </aside>
@@ -2072,8 +2556,25 @@ body::after {
         updateDepthIndicator();
 
 
-        // --- 手电筒效果驱动脚本 (新增代码) ---
+    // --- 手电筒效果驱动脚本 (新增代码) ---
+    // 检测是否支持 hover（桌面端）
+    const supportsHover = window.matchMedia('(hover: hover)').matches;
     const cursorDot = document.querySelector('.cursor-dot');
+
+    if (supportsHover) {
+        window.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            requestAnimationFrame(() => {
+                document.documentElement.style.setProperty('--cursor-x', clientX + 'px');
+                document.documentElement.style.setProperty('--cursor-y', clientY + 'px');
+                cursorDot.style.left = clientX + 'px';
+                cursorDot.style.top = clientY + 'px';
+            });
+        });
+    }
+
+
+    
     window.addEventListener('mousemove', (e) => {
         const { clientX, clientY } = e;
 
