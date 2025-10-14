@@ -4,6 +4,26 @@
     <meta charset="UTF-8">
     <title>我的博客 - 主页</title>
     <link rel="stylesheet" href="static/css/main.css">
+    <!-- 新增样式：用于定位 8 条扇区深度线 -->
+    <style>
+        .sector-depth-line {
+            position: absolute;
+            bottom: auto;
+            left: 0;
+            right: 0;
+        }
+
+        /* 各扇区深度线的具体位置 */
+        .depth-line-265 { top: calc(100vh + 2640px); }
+        .depth-line-546 { top: calc(100vh + 5450px); }
+        .depth-line-1226 { top: calc(100vh + 12250px); }
+        .depth-line-2515 { top: calc(100vh + 25140px); }
+        .depth-line-3085 { top: calc(100vh + 30840px); }
+        .depth-line-3655 { top: calc(100vh + 36540px); }
+        .depth-line-4062 { top: calc(100vh + 40610px); }
+        .depth-line-4565 { top: calc(100vh + 45640px); }
+
+    </style>
 </head>
 <body class="homepage-effect">
     <div class="cursor-dot"></div>
@@ -20,53 +40,64 @@
         <div class="inside-text">INSIDE-BASEMENT, HOME</div>
     </section>
 
-  <main class="main-content-grid">
+    <!-- 新增的 8 条扇区深度指示线 (已添加 id) -->
+    <div id="sector-1-line" class="border-line sector-depth-line depth-line-265"><div class="border-text">Sector-01 Depth: 265m</div></div>
+    <div id="sector-2-line" class="border-line sector-depth-line depth-line-546"><div class="border-text">Sector-02 Depth: 546m</div></div>
+    <div id="sector-3-line" class="border-line sector-depth-line depth-line-1226"><div class="border-text">Sector-03 Depth: 1226m</div></div>
+    <div id="sector-4-line" class="border-line sector-depth-line depth-line-2515"><div class="border-text">Sector-04 Depth: 2515m</div></div>
+    <div id="sector-5-line" class="border-line sector-depth-line depth-line-3085"><div class="border-text">Sector-05 Depth: 3085m</div></div>
+    <div id="sector-6-line" class="border-line sector-depth-line depth-line-3655"><div class="border-text">Sector-06 Depth: 3655m</div></div>
+    <div id="sector-7-line" class="border-line sector-depth-line depth-line-4062"><div class="border-text">Sector-07 Depth: 4062m</div></div>
+    <div id="sector-8-line" class="border-line sector-depth-line depth-line-4565"><div class="border-text">Sector-08 Depth: 4565m</div></div>
+
+    <main class="main-content-grid">
+        <!-- 卡片链接已修改：移除 href, 添加 data-target-id -->
         <div class="page-cards-container">
-            <a href="pages/page1.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-1-line">
                 <div class="card-content">
-                    <h2>扇区-01 储藏室 [-125m]</h2>
+                    <h2>扇区-01 储藏室 [-265m]</h2>
                     <p>文章的大归类仓库</p>
                 </div>
             </a>
-            <a href="pages/page2.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-2-line">
                 <div class="card-content">
                     <h2>扇区-02 未写入 [-546m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
-            <a href="pages/page3.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-3-line">
                 <div class="card-content">
-                    <h2>扇区-03 未写入 [-1236m]</h2>
+                    <h2>扇区-03 未写入 [-1226m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
-            <a href="pages/page4.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-4-line">
                 <div class="card-content">
-                    <h2>扇区-04 未写入 [-6515m]</h2>
+                    <h2>扇区-04 未写入 [-2515m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
-            <a href="pages/page5.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-5-line">
                 <div class="card-content">
-                    <h2>扇区-05 未写入 [-785m]</h2>
+                    <h2>扇区-05 未写入 [-3085m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
-            <a href="pages/page6.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-6-line">
                 <div class="card-content">
-                    <h2>扇区-06 未写入 [-655m]</h2>
+                    <h2>扇区-06 未写入 [-3655m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
-            <a href="pages/page7.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-7-line">
                 <div class="card-content">
-                    <h2>扇区-07 未写入 [-62m]</h2>
+                    <h2>扇区-07 未写入 [-4062m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
-            <a href="pages/page8.html" class="page-card">
+            <a href="#" class="page-card" data-target-id="sector-8-line">
                 <div class="card-content">
-                    <h2>扇区-08 未写入 [-565m]</h2>
+                    <h2>扇区-08 未写入 [-4565m]</h2>
                     <p>Undefined</p>
                 </div>
             </a>
@@ -99,91 +130,76 @@
             const heroElement = document.querySelector('.hero');
             const heroHeight = heroElement.offsetHeight;
             const viewCenter = scrollTop + (window.innerHeight / 2);
-
-            // --- 逻辑重构开始 ---
-
-            // 1. 将边界线的位置定义为深度零点。它距离页面顶部为 heroHeight - 5px。
             const zeroPoint = heroHeight - 5;
-
-            // 2. 计算当前视窗中心点相对于零点的距离。
-            //    - 当视窗中心在边界线上方时 (viewCenter < zeroPoint)，结果为正数。
-            //    - 当视窗中心在边界线下方时 (viewCenter > zeroPoint)，结果为负数。
             const depthInPixels = zeroPoint - viewCenter;
-
-            // 3. 将像素转换为米（假设1米 = 100像素）
             const depthInMeters = Math.round(depthInPixels / 10);
 
-            // --- 逻辑重构结束 ---
-
-            // 更新右侧深度显示
             const depthText = document.querySelector('.depth-text');
             depthText.textContent = depthInMeters + 'm';
-
-            // 更新左侧深度显示
             const depthTextLeft = document.querySelector('.depth-text-left');
             depthTextLeft.textContent = depthInMeters + 'm';
 
-            // 根据新的负数深度调整右侧指示器颜色
             const depthLine = document.querySelector('.depth-line');
-            // 根据新的负数深度调整左侧指示器颜色
             const depthLineLeft = document.querySelector('.depth-line-left');
 
-            if (depthInMeters < -10) { // 在边界线下方超过10米
+            if (depthInMeters < -10) {
                 depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
                 depthText.style.color = '#ff6b6b';
                 depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
                 depthTextLeft.style.color = '#ff6b6b';
-            } else if (depthInMeters < -5) { // 在边界线下方超过5米
+            } else if (depthInMeters < -5) {
                 depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
                 depthText.style.color = '#ffaa44';
                 depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
                 depthTextLeft.style.color = '#ffaa44';
-            } else { // 在边界线上方，或下方不足5米
+            } else {
                 depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
                 depthText.style.color = '#4ecdc4';
                 depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
                 depthTextLeft.style.color = '#4ecdc4';
             }
         }
-
-        // 监听滚动事件
         window.addEventListener('scroll', updateDepthIndicator);
-
-        // 初始化
         updateDepthIndicator();
 
+        // 手电筒效果驱动脚本
+        const supportsHover = window.matchMedia('(hover: hover)').matches;
+        const cursorDot = document.querySelector('.cursor-dot');
+        if (supportsHover) {
+            window.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                requestAnimationFrame(() => {
+                    document.documentElement.style.setProperty('--cursor-x', clientX + 'px');
+                    document.documentElement.style.setProperty('--cursor-y', clientY + 'px');
+                    cursorDot.style.left = clientX + 'px';
+                    cursorDot.style.top = clientY + 'px';
+                });
+            });
+        }
+        
+        // --- 新增：平滑滚动到指定深度的脚本 ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageCards = document.querySelectorAll('.page-card');
 
-    // --- 手电筒效果驱动脚本 (新增代码) ---
-    // 检测是否支持 hover（桌面端）
-    const supportsHover = window.matchMedia('(hover: hover)').matches;
-    const cursorDot = document.querySelector('.cursor-dot');
+            pageCards.forEach(card => {
+                card.addEventListener('click', function(event) {
+                    // 1. 阻止 <a> 标签的默认跳转行为
+                    event.preventDefault();
 
-    if (supportsHover) {
-        window.addEventListener('mousemove', (e) => {
-            const { clientX, clientY } = e;
-            requestAnimationFrame(() => {
-                document.documentElement.style.setProperty('--cursor-x', clientX + 'px');
-                document.documentElement.style.setProperty('--cursor-y', clientY + 'px');
-                cursorDot.style.left = clientX + 'px';
-                cursorDot.style.top = clientY + 'px';
+                    // 2. 从被点击的卡片上获取目标深度线的 ID
+                    const targetId = this.dataset.targetId;
+                    const targetElement = document.getElementById(targetId);
+
+                    // 3. 如果找到了目标元素，就滚动到它的位置
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop, // 滚动到目标元素的顶部
+                            behavior: 'smooth'            // 使用平滑的动画效果
+                        });
+                    }
+                });
             });
         });
-    }
-
-
-    
-    window.addEventListener('mousemove', (e) => {
-        const { clientX, clientY } = e;
-
-        // 使用 requestAnimationFrame 优化性能，确保在下一次浏览器重绘前更新
-        requestAnimationFrame(() => {
-            document.documentElement.style.setProperty('--cursor-x', clientX + 'px');
-            document.documentElement.style.setProperty('--cursor-y', clientY + 'px');
-
-            cursorDot.style.left = clientX + 'px';
-            cursorDot.style.top = clientY + 'px';
-        });
-    });
     </script>
 
 </body>
