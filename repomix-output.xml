@@ -43,16 +43,20 @@ The content is organized as follows:
 .github/workflows/deploy.yml
 .gitignore
 文件结构方案.md
+builder/__init__.py
 builder/config.py
 builder/index_updater.py
 builder/main.py
 builder/page_parser.py
+builder/rss_generator.py
 content/articles/文件结构方案.html
 content/articles/index.html
 content/articles/my-first-article.html
 content/articles/my-second-article.html
 content/articles/test_delete_after_converte.html
 content/articles/test.html
+content/notes/index.html
+content/weekly/index.html
 index.html
 md_converter.py
 pages/page1.html
@@ -620,6 +624,90 @@ def main():
 
 if __name__ == "__main__":
     main()
+</file>
+
+<file path="pages/test-page.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>测试页面 - JioooBasement</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+    <div class="page-container">
+        <header class="page-header">
+            <h1>测试页面</h1>
+            <a href="../index.html" class="back-home">← 返回主页</a>
+        </header>
+
+        <main class="page-content">
+            <p>这是一个测试子页面。</p>
+            <p>用于测试导航链接的功能。</p>
+        </main>
+    </div>
+
+    <style>
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .back-home {
+            color: #4ecdc4;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border: 1px solid #4ecdc4;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-home:hover {
+            background-color: rgba(78, 205, 196, 0.1);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+        }
+
+        .page-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #c5c5c5;
+        }
+    </style>
+</body>
+</html>
+</file>
+
+<file path="run_build.py">
+from builder.main import build
+
+if __name__ == '__main__':
+    build()
+</file>
+
+<file path=".gitignore">
+# 忽略所有 output 目录下的内容
+output/
+.claude/
+
+# 忽略 Python 缓存
+__pycache__/
+*.pyc
 </file>
 
 <file path="pages/page2.html">
@@ -1241,185 +1329,6 @@ if __name__ == "__main__":
 </html>
 </file>
 
-<file path="pages/test-page.html">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>测试页面 - JioooBasement</title>
-    <link rel="stylesheet" href="../static/css/main.css">
-</head>
-<body>
-    <div class="page-container">
-        <header class="page-header">
-            <h1>测试页面</h1>
-            <a href="../index.html" class="back-home">← 返回主页</a>
-        </header>
-
-        <main class="page-content">
-            <p>这是一个测试子页面。</p>
-            <p>用于测试导航链接的功能。</p>
-        </main>
-    </div>
-
-    <style>
-        .page-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            min-height: 100vh;
-        }
-
-        .page-header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 20px;
-        }
-
-        .page-header h1 {
-            font-size: 2.5rem;
-            color: #e0e0e0;
-            margin-bottom: 15px;
-        }
-
-        .back-home {
-            color: #4ecdc4;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 8px 16px;
-            border: 1px solid #4ecdc4;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .back-home:hover {
-            background-color: rgba(78, 205, 196, 0.1);
-            box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
-        }
-
-        .page-content {
-            line-height: 1.8;
-            font-size: 1.1rem;
-            color: #c5c5c5;
-        }
-    </style>
-</body>
-</html>
-</file>
-
-<file path="run_build.py">
-from builder.main import build
-
-if __name__ == '__main__':
-    build()
-</file>
-
-<file path=".gitignore">
-# 忽略所有 output 目录下的内容
-output/
-.claude/
-
-# 忽略 Python 缓存
-__pycache__/
-*.pyc
-</file>
-
-<file path="builder/main.py">
-import os
-import shutil
-from pathlib import Path
-from . import config
-from .page_parser import Page
-from . import index_updater # 导入索引更新器
-
-def build():
-    print("演算开始：开始构建站点...")
-
-    # 1. 清空输出目录
-    if config.OUTPUT_DIR.exists():
-        shutil.rmtree(config.OUTPUT_DIR)
-    os.makedirs(config.OUTPUT_DIR)
-    
-    # 2. 复制静态文件
-    shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
-    print("静态文件已复制。")
-
-    # 复制 pages 目录
-    pages_dir = config.BASE_DIR / "pages"
-    if pages_dir.exists():
-        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
-        print("Pages 目录已复制。")
-
-    # 3. 读取模板
-    try:
-        with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
-            article_template = f.read()
-        print("文章模板已加载。")
-    except FileNotFoundError:
-        print("错误：未找到文章模板。构建中止。")
-        return
-
-    # 4. 解析所有页面
-    all_pages = []
-    print("开始处理内容文件...")
-    for category in config.CATEGORIES:
-        category_path = config.CONTENT_DIR / category
-        output_cat_dir = config.OUTPUT_DIR / category
-        if not output_cat_dir.exists():
-            os.makedirs(output_cat_dir)
-            
-        for file_path in category_path.glob("*.html"):
-            if file_path.name == "index.html":
-                continue
-            
-            page = Page(file_path)
-            all_pages.append(page)
-            
-            rendered_html = page.render(article_template)
-            
-            output_file_path = output_cat_dir / file_path.name
-            with open(output_file_path, 'w', encoding='utf-8') as f:
-                f.write(rendered_html)
-    print("所有页面已处理并生成。")
-
-    # 5. 更新所有索引页
-    index_updater.update_indexes(all_pages)
-    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
-    page1_path = config.BASE_DIR / "pages" / "page1.html"
-    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
-
-    if page1_path.exists():
-        # 生成文章列表HTML (复用主索引逻辑)
-        post_list_html = ""
-        for page in all_pages:
-            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
-            post_list_html += f"""
-            <article>
-                <h2><a href="{relative_path}">{page.title}</a></h2>
-                <p class="date">{page.date}</p>
-                <p class="summary">{page.summary}</p>
-            </article>
-            """
-        
-        # 读取源模板并替换
-        with open(page1_path, 'r', encoding='utf-8') as f:
-            template = f.read()
-        
-        final_html = template.replace("{{POST_LIST}}", post_list_html)
-        
-        # 写入输出
-        with open(output_page1_path, 'w', encoding='utf-8') as f:
-            f.write(final_html)
-        
-        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
-
-    print("构建流程完毕。系统功能完整。")
-
-if __name__ == '__main__':
-    build()
-</file>
-
 <file path="static/css/article.css">
 /* --- 全局与基础设定 --- */
 body {
@@ -1571,6 +1480,127 @@ body {
     border-radius: 4px;
     border: 1px solid #444;
 }
+</file>
+
+<file path="templates/article.template">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>$title$</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <a href="../index.html" class="back-link">返回基地</a>
+            <h1 class="article-title">$title$</h1>
+            <p class="article-meta">记录于：$date$</p>
+        </header>
+
+        <main class="article-content">
+            $body$
+        </main>
+    </div>
+
+</body>
+</html>
+</file>
+
+<file path="builder/main.py">
+import os
+import shutil
+from pathlib import Path
+from . import config
+from .page_parser import Page
+from . import index_updater # 导入索引更新器
+
+def build():
+    print("演算开始：开始构建站点...")
+
+    # 1. 清空输出目录
+    if config.OUTPUT_DIR.exists():
+        shutil.rmtree(config.OUTPUT_DIR)
+    os.makedirs(config.OUTPUT_DIR)
+    
+    # 2. 复制静态文件
+    shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
+    print("静态文件已复制。")
+
+    # 复制 pages 目录
+    pages_dir = config.BASE_DIR / "pages"
+    if pages_dir.exists():
+        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
+        print("Pages 目录已复制。")
+
+    # 3. 读取模板
+    try:
+        with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
+            article_template = f.read()
+        print("文章模板已加载。")
+    except FileNotFoundError:
+        print("错误：未找到文章模板。构建中止。")
+        return
+
+    # 4. 解析所有页面
+    all_pages = []
+    print("开始处理内容文件...")
+    for category in config.CATEGORIES:
+        category_path = config.CONTENT_DIR / category
+        output_cat_dir = config.OUTPUT_DIR / category
+        if not output_cat_dir.exists():
+            os.makedirs(output_cat_dir)
+            
+        for file_path in category_path.glob("*.html"):
+            if file_path.name == "index.html":
+                continue
+            
+            page = Page(file_path)
+            all_pages.append(page)
+            
+            rendered_html = page.render(article_template)
+            
+            output_file_path = output_cat_dir / file_path.name
+            with open(output_file_path, 'w', encoding='utf-8') as f:
+                f.write(rendered_html)
+    print("所有页面已处理并生成。")
+
+    # 5. 更新所有索引页
+    index_updater.update_indexes(all_pages)
+    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
+    page1_path = config.BASE_DIR / "pages" / "page1.html"
+    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
+
+    if page1_path.exists():
+        # 生成文章列表HTML (复用主索引逻辑)
+        post_list_html = ""
+        for page in all_pages:
+            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
+            post_list_html += f"""
+            <article>
+                <h2><a href="{relative_path}">{page.title}</a></h2>
+                <p class="date">{page.date}</p>
+                <p class="summary">{page.summary}</p>
+            </article>
+            """
+        
+        # 读取源模板并替换
+        with open(page1_path, 'r', encoding='utf-8') as f:
+            template = f.read()
+        
+        final_html = template.replace("{{POST_LIST}}", post_list_html)
+        
+        # 写入输出
+        with open(output_page1_path, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+        
+        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
+
+    print("构建流程完毕。系统功能完整。")
+
+if __name__ == '__main__':
+    build()
 </file>
 
 <file path="static/css/page.css">
@@ -1728,32 +1758,6 @@ body {
 .page-container {
     padding-top: 80px;  /* 原60px +20px 避线+标签 */
 }
-</file>
-
-<file path="templates/article.template">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>$title$</title>
-    <link rel="stylesheet" href="../static/css/article.css">
-</head>
-<body>
-
-    <div class="article-container">
-        <header class="article-header">
-            <a href="../index.html" class="back-link">返回基地</a>
-            <h1 class="article-title">$title$</h1>
-            <p class="article-meta">记录于：$date$</p>
-        </header>
-
-        <main class="article-content">
-            $body$
-        </main>
-    </div>
-
-</body>
-</html>
 </file>
 
 <file path="pages/page1.html">
