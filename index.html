@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <title>我的博客 - 主页</title>
     <link rel="stylesheet" href="static/css/main.css">
-    <!-- 新增样式：用于定位 8 条扇区深度线 -->
+    <!-- 样式 -->
     <style>
+        /* --- 扇区深度线定位 --- */
         .sector-depth-line {
             position: absolute;
             bottom: auto;
             left: 0;
             right: 0;
         }
-
-        /* 各扇区深度线的具体位置 */
         .depth-line-265 { top: calc(100vh + 2640px); }
         .depth-line-546 { top: calc(100vh + 5450px); }
         .depth-line-1226 { top: calc(100vh + 12250px); }
@@ -23,11 +22,92 @@
         .depth-line-4062 { top: calc(100vh + 40610px); }
         .depth-line-4565 { top: calc(100vh + 45640px); }
 
+        /* --- 悬浮电梯控制面板样式 --- */
+        #elevator-panel {
+            position: absolute;
+            right: 20px;
+            z-index: 1001;
+            background-color: rgba(34, 34, 34, 0.9);
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+            box-sizing: border-box;
+        }
+        .panel-header {
+            text-align: center;
+            font-size: 1rem;
+            color: #888;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        #clock-display {
+            text-align: center;
+            color: #4ecdc4;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        #clock-display #time-display {
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .panel-status-display {
+            border-top: 1px solid #444;
+            border-bottom: 1px solid #444;
+            padding: 10px 0;
+            margin: 15px 0;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .panel-status-display h3 {
+            margin: 0 0 5px 0;
+            color: #aaa;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+        .panel-status-display p {
+            margin: 3px 0;
+        }
+        .elevator-buttons ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .elevator-buttons li {
+            margin-bottom: 5px;
+        }
+        .elevator-button {
+            display: block;
+            width: 100%;
+            padding: 8px 10px;
+            background-color: #333;
+            color: #c5c5c5;
+            text-decoration: none;
+            border: 1px solid #555;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .elevator-button:hover {
+            background-color: #4ecdc4;
+            color: #1a1a1a;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 8px rgba(78, 205, 196, 0.5);
+        }
+        .page-cards-container {
+            align-self: flex-start;
+        }
     </style>
 </head>
 <body class="homepage-effect">
     <div class="cursor-dot"></div>
-    <section class="hero">
+    <section class="hero" id="hero-section"> {/* <!-- 新增 ID 作为滚动目标 --> */}
         <div class="hero-content">
             <h1 class="hero-title">JioooBasement</h1>
             <h1 class="hero-title">Jio基地</h1>
@@ -40,7 +120,6 @@
         <div class="inside-text">INSIDE-BASEMENT, HOME</div>
     </section>
 
-    <!-- 新增的 8 条扇区深度指示线 (已添加 id) -->
     <div id="sector-1-line" class="border-line sector-depth-line depth-line-265"><div class="border-text">Sector-01 Depth: 265m</div></div>
     <div id="sector-2-line" class="border-line sector-depth-line depth-line-546"><div class="border-text">Sector-02 Depth: 546m</div></div>
     <div id="sector-3-line" class="border-line sector-depth-line depth-line-1226"><div class="border-text">Sector-03 Depth: 1226m</div></div>
@@ -51,80 +130,43 @@
     <div id="sector-8-line" class="border-line sector-depth-line depth-line-4565"><div class="border-text">Sector-08 Depth: 4565m</div></div>
 
     <main class="main-content-grid">
-        <!-- 卡片链接已修改：移除 href, 添加 data-target-id -->
         <div class="page-cards-container">
-            <a href="#" class="page-card" data-target-id="sector-1-line">
-                <div class="card-content">
-                    <h2>扇区-01 储藏室 [-265m]</h2>
-                    <p>文章的大归类仓库</p>
-                </div>
-            </a>
-            <a href="#" class="page-card" data-target-id="sector-2-line">
-                <div class="card-content">
-                    <h2>扇区-02 未写入 [-546m]</h2>
-                    <p>Undefined</p>
-                </div>
-            </a>
-            <a href="#" class="page-card" data-target-id="sector-3-line">
-                <div class="card-content">
-                    <h2>扇区-03 未写入 [-1226m]</h2>
-                    <p>Undefined</p>
-                </div>
-            </a>
-            <a href="#" class="page-card" data-target-id="sector-4-line">
-                <div class="card-content">
-                    <h2>扇区-04 未写入 [-2515m]</h2>
-                    <p>Undefined</p>
-                </div>
-            </a>
-            <a href="#" class="page-card" data-target-id="sector-5-line">
-                <div class="card-content">
-                    <h2>扇区-05 未写入 [-3085m]</h2>
-                    <p>Undefined</p>
-                </div>
-            </a>
-            <a href="#" class="page-card" data-target-id="sector-6-line">
-                <div class="card-content">
-                    <h2>扇区-06 未写入 [-3655m]</h2>
-                    <p>Undefined</p>
-                </div>
-            </a>
-            <a href="#" class="page-card" data-target-id="sector-7-line">
-                <div class="card-content">
-                    <h2>扇区-07 未写入 [-4062m]</h2>
-                    <p>Undefined</p>
-                </div>
-            </a>
-            <a href="#" class="page-card" data-target-id="sector-8-line">
-                <div class="card-content">
-                    <h2>扇区-08 未写入 [-4565m]</h2>
-                    <p>Undefined</p>
-                </div>
-            </a>
+            <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 储藏室 [-265m]</h2><p>文章的大归类仓库</p></div></a>
+            <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-546m]</h2><p>Undefined</p></div></a>
+            <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-1226m]</h2><p>Undefined</p></div></a>
+            <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-2515m]</h2><p>Undefined</p></div></a>
+            <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-3085m]</h2><p>Undefined</p></div></a>
+            <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 未写入 [-3655m]</h2><p>Undefined</p></div></a>
+            <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-4062m]</h2><p>Undefined</p></div></a>
+            <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-4565m]</h2><p>Undefined</p></div></a>
         </div>
-
-        <aside class="right-panel">
-            <div class="panel-content">
-                <h3>//:Welcome to JioooBasement</h3>
-                <p>地下室深度导航系统已激活。</p>
-                <p>节点电梯通道链接稳定</p>
-                <p>等待指令...</p>
-            </div>
-        </aside>
+        <aside class="right-panel"><div class="panel-content"><h3>//:Welcome to JioooBasement</h3><p>地下室深度导航系统已激活。</p><p>节点电梯通道链接稳定</p><p>等待指令...</p></div></aside>
     </main>
 
-    <div class="depth-indicator">
-        <div class="depth-line"></div>
-        <div class="depth-text">0m</div>
-    </div>
+    <div class="depth-indicator-left"><div class="depth-text-left">0m</div><div class="depth-line-left"></div></div>
 
-    <div class="depth-indicator-left">
-        <div class="depth-text-left">0m</div>
-        <div class="depth-line-left"></div>
+    <div id="elevator-panel">
+        <div class="panel-header">ELEVATOR SYSTEM</div>
+        <div id="clock-display"><div id="date-display">YYYY-MM-DD</div><div id="time-display">HH:MM:SS</div></div>
+        <div class="panel-status-display"><h3>//:Welcome to JioooBasement</h3><p>深度导航系统已激活</p><p>节点通道链接稳定</p><p>等待指令...</p></div>
+        <nav class="elevator-buttons">
+            <ul>
+                {/* <!-- 新增返回 0 Depth 的按钮 --> */}
+                <li><a href="#" class="elevator-button" data-target-id="hero-section">Return to 0 Depth</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-1-line">Go to Sector 01</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-2-line">Go to Sector 02</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-3-line">Go to Sector 03</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-4-line">Go to Sector 04</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-5-line">Go to Sector 05</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-6-line">Go to Sector 06</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-7-line">Go to Sector 07</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-8-line">Go to Sector 08</a></li>
+            </ul>
+        </nav>
     </div>
 
     <script>
-        // 深度指示器功能
+        // --- 深度指示器功能 ---
         function updateDepthIndicator() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             const heroElement = document.querySelector('.hero');
@@ -133,36 +175,27 @@
             const zeroPoint = heroHeight - 5;
             const depthInPixels = zeroPoint - viewCenter;
             const depthInMeters = Math.round(depthInPixels / 10);
-
-            const depthText = document.querySelector('.depth-text');
-            depthText.textContent = depthInMeters + 'm';
             const depthTextLeft = document.querySelector('.depth-text-left');
             depthTextLeft.textContent = depthInMeters + 'm';
-
-            const depthLine = document.querySelector('.depth-line');
             const depthLineLeft = document.querySelector('.depth-line-left');
-
             if (depthInMeters < -10) {
-                depthLine.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
-                depthText.style.color = '#ff6b6b';
-                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ff6b6b 0px, #ff6b6b 8px, transparent 8px, transparent 12px)';
-                depthTextLeft.style.color = '#ff6b6b';
+                const dangerColor = '#ff6b6b';
+                depthLineLeft.style.background = `repeating-linear-gradient(to right, ${dangerColor} 0px, ${dangerColor} 8px, transparent 8px, transparent 12px)`;
+                depthTextLeft.style.color = dangerColor;
             } else if (depthInMeters < -5) {
-                depthLine.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
-                depthText.style.color = '#ffaa44';
-                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #ffaa44 0px, #ffaa44 8px, transparent 8px, transparent 12px)';
-                depthTextLeft.style.color = '#ffaa44';
+                const warningColor = '#ffaa44';
+                depthLineLeft.style.background = `repeating-linear-gradient(to right, ${warningColor} 0px, ${warningColor} 8px, transparent 8px, transparent 12px)`;
+                depthTextLeft.style.color = warningColor;
             } else {
-                depthLine.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
-                depthText.style.color = '#4ecdc4';
-                depthLineLeft.style.background = 'repeating-linear-gradient(to right, #4ecdc4 0px, #4ecdc4 8px, transparent 8px, transparent 12px)';
-                depthTextLeft.style.color = '#4ecdc4';
+                const safeColor = '#4ecdc4';
+                depthLineLeft.style.background = `repeating-linear-gradient(to right, ${safeColor} 0px, ${safeColor} 8px, transparent 8px, transparent 12px)`;
+                depthTextLeft.style.color = safeColor;
             }
         }
         window.addEventListener('scroll', updateDepthIndicator);
         updateDepthIndicator();
 
-        // 手电筒效果驱动脚本
+        // --- 手电筒效果 ---
         const supportsHover = window.matchMedia('(hover: hover)').matches;
         const cursorDot = document.querySelector('.cursor-dot');
         if (supportsHover) {
@@ -176,31 +209,88 @@
                 });
             });
         }
-        
-        // --- 新增：平滑滚动到指定深度的脚本 ---
+
         document.addEventListener('DOMContentLoaded', function() {
-            const pageCards = document.querySelectorAll('.page-card');
-
-            pageCards.forEach(card => {
-                card.addEventListener('click', function(event) {
-                    // 1. 阻止 <a> 标签的默认跳转行为
+            // --- 平滑滚动功能 ---
+            const scrollTriggers = document.querySelectorAll('[data-target-id]');
+            scrollTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function(event) {
                     event.preventDefault();
-
-                    // 2. 从被点击的卡片上获取目标深度线的 ID
                     const targetId = this.dataset.targetId;
                     const targetElement = document.getElementById(targetId);
-
-                    // 3. 如果找到了目标元素，就滚动到它的位置
                     if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop, // 滚动到目标元素的顶部
-                            behavior: 'smooth'            // 使用平滑的动画效果
-                        });
+                        // 特殊处理返回顶部，确保滚动到最顶端
+                        const topPosition = targetId === 'hero-section' ? 0 : targetElement.offsetTop;
+                        window.scrollTo({ top: topPosition, behavior: 'smooth' });
                     }
                 });
             });
+
+            // --- 实时时钟功能 ---
+            const dateElement = document.getElementById('date-display');
+            const timeElement = document.getElementById('time-display');
+            function updateClock() {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                dateElement.textContent = `${year}-${month}-${day}`;
+                timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+            
+            // --- 智能悬浮面板、动态宽度和竖线延长功能 ---
+            const mainGrid = document.querySelector('.main-content-grid');
+            const rightPanel = document.querySelector('.right-panel');
+            const elevatorPanel = document.getElementById('elevator-panel');
+            const lastLine = document.getElementById('sector-8-line');
+            const zeroDepthLine = document.querySelector('.hero .border-line');
+
+            function performUpdates() {
+                if (mainGrid && lastLine) {
+                    const gridTop = mainGrid.offsetTop;
+                    const requiredHeight = (lastLine.offsetTop + lastLine.offsetHeight) - gridTop;
+                    mainGrid.style.minHeight = requiredHeight + 'px';
+                }
+
+                if (rightPanel && elevatorPanel) {
+                    const rect = rightPanel.getBoundingClientRect();
+                    elevatorPanel.style.width = rect.width + 'px';
+                }
+
+                if (elevatorPanel && zeroDepthLine) {
+                    const panelHeight = elevatorPanel.offsetHeight;
+                    const fixedTopPosition = (window.innerHeight - panelHeight) / 2;
+                    const scrollThreshold = zeroDepthLine.offsetTop - fixedTopPosition;
+
+                    if (window.scrollY > scrollThreshold) {
+                        elevatorPanel.style.position = 'fixed';
+                        elevatorPanel.style.top = fixedTopPosition + 'px';
+                    } else {
+                        elevatorPanel.style.position = 'absolute';
+                        elevatorPanel.style.top = (zeroDepthLine.offsetTop + 20) + 'px';
+                    }
+                }
+            }
+            
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        performUpdates();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            window.addEventListener('load', performUpdates);
+            window.addEventListener('resize', performUpdates);
         });
     </script>
-
 </body>
 </html>
