@@ -8,6 +8,7 @@ class Page:
         self.summary = ""
         self.body = ""
         self.metadata = {}
+        self.size_in_bits = 0  # 新增属性，用于存储文件大小（比特）
         self.parse()
 
     def parse(self):

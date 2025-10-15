@@ -53,6 +53,14 @@ def build():
             output_file_path = output_cat_dir / file_path.name
             with open(output_file_path, 'w', encoding='utf-8') as f:
                 f.write(rendered_html)
+
+            # --- 核心修改：在文件写入后，计算大小并存储 ---
+            try:
+                size_in_bytes = os.path.getsize(output_file_path)
+                page.size_in_bits = size_in_bytes * 8
+            except FileNotFoundError:
+                print(f"警告：无法获取文件 {output_file_path} 的大小。")
+
     print("所有页面已处理并生成。")
 
     # 5. 更新所有索引页

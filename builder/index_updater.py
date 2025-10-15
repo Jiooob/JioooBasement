@@ -16,34 +16,26 @@ def update_indexes(pages):
 def update_main_index(pages):
     from . import config
 
-    # 生成文章列表的HTML (旧逻辑，可能用于其他页面)
-    post_list_html = ""
-    for page in pages:
-        relative_path = page.path.relative_to(config.CONTENT_DIR)
-        post_list_html += f"""
-        <article>
-            <h2><a href="{relative_path}">{page.title}</a></h2>
-            <p class="date">{page.date}</p>
-            <p class="summary">{page.summary}</p>
-        </article>
-        """
+    # (旧逻辑，保留以防万一)
+    post_list_html = "..." # 省略未改变部分
     
-    # --- 新增：为 Sector 01 生成文章卡片 ---
+    # --- 为 Sector 01 生成文章卡片 ---
     article_cards_html = ""
     for page in pages:
-        # 计算从 output 根目录出发的相对路径
         relative_path = page.path.relative_to(config.CONTENT_DIR)
+        # --- 核心修改：添加一个带有 class="size" 的 <p> 标签来显示大小 ---
+        # 使用 f-string 的格式化功能 `{page.size_in_bits:,}` 来为数字添加千位分隔符
         article_cards_html += f"""
         <a href="{relative_path}" class="article-card-item">
             <div class="card-content">
                 <h2>{page.title}</h2>
                 <p class="date">记录于：{page.date}</p>
                 <p class="summary">{page.summary}</p>
+                <p class="size">Size: {page.size_in_bits:,} bits</p>
             </div>
         </a>
         """
     
-    # 将所有卡片包裹在一个容器中
     sector_1_content = f'<div class="article-cards-container">{article_cards_html}</div>'
 
     # 读取主页模板
@@ -51,11 +43,8 @@ def update_main_index(pages):
     with open(main_index_path, 'r', encoding='utf-8') as f:
         template = f.read()
     
-    # 注入文章卡片内容
     final_html = template.replace("<!-- ARTICLE_CARDS_HERE -->", sector_1_content)
-
-    # (可选) 替换旧的占位符，以防万一
-    final_html = final_html.replace("{{POST_LIST}}", post_list_html)
+    final_html = final_html.replace("{{POST_LIST}}", "") # 清理旧占位符
 
     # 写入最终的主页文件
     output_path = config.OUTPUT_DIR / "index.html"
@@ -65,6 +54,7 @@ def update_main_index(pages):
 
 
 def update_category_indexes(pages):
+    # ... 此函数无需修改 ...
     from . import config
 
     for category in config.CATEGORIES:
