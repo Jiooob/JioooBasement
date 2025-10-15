@@ -16,11 +16,9 @@ def update_indexes(pages):
 def update_main_index(pages):
     from . import config
 
-    # 生成文章列表的HTML
+    # 生成文章列表的HTML (旧逻辑，可能用于其他页面)
     post_list_html = ""
-    # 确保这里只有一个 for 循环
     for page in pages:
-        # 路径需要相对于输出目录的根，所以要去掉 content/
         relative_path = page.path.relative_to(config.CONTENT_DIR)
         post_list_html += f"""
         <article>
@@ -30,12 +28,34 @@ def update_main_index(pages):
         </article>
         """
     
-    # 读取主页模板并注入列表
+    # --- 新增：为 Sector 01 生成文章卡片 ---
+    article_cards_html = ""
+    for page in pages:
+        # 计算从 output 根目录出发的相对路径
+        relative_path = page.path.relative_to(config.CONTENT_DIR)
+        article_cards_html += f"""
+        <a href="{relative_path}" class="article-card-item">
+            <div class="card-content">
+                <h2>{page.title}</h2>
+                <p class="date">记录于：{page.date}</p>
+                <p class="summary">{page.summary}</p>
+            </div>
+        </a>
+        """
+    
+    # 将所有卡片包裹在一个容器中
+    sector_1_content = f'<div class="article-cards-container">{article_cards_html}</div>'
+
+    # 读取主页模板
     main_index_path = config.BASE_DIR / "index.html"
     with open(main_index_path, 'r', encoding='utf-8') as f:
         template = f.read()
     
-    final_html = template.replace("{{POST_LIST}}", post_list_html)
+    # 注入文章卡片内容
+    final_html = template.replace("<!-- ARTICLE_CARDS_HERE -->", sector_1_content)
+
+    # (可选) 替换旧的占位符，以防万一
+    final_html = final_html.replace("{{POST_LIST}}", post_list_html)
 
     # 写入最终的主页文件
     output_path = config.OUTPUT_DIR / "index.html"
