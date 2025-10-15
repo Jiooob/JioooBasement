@@ -103,11 +103,67 @@
         .page-cards-container {
             align-self: flex-start;
         }
+
+        /* --- 新增：文章卡片样式 --- */
+        .article-cards-container {
+            position: absolute;
+            top: calc(100vh + 2640px + 60px); /* 位于 sector-1-line 下方 60px */
+            left: 50px; /* 与主内容区左侧对齐 */
+            right: 50px; /* 与主内容区右侧对齐 */
+            padding-right: calc(33.33% + 50px); /* 右侧留出右侧面板的宽度 */
+            box-sizing: border-box;
+            display: grid;
+            /* --- 核心修改：将多列网格改为单列，让每个卡片占据一行 --- */
+            grid-template-columns: 1fr;
+            gap: 20px; /* 调整卡片之间的垂直间距 */
+        }
+
+        .article-card-item {
+            background-color: #2a2a2a; /* 稍亮的背景以区分 */
+            border: 1px solid #555;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #c5c5c5;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 120px; /* 调整卡片高度 */
+        }
+
+        .article-card-item:hover {
+            transform: translateY(-5px);
+            border-color: #00aaff; /* 使用不同的高亮色 */
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.2);
+        }
+
+        .article-card-item .card-content {
+            padding: 20px;
+        }
+
+        .article-card-item h2 {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin: 0 0 10px 0;
+        }
+
+        .article-card-item .date {
+            font-size: 0.8rem;
+            color: #888;
+            margin: 0 0 10px 0;
+        }
+
+        .article-card-item .summary {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin: 0;
+        }
     </style>
 </head>
 <body class="homepage-effect">
     <div class="cursor-dot"></div>
-    <section class="hero" id="hero-section"> {/* <!-- 新增 ID 作为滚动目标 --> */}
+    <section class="hero" id="hero-section">
         <div class="hero-content">
             <h1 class="hero-title">JioooBasement</h1>
             <h1 class="hero-title">Jio基地</h1>
@@ -121,6 +177,47 @@
     </section>
 
     <div id="sector-1-line" class="border-line sector-depth-line depth-line-265"><div class="border-text">Sector-01 Depth: 265m</div></div>
+    <div class="article-cards-container">
+        <a href="articles/test_delete_after_converte.html" class="article-card-item">
+            <div class="card-content">
+                <h2>test for feature which remove md from source_md after converte to html into output</h2>
+                <p class="date">记录于：2025-9-21</p>
+                <p class="summary">False</p>
+            </div>
+        </a>
+        
+        <a href="articles/my-second-article.html" class="article-card-item">
+            <div class="card-content">
+                <h2>第二篇文章</h2>
+                <p class="date">记录于：2025-09-22</p>
+                <p class="summary">这是第二篇，用于测试多文件处理。</p>
+            </div>
+        </a>
+        
+        <a href="articles/my-first-article.html" class="article-card-item">
+            <div class="card-content">
+                <h2>我的第一篇文章</h2>
+                <p class="date">记录于：2025-09-21</p>
+                <p class="summary">这是第一篇文章的摘要。</p>
+            </div>
+        </a>
+        
+        <a href="articles/文件结构方案.html" class="article-card-item">
+            <div class="card-content">
+                <h2>文件结构方案</h2>
+                <p class="date">记录于：2025-09-21</p>
+                <p class="summary">这是转化的md测试</p>
+            </div>
+        </a>
+        
+        <a href="articles/test.html" class="article-card-item">
+            <div class="card-content">
+                <h2>test</h2>
+                <p class="date">记录于：2025-09-20</p>
+                <p class="summary"></p>
+            </div>
+        </a>
+        </div>
     <div id="sector-2-line" class="border-line sector-depth-line depth-line-546"><div class="border-text">Sector-02 Depth: 546m</div></div>
     <div id="sector-3-line" class="border-line sector-depth-line depth-line-1226"><div class="border-text">Sector-03 Depth: 1226m</div></div>
     <div id="sector-4-line" class="border-line sector-depth-line depth-line-2515"><div class="border-text">Sector-04 Depth: 2515m</div></div>
@@ -146,13 +243,12 @@
     <div class="depth-indicator-left"><div class="depth-text-left">0m</div><div class="depth-line-left"></div></div>
 
     <div id="elevator-panel">
-        <div class="panel-header">ELEVATOR SYSTEM</div>
+        <div class="panel-header">ELEVATOR</div>
         <div id="clock-display"><div id="date-display">YYYY-MM-DD</div><div id="time-display">HH:MM:SS</div></div>
         <div class="panel-status-display"><h3>//:Welcome to JioooBasement</h3><p>深度导航系统已激活</p><p>节点通道链接稳定</p><p>等待指令...</p></div>
         <nav class="elevator-buttons">
             <ul>
-                {/* <!-- 新增返回 0 Depth 的按钮 --> */}
-                <li><a href="#" class="elevator-button" data-target-id="hero-section">Return to 0 Depth</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="hero-section">Return to surface</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-1-line">Go to Sector 01</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-2-line">Go to Sector 02</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-3-line">Go to Sector 03</a></li>
@@ -219,8 +315,8 @@
                     const targetId = this.dataset.targetId;
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
-                        // 特殊处理返回顶部，确保滚动到最顶端
-                        const topPosition = targetId === 'hero-section' ? 0 : targetElement.offsetTop;
+                        // --- 核心修改：在计算目标位置时减去20px的偏移量 ---
+                        const topPosition = targetId === 'hero-section' ? 0 : targetElement.offsetTop - 20;
                         window.scrollTo({ top: topPosition, behavior: 'smooth' });
                     }
                 });
