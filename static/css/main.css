@@ -551,7 +551,6 @@ body.homepage-effect::after {
 #sector-1-content-anchor {
     position: absolute;
     /* 核心: top 值与扇区1的深度线对齐，并留出 60px 的上边距 */
-    top: calc(100vh + 2640px + 60px); 
     left: 50px;
     right: 50px;
     box-sizing: border-box;
