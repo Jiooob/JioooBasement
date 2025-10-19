@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>图片插入测试</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <!-- 
+              核心修改：
+              1. 添加 onclick 事件处理器。
+              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
+                 这可以处理用户在新标签页直接打开文章的边缘情况。
+              3. `event.preventDefault()` 阻止链接的默认跳转行为。
+              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
+              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
+            -->
+            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
+            <h1 class="article-title">图片插入测试</h1>
+            <p class="article-meta">记录于：2025-10-19</p>
+        </header>
+
+        <main class="article-content">
+            
+<h2>这是一个图片测试</h2>
+<p>
+        这是小Rain
+    </p>
+<p>下面这张图片就是从 `static/images/` 目录中引用的。</p>
+<p>但是我决定把这些交给aicoding来帮我完成 我只需要注意内容就好</p>
+<img alt="一张关于代码的屏幕截图" src="../static/images/屏幕截图 2025-10-19 002929.png"/>
+
+        </main>
+    </div>
+
+</body>
+</html>
