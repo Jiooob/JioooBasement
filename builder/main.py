@@ -3,105 +3,118 @@ import shutil
 from pathlib import Path
 from . import config
 from .page_parser import Page
-from . import index_updater # 导入索引更新器
+from . import index_updater
 
 def build():
     print("演算开始：开始构建站点...")
 
-    # 1. 清空输出目录
+    # 1. 清理和准备目录
     if config.OUTPUT_DIR.exists():
         shutil.rmtree(config.OUTPUT_DIR)
     os.makedirs(config.OUTPUT_DIR)
-    
-    # 2. 复制静态文件
     shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
-    print("静态文件已复制。")
+    if (config.BASE_DIR / "pages").exists():
+        shutil.copytree(config.BASE_DIR / "pages", config.OUTPUT_DIR / "pages")
+    if (config.BASE_DIR / "CNAME").exists():
+        shutil.copy(config.BASE_DIR / "CNAME", config.OUTPUT_DIR / "CNAME")
+    print("静态文件和目录已复制。")
 
-    # 复制 pages 目录
-    pages_dir = config.BASE_DIR / "pages"
-    if pages_dir.exists():
-        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
-        print("Pages 目录已复制。")
-
-    # ==================== START: 新增代码 ====================
-    # 3. 复制 CNAME 文件 (如果存在)
-    cname_path = config.BASE_DIR / "CNAME"
-    if cname_path.exists():
-        shutil.copy(cname_path, config.OUTPUT_DIR / "CNAME")
-        print("CNAME 文件已复制。")
-    # ===================== END: 新增代码 =====================
-
-    # 3. 读取模板
+    # 2. 加载模板
     try:
         with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
             article_template = f.read()
-        print("文章模板已加载。")
-    except FileNotFoundError:
-        print("错误：未找到文章模板。构建中止。")
+        with open(config.BASE_DIR / "index.html", 'r', encoding='utf-8') as f:
+            index_template = f.read()
+        print("模板已加载。")
+    except FileNotFoundError as e:
+        print(f"错误: 模板文件未找到: {e}。构建中止。")
         return
 
-    # 4. 解析所有页面
     all_pages = []
-    print("开始处理内容文件...")
-    for category in config.CATEGORIES:
-        category_path = config.CONTENT_DIR / category
-        output_cat_dir = config.OUTPUT_DIR / category
-        if not output_cat_dir.exists():
-            os.makedirs(output_cat_dir)
+    
+    # --- V V V V  核心逻辑重构开始  V V V V ---
+    
+    print("开始处理所有扇区的内容...")
+    # 3. 遍历所有 content/ 下的目录
+    for content_dir in config.CONTENT_DIR.iterdir():
+        if not content_dir.is_dir():
+            continue
+
+        # 我们只处理以 "sector-" 开头的目录
+        if content_dir.name.startswith("sector-"):
+            sector_name = content_dir.name
+            print(f"  - 正在处理 {sector_name}...")
+
+            output_sector_dir = config.OUTPUT_DIR / sector_name
+            if not output_sector_dir.exists():
+                os.makedirs(output_sector_dir)
             
-        for file_path in category_path.glob("*.html"):
-            if file_path.name == "index.html":
-                continue
+            sector_cards_html = []
             
-            page = Page(file_path)
-            all_pages.append(page)
+            # 4. 处理扇区内的每一篇文章
+            for file_path in content_dir.glob("*.html"):
+                print(f"      - 发现文件: {file_path.name}")
+                if file_path.name == "index.html":
+                    continue
+                
+                page = Page(file_path)
+                all_pages.append(page)
+                
+                # 渲染并保存完整的文章页面
+                rendered_html = page.render(article_template)
+                output_file_path = output_sector_dir / file_path.name
+                with open(output_file_path, 'w', encoding='utf-8') as f:
+                    f.write(rendered_html)
+                
+                # 计算文件大小 (可选)
+                try:
+                    size_in_bytes = os.path.getsize(output_file_path)
+                    page.size_in_bits = size_in_bytes * 8
+                except FileNotFoundError:
+                    pass
+
+                # 5. 为这篇文章生成卡片 HTML
+                # 注意相对路径现在需要包含扇区目录
+                relative_path = f"{sector_name}/{file_path.name}"
+                card_html = f"""
+                <a href="{relative_path}" class="article-card-item">
+                    <div class="card-content">
+                        <h2>{page.title}</h2>
+                        <p class="date">记录于：{page.date}</p>
+                        <p class="summary">{page.summary}</p>
+                        <p class="size">Size: {page.size_in_bits:,} bits</p>
+                    </div>
+                </a>
+                """
+                sector_cards_html.append((page.date, card_html))
             
-            rendered_html = page.render(article_template)
+            # 按日期对卡片排序
+            sector_cards_html.sort(key=lambda item: item[0], reverse=True)
             
-            output_file_path = output_cat_dir / file_path.name
-            with open(output_file_path, 'w', encoding='utf-8') as f:
-                f.write(rendered_html)
+            # 6. 将生成的卡片注入主页模板
+            final_cards_html = "".join([item[1] for item in sector_cards_html])
+            if final_cards_html:
+                 # 将所有卡片包裹在一个容器中
+                final_cards_html = f'<div class="article-cards-container">{final_cards_html}</div>'
 
-            # --- 核心修改：在文件写入后，计算大小并存储 ---
-            try:
-                size_in_bytes = os.path.getsize(output_file_path)
-                page.size_in_bits = size_in_bytes * 8
-            except FileNotFoundError:
-                print(f"警告：无法获取文件 {output_file_path} 的大小。")
+            placeholder = f"<!-- {sector_name.upper().replace('-', '_')}_CARDS_HERE -->"
+            if sector_name == "sector-01":
+                print(f"DEBUG: 为 sector-01 生成的占位符是 ->>>{placeholder}<<<-")
+            index_template = index_template.replace(placeholder, final_cards_html)
+            
+    # 移除旧的占位符以防万一
+    index_template = index_template.replace("<!-- ARTICLE_CARDS_HERE -->", "")
+    
+    # --- ^ ^ ^ ^  核心逻辑重构结束  ^ ^ ^ ^ ---
 
-    print("所有页面已处理并生成。")
-
-    # 5. 更新所有索引页
-    index_updater.update_indexes(all_pages)
-    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
-    page1_path = config.BASE_DIR / "pages" / "page1.html"
-    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
-
-    if page1_path.exists():
-        # 生成文章列表HTML (复用主索引逻辑)
-        post_list_html = ""
-        for page in all_pages:
-            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
-            post_list_html += f"""
-            <article>
-                <h2><a href="{relative_path}">{page.title}</a></h2>
-                <p class="date">{page.date}</p>
-                <p class="summary">{page.summary}</p>
-            </article>
-            """
-        
-        # 读取源模板并替换
-        with open(page1_path, 'r', encoding='utf-8') as f:
-            template = f.read()
-        
-        final_html = template.replace("{{POST_LIST}}", post_list_html)
-        
-        # 写入输出
-        with open(output_page1_path, 'w', encoding='utf-8') as f:
-            f.write(final_html)
-        
-        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
-
+    # 7. 保存最终生成的主页
+    with open(config.OUTPUT_DIR / "index.html", 'w', encoding='utf-8') as f:
+        f.write(index_template)
+    print("主索引页已根据所有扇区内容生成。")
+    
+    # 8. 更新其他索引（这部分逻辑现在可能需要调整或移除，取决于您是否还使用它们）
+    # index_updater.update_indexes(all_pages) # 暂时可以注释掉，因为主逻辑已包含
+    
     print("构建流程完毕。系统功能完整。")
 
 if __name__ == '__main__':

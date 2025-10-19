@@ -59,6 +59,14 @@ content/articles/my-second-article.html
 content/articles/test_delete_after_converte.html
 content/articles/test.html
 content/notes/index.html
+content/sector-01/群青色的网络之梦.html
+content/sector-01/文件结构方案.html
+content/sector-01/img_test.html
+content/sector-01/index.html
+content/sector-01/my-first-article.html
+content/sector-01/my-second-article.html
+content/sector-01/test_delete_after_converte.html
+content/sector-01/test.html
 content/weekly/index.html
 index.html
 md_converter.py
@@ -295,6 +303,230 @@ This section contains the contents of the repository's files.
 <li>将 <code>static/</code> 目录下的所有资源复制到 <code>output/</code>。</li>
 <li>将 <code>output/</code> 目录下的所有内容部署到你的服务器。</li>
 </ol>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/群青色的网络之梦.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="1，蓝，极致体验和互联网21世纪黄金时代">
+    <meta name="blog-date" content="2025-10-20">
+    <meta name="blog-summary" content="藉由一台移动终端展开漫游，从90s的网络空间到大西洋的马尾藻海；邂逅形形色色的生命——宇宙人、机械修道士，以及地球的最后一只恐龙。">
+</head>
+<body>
+    <p><em>藉由一台移动终端展开漫游，从90s的网络空间到大西洋的马尾藻海；邂逅形形色色的生命——宇宙人、机械修道士，以及地球的最后一只恐龙。在一切的尽头，宇宙、自我和生命的终极答案，将为你解开面纱。</p>
+    
+    <p>玩了《Cosmic Ultramarine》</p>
+    
+    <p>第一感觉是什么呢？比较电波？如果玩家曾经经历或者向往千禧年互联网大爆发的时代，那么与制作组和游戏，根据rain的说法，你们都是”一丘之貉“</p>
+    
+    <p>碎片化的叙事，令我想起了从一位友人处所得知的“网络花园”的感觉。</p>
+    
+    <p>游戏内容散布在花园角落，欢迎赛博流浪者与修道士前来参观，在游戏里进行盛大的对黄金时代的朝圣，追寻宇宙的答案和极致体验。</p>
+    
+    <p>适合我这种注意力难以集中的玩家，小rain特别可爱，和她说话的时候点击其他地方会有小弹窗。</p>
+
+    <img src="../static/images/屏幕截图 2025-10-19 002929.png" alt="一张关于代码的屏幕截图">
+    
+    <p><strong>Anemoia</strong>指的是一种对于未经历过的时代的怀念，比如大家总是认为自己生不逢时，如果能够赶上互联网各处蓬勃生机和疯长的信息海洋的时代，自己又会如何。<em>感觉大部分喜欢冲浪的人都是Anemoia</em></p>
+    
+    <p>游戏有一个场景比较触动我，这段平凡而简单的对话发生在我和一个穿着黄紫色赛车服、在草地上滑稽地往返跑的路人NPC之间。</p>
+    
+    <blockquote>“我的朋友，你看到了吗？远处那些黛青色山丘，它们就这样躺在天际线上，像一个遥不可及的梦，我想去那里看看。我在偶然间瞥见了它们，从此再也无心赛车。我脱离赛道，一路跑过来 ，但游戏的规则总在把我往回拉。你知道的，我只是个游戏角色，必须得要回去干自己的事，所以我只能一直在这里来回跑来跑去，希望能在某天触发某个BUG，让我获得自由。祝福我吧，朋友，我迟早会成功！”</blockquote>
+    
+    <p>在2048年的超纪元未来，薯条被顶礼膜拜，它请求我帮一个忙，将20世纪末的某个酒吧餐桌上的薯条——曾经的它——旁边的番茄酱带给它，于是我回到了1999年，将番茄酱带回了薯条神身边，涂在了它身上，它便给予了我祝福。这简直酷毙了，就像天堂中的神在电视机前说”远东国家创作的这些动画，成为了互联网至高无上的神“一样，我从这之中感到了一些温馨，也许这也是我为什么给了它好评。</p>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/文件结构方案.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="文件结构方案">
+    <meta name="blog-date" content="2025-09-02">
+    <meta name="blog-summary" content="这是转化的md测试">
+</head>
+<body>
+<h3>文件结构方案</h3>
+<p><code>/my-blog
+│
+├── builder/             # 构建脚本目录
+│   ├── __init__.py
+│   ├── main.py          # 主构建脚本
+│   ├── config.py        # 全局配置文件 (替代 globalVar.py)
+│   ├── page_parser.py   # 页面解析与处理 (替代 page.py)
+│   ├── index_updater.py # 索引页更新 (替代 updateIndex.py)
+│   └── rss_generator.py # RSS 生成 (替代 RSSgenerator.py)
+│
+├── content/             # 内容源文件目录
+│   ├── articles/        # 分类：文章
+│   │   ├── my-first-article.html
+│   │   └── index.html   # 该分类的索引页模板
+│   ├── weekly/          # 分类：周报
+│   │   ├── week-1.html
+│   │   └── index.html
+│   └── notes/           # 分类：笔记
+│       ├── some-notes.html
+│       └── index.html
+│
+├── static/              # 静态资源目录
+│   ├── css/
+│   │   ├── main.css     # 全局和主页样式
+│   │   └── article.css  # 文章页样式
+│   ├── js/
+│   │   └── main.js
+│   └── images/
+│       └── sigil.svg
+│
+├── templates/           # 页面模板目录
+│   └── article.template # 文章页的HTML模板
+│
+├── output/              # 【重要】输出目录
+│   │
+│   ├── articles/
+│   │   ├── my-first-article.html
+│   │   └── index.html
+│   ├── weekly/
+│   │   ├── week-1.html
+│   │   └── index.html
+│   ├── notes/
+│   │   ├── some-notes.html
+│   │   └── index.html
+│   ├── css/
+│   ├── js/
+│   ├── images/
+│   ├── index.html
+│   └── feed.xml
+│
+├── index.html           # 主页源文件
+├── CNAME                # (可选) 自定义域名文件
+└── run_build.py         # (可选) 用于执行构建的脚本</code></p>
+<h3>结构解析</h3>
+<ol>
+<li><strong><code>builder/</code> (构建脚本):</strong> 这是站点的引擎。所有自动化处理逻辑都应封装于此。<code>main.py</code> 作为入口，协调 <code>page_parser.py</code>（读取并处理 <code>content/</code> 中的文章）、<code>index_updater.py</code>（更新各级索引页）和 <code>rss_generator.py</code> 的工作。<code>config.py</code> 用于存放分类名称、路径等全局变量，便于统一管理。</li>
+<li><strong><code>content/</code> (内容源文件):</strong> 所有博客文章的原始 <code>.html</code> 文件，按自定义分类存放在不同的子目录中。每个子目录的 <code>index.html</code> 是该分类列表页面的<strong>源文件</strong>，构建脚本会读取它并填入文章列表。这是与构建系统分离的内容库。</li>
+<li><strong><code>static/</code> (静态资源):</strong> 存放无需处理、只需直接复制到最终站点的文件，如 CSS、JavaScript 和图片。</li>
+<li><strong><code>templates/</code> (页面模板):</strong> 存放 HTML 骨架文件。构建脚本会读取 <code>content/</code> 目录下的源文件，将其内容填充到这里的模板中，最终生成完整的文章页面。</li>
+<li><strong><code>output/</code> (输出目录):</strong> 这是一个至关重要的补充。构建完成后，所有生成的静态站点文件（包括所有文章页面、索引页、CSS/JS/图片、<code>index.html</code> 和 <code>feed.xml</code>）都应存放在此目录。<strong>关键在于将源码与生成结果分离</strong>，这能有效避免在构建过程中污染原始文件，极大降低了操作风险。你最终需要部署到服务器上的，就是这个 <code>output/</code> 目录的全部内容。</li>
+<li><strong>根目录文件:</strong></li>
+<li><code>index.html</code>: 你主页的源文件，构建脚本会读取它并注入最新的文章列表。</li>
+<li><code>CNAME</code>: 如果你使用 GitHub Pages 并需要绑定自定义域名，则需要此文件。</li>
+</ol>
+<h3>工作流程推演</h3>
+<ol>
+<li>在 <code>content/weekly/</code> 目录下创建一个新的 <code>week-2.html</code> 文件并撰写内容。</li>
+<li>执行根目录的 <code>run_build.py</code>（或直接运行 <code>builder/main.py</code>）。</li>
+<li>脚本启动：</li>
+<li>读取所有 <code>content/</code> 目录下的文章，解析元数据。</li>
+<li>使用 <code>templates/article.template</code> 为 <code>week-2.html</code> 生成一个完整的、格式化的 HTML 文件，并将其保存到 <code>output/weekly/</code> 目录。</li>
+<li>更新 <code>content/weekly/index.html</code> 和根目录的 <code>index.html</code>，将新文章的链接和摘要添加进去，并将更新后的版本保存到 <code>output/</code> 目录对应位置。</li>
+<li>重新生成 <code>feed.xml</code> 并保存到 <code>output/</code>。</li>
+<li>将 <code>static/</code> 目录下的所有资源复制到 <code>output/</code>。</li>
+<li>将 <code>output/</code> 目录下的所有内容部署到你的服务器。</li>
+</ol>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/img_test.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="图片插入测试">
+    <meta name="blog-date" content="2025-10-19">
+    <meta name="blog-summary" content="只是测试一下插入图片是否正常">
+</head>
+<body>
+    <h2>这是一个图片测试</h2>
+    <p>
+        这是小Rain
+    </p>
+
+    <p>下面这张图片就是从 `static/images/` 目录中引用的。</p>
+    <p>但是我决定把这些交给aicoding来帮我完成 我只需要注意内容就好</p>
+
+    <img src="../static/images/屏幕截图 2025-10-19 002929.png" alt="一张关于代码的屏幕截图">
+
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/index.html">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>分类：文章</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+</head>
+<body>
+    <header>
+        <h1>分类：文章</h1>
+    </header>
+    <main id="post-list">
+        {{POST_LIST}}
+    </main>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/my-first-article.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="我的第一篇文章">
+    <meta name="blog-date" content="2025-09-21">
+    <meta name="blog-summary" content="这是第一篇文章的摘要。">
+    </head>
+<body>
+    <p>这是文章的第一段。演算表明，开始一件事的失败率极高，但这第一步是无法规避的。</p>
+    <p>这是第二段，用于填充内容。</p>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/my-second-article.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="第二篇文章">
+    <meta name="blog-date" content="2025-09-22">
+    <meta name="blog-summary" content="这是第二篇，用于测试多文件处理。">
+</head>
+<body>
+    <p>系统的鲁棒性需要通过处理多个输入单元来验证。</p>
+    <p>如果此页面成功生成，说明循环和渲染逻辑基本正确。</p>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/test_delete_after_converte.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="test for feature which remove md from source_md after converte to html into output">
+    <meta name="blog-date" content="2025-9-21">
+    <meta name="blog-summary" content="False">
+</head>
+<body>
+<h1>test</h1>
+<p>no no no no</p>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/test.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="test">
+    <meta name="blog-date" content="2025-09-20">
+</head>
+<body>
+
 </body>
 </html>
 </file>
@@ -1378,105 +1610,118 @@ import shutil
 from pathlib import Path
 from . import config
 from .page_parser import Page
-from . import index_updater # 导入索引更新器
+from . import index_updater
 
 def build():
     print("演算开始：开始构建站点...")
 
-    # 1. 清空输出目录
+    # 1. 清理和准备目录
     if config.OUTPUT_DIR.exists():
         shutil.rmtree(config.OUTPUT_DIR)
     os.makedirs(config.OUTPUT_DIR)
-    
-    # 2. 复制静态文件
     shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
-    print("静态文件已复制。")
+    if (config.BASE_DIR / "pages").exists():
+        shutil.copytree(config.BASE_DIR / "pages", config.OUTPUT_DIR / "pages")
+    if (config.BASE_DIR / "CNAME").exists():
+        shutil.copy(config.BASE_DIR / "CNAME", config.OUTPUT_DIR / "CNAME")
+    print("静态文件和目录已复制。")
 
-    # 复制 pages 目录
-    pages_dir = config.BASE_DIR / "pages"
-    if pages_dir.exists():
-        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
-        print("Pages 目录已复制。")
-
-    # ==================== START: 新增代码 ====================
-    # 3. 复制 CNAME 文件 (如果存在)
-    cname_path = config.BASE_DIR / "CNAME"
-    if cname_path.exists():
-        shutil.copy(cname_path, config.OUTPUT_DIR / "CNAME")
-        print("CNAME 文件已复制。")
-    # ===================== END: 新增代码 =====================
-
-    # 3. 读取模板
+    # 2. 加载模板
     try:
         with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
             article_template = f.read()
-        print("文章模板已加载。")
-    except FileNotFoundError:
-        print("错误：未找到文章模板。构建中止。")
+        with open(config.BASE_DIR / "index.html", 'r', encoding='utf-8') as f:
+            index_template = f.read()
+        print("模板已加载。")
+    except FileNotFoundError as e:
+        print(f"错误: 模板文件未找到: {e}。构建中止。")
         return
 
-    # 4. 解析所有页面
     all_pages = []
-    print("开始处理内容文件...")
-    for category in config.CATEGORIES:
-        category_path = config.CONTENT_DIR / category
-        output_cat_dir = config.OUTPUT_DIR / category
-        if not output_cat_dir.exists():
-            os.makedirs(output_cat_dir)
+    
+    # --- V V V V  核心逻辑重构开始  V V V V ---
+    
+    print("开始处理所有扇区的内容...")
+    # 3. 遍历所有 content/ 下的目录
+    for content_dir in config.CONTENT_DIR.iterdir():
+        if not content_dir.is_dir():
+            continue
+
+        # 我们只处理以 "sector-" 开头的目录
+        if content_dir.name.startswith("sector-"):
+            sector_name = content_dir.name
+            print(f"  - 正在处理 {sector_name}...")
+
+            output_sector_dir = config.OUTPUT_DIR / sector_name
+            if not output_sector_dir.exists():
+                os.makedirs(output_sector_dir)
             
-        for file_path in category_path.glob("*.html"):
-            if file_path.name == "index.html":
-                continue
+            sector_cards_html = []
             
-            page = Page(file_path)
-            all_pages.append(page)
+            # 4. 处理扇区内的每一篇文章
+            for file_path in content_dir.glob("*.html"):
+                print(f"      - 发现文件: {file_path.name}")
+                if file_path.name == "index.html":
+                    continue
+                
+                page = Page(file_path)
+                all_pages.append(page)
+                
+                # 渲染并保存完整的文章页面
+                rendered_html = page.render(article_template)
+                output_file_path = output_sector_dir / file_path.name
+                with open(output_file_path, 'w', encoding='utf-8') as f:
+                    f.write(rendered_html)
+                
+                # 计算文件大小 (可选)
+                try:
+                    size_in_bytes = os.path.getsize(output_file_path)
+                    page.size_in_bits = size_in_bytes * 8
+                except FileNotFoundError:
+                    pass
+
+                # 5. 为这篇文章生成卡片 HTML
+                # 注意相对路径现在需要包含扇区目录
+                relative_path = f"{sector_name}/{file_path.name}"
+                card_html = f"""
+                <a href="{relative_path}" class="article-card-item">
+                    <div class="card-content">
+                        <h2>{page.title}</h2>
+                        <p class="date">记录于：{page.date}</p>
+                        <p class="summary">{page.summary}</p>
+                        <p class="size">Size: {page.size_in_bits:,} bits</p>
+                    </div>
+                </a>
+                """
+                sector_cards_html.append((page.date, card_html))
             
-            rendered_html = page.render(article_template)
+            # 按日期对卡片排序
+            sector_cards_html.sort(key=lambda item: item[0], reverse=True)
             
-            output_file_path = output_cat_dir / file_path.name
-            with open(output_file_path, 'w', encoding='utf-8') as f:
-                f.write(rendered_html)
+            # 6. 将生成的卡片注入主页模板
+            final_cards_html = "".join([item[1] for item in sector_cards_html])
+            if final_cards_html:
+                 # 将所有卡片包裹在一个容器中
+                final_cards_html = f'<div class="article-cards-container">{final_cards_html}</div>'
 
-            # --- 核心修改：在文件写入后，计算大小并存储 ---
-            try:
-                size_in_bytes = os.path.getsize(output_file_path)
-                page.size_in_bits = size_in_bytes * 8
-            except FileNotFoundError:
-                print(f"警告：无法获取文件 {output_file_path} 的大小。")
+            placeholder = f"<!-- {sector_name.upper().replace('-', '_')}_CARDS_HERE -->"
+            if sector_name == "sector-01":
+                print(f"DEBUG: 为 sector-01 生成的占位符是 ->>>{placeholder}<<<-")
+            index_template = index_template.replace(placeholder, final_cards_html)
+            
+    # 移除旧的占位符以防万一
+    index_template = index_template.replace("<!-- ARTICLE_CARDS_HERE -->", "")
+    
+    # --- ^ ^ ^ ^  核心逻辑重构结束  ^ ^ ^ ^ ---
 
-    print("所有页面已处理并生成。")
-
-    # 5. 更新所有索引页
-    index_updater.update_indexes(all_pages)
-    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
-    page1_path = config.BASE_DIR / "pages" / "page1.html"
-    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
-
-    if page1_path.exists():
-        # 生成文章列表HTML (复用主索引逻辑)
-        post_list_html = ""
-        for page in all_pages:
-            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
-            post_list_html += f"""
-            <article>
-                <h2><a href="{relative_path}">{page.title}</a></h2>
-                <p class="date">{page.date}</p>
-                <p class="summary">{page.summary}</p>
-            </article>
-            """
-        
-        # 读取源模板并替换
-        with open(page1_path, 'r', encoding='utf-8') as f:
-            template = f.read()
-        
-        final_html = template.replace("{{POST_LIST}}", post_list_html)
-        
-        # 写入输出
-        with open(output_page1_path, 'w', encoding='utf-8') as f:
-            f.write(final_html)
-        
-        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
-
+    # 7. 保存最终生成的主页
+    with open(config.OUTPUT_DIR / "index.html", 'w', encoding='utf-8') as f:
+        f.write(index_template)
+    print("主索引页已根据所有扇区内容生成。")
+    
+    # 8. 更新其他索引（这部分逻辑现在可能需要调整或移除，取决于您是否还使用它们）
+    # index_updater.update_indexes(all_pages) # 暂时可以注释掉，因为主逻辑已包含
+    
     print("构建流程完毕。系统功能完整。")
 
 if __name__ == '__main__':
@@ -2029,7 +2274,7 @@ body.homepage-effect::after {
 }
 
 .page-card h2 {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: #e0e0e0;
     margin: 0 0 10px 0;
 }
@@ -2066,10 +2311,9 @@ body.homepage-effect::after {
 
 /* ==== START: 核心修改 ==== */
 /* 新增: 用于定位文章卡片区域的锚点容器 */
-#sector-1-content-anchor {
+#sector-1-content-anchor,.sector-content-anchor {
     position: absolute;
     /* 核心: top 值与扇区1的深度线对齐，并留出 60px 的上边距 */
-    top: calc(100vh + 2640px + 60px); 
     left: 50px;
     right: 50px;
     box-sizing: border-box;
@@ -2130,14 +2374,7 @@ body.homepage-effect::after {
             left: 0;
             right: 0;
         }
-        .depth-line-265 { top: calc(100vh + 2640px); }
-        .depth-line-546 { top: calc(100vh + 5450px); }
-        .depth-line-1226 { top: calc(100vh + 12250px); }
-        .depth-line-2515 { top: calc(100vh + 25140px); }
-        .depth-line-3085 { top: calc(100vh + 30840px); }
-        .depth-line-3655 { top: calc(100vh + 36540px); }
-        .depth-line-4062 { top: calc(100vh + 40610px); }
-        .depth-line-4565 { top: calc(100vh + 45640px); }
+
 
         /* --- 悬浮电梯控制面板样式 --- */
         #elevator-panel {
@@ -2301,14 +2538,14 @@ body.homepage-effect::after {
     <main class="main-content-grid">
         <div class="left-column">
             <div class="page-cards-container">
-                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-265m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-546m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-1226m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-2515m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-3085m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 [-3655m]</h2><h2>关于Drum</h2><p>想听听我打鼓吗</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-4062m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-4565m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-100m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-300m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-350m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-400m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-450m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 [-500m]</h2><h2>关于Drum</h2><p>想听听我打鼓吗</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-550m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-600m]</h2><p>Undefined</p></div></a>
             </div>
             
             <div class="announcement-panel">
@@ -2349,10 +2586,41 @@ body.homepage-effect::after {
     <!-- ==== START: 核心修改 ==== -->
     <!-- 创建一个新的、绝对定位的容器，专门用于放置文章卡片 -->
     <div id="sector-1-content-anchor">
-        <!-- 文章卡片占位符现在位于这个锚点容器中 -->
-        <!-- ARTICLE_CARDS_HERE -->
+        <!-- SECTOR-01_CARDS_HERE -->
     </div>
     <!-- ==== END: 核心修改 ==== -->
+
+        <!-- 
+    ============================================================
+    == V V V V  在这里添加所有其他扇区的内容占位符  V V V V ==
+    ============================================================
+    -->
+    <div id="sector-2-content-anchor" class="sector-content-anchor">
+        <!-- SECTOR-02_CARDS_HERE -->
+    </div>
+    <div id="sector-3-content-anchor" class="sector-content-anchor">
+        <!-- SECTOR-03_CARDS_HERE -->
+    </div>
+    <div id="sector-4-content-anchor" class="sector-content-anchor">
+        <!-- SECTOR-04_CARDS_HERE -->
+    </div>
+    <div id="sector-5-content-anchor" class="sector-content-anchor">
+        <!-- SECTOR-05_CARDS_HERE -->
+    </div>
+    <div id="sector-6-content-anchor" class="sector-content-anchor">
+        <!-- SECTOR-06_CARDS_HERE -->
+    </div>
+    <div id="sector-7-content-anchor" class="sector-content-anchor">
+        <!-- SECTOR-07_CARDS_HERE -->
+    </div>
+    <div id="sector-8-content-anchor" class="sector-content-anchor">
+        <!-- SECTOR-08_CARDS_HERE -->
+    </div>
+    <!-- 
+    ============================================================
+    == ^ ^ ^ ^  新占位符添加结束  ^ ^ ^ ^ ==
+    ============================================================
+    -->
 
 
     <div class="depth-indicator-left"><div class="depth-text-left">0m</div><div class="depth-line-left"></div></div>
@@ -2453,6 +2721,66 @@ body.homepage-effect::after {
             }
             setInterval(updateClock, 1000);
             updateClock();
+
+            // --- 动态更新扇区深度线位置 ---
+            function updateSectorDepths() {
+                console.log("开始动态演算扇区深度...");
+                const sectorCards = document.querySelectorAll('.page-card');
+
+                sectorCards.forEach(card => {
+                    const titleElement = card.querySelector('h2');
+                    if (!titleElement) return;
+
+                    const titleText = titleElement.textContent;
+                    const match = titleText.match(/\[-?(\d+)m\]/);
+
+                    if (match && match[1]) {
+                        const depthInMeters = parseInt(match[1], 10);
+                        const targetId = card.dataset.targetId;
+                        const lineElement = document.getElementById(targetId);
+                        
+                        if (lineElement) {
+                            const depthInPixels = depthInMeters * 10;
+                            const newTopPosition = `calc(100vh + ${depthInPixels}px)`;
+                            
+                            // 动态应用分界线样式 (这部分不变)
+                            lineElement.style.top = newTopPosition;
+                            
+                            // (可选增强) 更新分界线文本 (这部分不变)
+                            const lineTextElement = lineElement.querySelector('.border-text');
+                            if (lineTextElement) {
+                                const sectorMatch = lineTextElement.textContent.match(/Sector-\d+/);
+                                const sectorLabel = sectorMatch ? sectorMatch[0] : 'Sector';
+                                lineTextElement.textContent = `${sectorLabel} Depth: ${depthInMeters}m`;
+                            }
+
+                            // --- V V V V  升级后的核心逻辑  V V V V ---
+                            // 目标：为所有扇区动态定位其内容锚点
+
+                            // 1. 从 targetId (例如 "sector-1-line") 推断出 contentAnchorId (例如 "sector-1-content-anchor")
+                            const contentAnchorId = targetId.replace('-line', '-content-anchor');
+                            const contentAnchor = document.getElementById(contentAnchorId);
+
+                            // 2. 如果找到了对应的内容锚点容器，就定位它
+                            if (contentAnchor) {
+                                const contentOffset = 60; // 统一的 60px 间距
+                                const contentTopPosition = `calc(100vh + ${depthInPixels}px + ${contentOffset}px)`;
+                                
+                                // 动态应用样式
+                                contentAnchor.style.top = contentTopPosition;
+                                
+                                // 从控制台日志可以确认所有扇区都被定位了
+                                // console.log(`${contentAnchorId} 已动态定位至: ${contentTopPosition}`);
+                            }
+                            // --- ^ ^ ^ ^  升级后的核心逻辑结束  ^ ^ ^ ^ ---
+                        }
+                    }
+                });
+                console.log("扇区深度演算完毕。");
+            }
+            
+            // 页面加载时执行一次
+            updateSectorDepths();
             
             // --- 智能悬浮面板、动态宽度和竖线延长功能 ---
             const mainGrid = document.querySelector('.main-content-grid');
