@@ -49,7 +49,10 @@ builder/index_updater.py
 builder/main.py
 builder/page_parser.py
 builder/rss_generator.py
+CNAME
+content/articles/群青色的网络之梦.html
 content/articles/文件结构方案.html
+content/articles/img_test.html
 content/articles/index.html
 content/articles/my-first-article.html
 content/articles/my-second-article.html
@@ -72,6 +75,7 @@ run_build.py
 static/css/article.css
 static/css/main.css
 static/css/page.css
+static/images/屏幕截图 2025-10-19 002929.png
 templates/article.template
 </directory_structure>
 
@@ -171,12 +175,46 @@ This section contains the contents of the repository's files.
 4. 将 `output/` 目录下的所有内容部署到你的服务器。
 </file>
 
+<file path="content/articles/群青色的网络之梦.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="1，蓝，极致体验和互联网21世纪黄金时代">
+    <meta name="blog-date" content="2025-10-20">
+    <meta name="blog-summary" content="藉由一台移动终端展开漫游，从90s的网络空间到大西洋的马尾藻海；邂逅形形色色的生命——宇宙人、机械修道士，以及地球的最后一只恐龙。">
+</head>
+<body>
+    <p><em>藉由一台移动终端展开漫游，从90s的网络空间到大西洋的马尾藻海；邂逅形形色色的生命——宇宙人、机械修道士，以及地球的最后一只恐龙。在一切的尽头，宇宙、自我和生命的终极答案，将为你解开面纱。</p>
+    
+    <p>玩了《Cosmic Ultramarine》</p>
+    
+    <p>第一感觉是什么呢？比较电波？如果玩家曾经经历或者向往千禧年互联网大爆发的时代，那么与制作组和游戏，根据rain的说法，你们都是”一丘之貉“</p>
+    
+    <p>碎片化的叙事，令我想起了从一位友人处所得知的“网络花园”的感觉。</p>
+    
+    <p>游戏内容散布在花园角落，欢迎赛博流浪者与修道士前来参观，在游戏里进行盛大的对黄金时代的朝圣，追寻宇宙的答案和极致体验。</p>
+    
+    <p>适合我这种注意力难以集中的玩家，小rain特别可爱，和她说话的时候点击其他地方会有小弹窗。</p>
+
+    <img src="../static/images/屏幕截图 2025-10-19 002929.png" alt="一张关于代码的屏幕截图">
+    
+    <p><strong>Anemoia</strong>指的是一种对于未经历过的时代的怀念，比如大家总是认为自己生不逢时，如果能够赶上互联网各处蓬勃生机和疯长的信息海洋的时代，自己又会如何。<em>感觉大部分喜欢冲浪的人都是Anemoia</em></p>
+    
+    <p>游戏有一个场景比较触动我，这段平凡而简单的对话发生在我和一个穿着黄紫色赛车服、在草地上滑稽地往返跑的路人NPC之间。</p>
+    
+    <blockquote>“我的朋友，你看到了吗？远处那些黛青色山丘，它们就这样躺在天际线上，像一个遥不可及的梦，我想去那里看看。我在偶然间瞥见了它们，从此再也无心赛车。我脱离赛道，一路跑过来 ，但游戏的规则总在把我往回拉。你知道的，我只是个游戏角色，必须得要回去干自己的事，所以我只能一直在这里来回跑来跑去，希望能在某天触发某个BUG，让我获得自由。祝福我吧，朋友，我迟早会成功！”</blockquote>
+    
+    <p>在2048年的超纪元未来，薯条被顶礼膜拜，它请求我帮一个忙，将20世纪末的某个酒吧餐桌上的薯条——曾经的它——旁边的番茄酱带给它，于是我回到了1999年，将番茄酱带回了薯条神身边，涂在了它身上，它便给予了我祝福。这简直酷毙了，就像天堂中的神在电视机前说”远东国家创作的这些动画，成为了互联网至高无上的神“一样，我从这之中感到了一些温馨，也许这也是我为什么给了它好评。</p>
+</body>
+</html>
+</file>
+
 <file path="content/articles/文件结构方案.html">
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="blog-title" content="文件结构方案">
-    <meta name="blog-date" content="2025-09-21">
+    <meta name="blog-date" content="2025-09-02">
     <meta name="blog-summary" content="这是转化的md测试">
 </head>
 <body>
@@ -326,133 +364,31 @@ SITE_TITLE = "我的博客"
 SITE_DESCRIPTION = "一个简约的博客"
 </file>
 
-<file path="builder/index_updater.py">
-def update_indexes(pages):
-    # 按日期对所有页面进行降序排序，这是确保逻辑一致性的必要步骤
-    pages.sort(key=lambda p: p.date, reverse=True)
-
-    print("开始更新索引页...")
-
-    # 更新主索引页
-    update_main_index(pages)
-
-    # 更新分类索引页
-    update_category_indexes(pages)
-    
-    print("索引页更新完毕。")
-
-
-def update_main_index(pages):
-    from . import config
-
-    # 生成文章卡片列表的HTML
-    card_list_html = ""
-    for page in pages:
-        # 路径需要相对于输出目录的根，所以要去掉 content/
-        relative_path = page.path.relative_to(config.CONTENT_DIR)
-        card_list_html += f"""
-        <a href="{relative_path}" class="page-card">
-            <div class="card-content">
-                <h2>{page.title}</h2>
-                <p>记录于：{page.date}</p>
-            </div>
-        </a>
-        """
-    
-    # 读取主页模板并注入列表
-    main_index_path = config.BASE_DIR / "index.html"
-    with open(main_index_path, 'r', encoding='utf-8') as f:
-        template = f.read()
-    
-    # 将生成的卡片列表替换到新的占位符中
-    final_html = template.replace("{{ARTICLE_CARDS}}", card_list_html)
-
-    # 写入最终的主页文件
-    output_path = config.OUTPUT_DIR / "index.html"
-    with open(output_path, 'w', encoding='utf-8') as f:
-        f.write(final_html)
-    print("  - 主索引页 [index.html] 已更新。")
-
-
-def update_category_indexes(pages):
-    from . import config
-
-    for category in config.CATEGORIES:
-        # 筛选出属于当前分类的文章
-        category_pages = [p for p in pages if p.path.parent.name == category]
-        
-        if not category_pages:
-            continue
-
-        # 生成文章列表的HTML
-        post_list_html = ""
-        # 确保这里也只有一个 for 循环
-        for page in category_pages:
-            # 在分类页中，链接是相对的
-            post_list_html += f"""
-            <article>
-                <h2><a href="{page.path.name}">{page.title}</a></h2>
-                <p class="date">{page.date}</p>
-                <p class="summary">{page.summary}</p>
-            </article>
-            """
-
-        # 读取分类索引页模板并注入
-        category_index_path = config.CONTENT_DIR / category / "index.html"
-        if category_index_path.exists():
-            with open(category_index_path, 'r', encoding='utf-8') as f:
-                template = f.read()
-            
-            final_html = template.replace("{{POST_LIST}}", post_list_html)
-
-            # 写入最终的分类索引页
-            output_path = config.OUTPUT_DIR / category / "index.html"
-            with open(output_path, 'w', encoding='utf-8') as f:
-                f.write(final_html)
-            print(f"  - 分类索引页 [{category}/index.html] 已更新。")
+<file path="CNAME">
+jiooobasement.generaltechstudio.com
 </file>
 
-<file path="builder/page_parser.py">
-from bs4 import BeautifulSoup
+<file path="content/articles/img_test.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="图片插入测试">
+    <meta name="blog-date" content="2025-10-19">
+    <meta name="blog-summary" content="只是测试一下插入图片是否正常">
+</head>
+<body>
+    <h2>这是一个图片测试</h2>
+    <p>
+        这是小Rain
+    </p>
 
-class Page:
-    def __init__(self, file_path):
-        self.path = file_path
-        self.title = ""
-        self.date = ""
-        self.summary = ""
-        self.body = ""
-        self.metadata = {}
-        self.parse()
+    <p>下面这张图片就是从 `static/images/` 目录中引用的。</p>
+    <p>但是我决定把这些交给aicoding来帮我完成 我只需要注意内容就好</p>
 
-    def parse(self):
-        with open(self.path, 'r', encoding='utf-8') as f:
-            soup = BeautifulSoup(f.read(), 'html.parser')
+    <img src="../static/images/屏幕截图 2025-10-19 002929.png" alt="一张关于代码的屏幕截图">
 
-        # 解析元数据
-        meta_tags = soup.find_all('meta')
-        for tag in meta_tags:
-            if tag.get('name', '').startswith('blog-'):
-                key = tag['name'].replace('blog-', '')
-                self.metadata[key] = tag['content']
-        
-        self.title = self.metadata.get('title', '无标题')
-        self.date = self.metadata.get('date', '')
-        self.summary = self.metadata.get('summary', '')
-
-        # 解析正文
-        if soup.body:
-            # get_text() 方法可以提取纯文本内容，而 str(soup.body) 会保留HTML标签
-            self.body = ''.join(str(child) for child in soup.body.children)
-        else:
-            self.body = str(soup)
-
-    def render(self, template_content):
-        """使用页面数据渲染模板"""
-        content = template_content.replace('$title$', self.title)
-        content = content.replace('$date$', self.date)
-        content = content.replace('$body$', self.body)
-        return content
+</body>
+</html>
 </file>
 
 <file path="content/articles/index.html">
@@ -711,6 +647,50 @@ __pycache__/
 *.pyc
 </file>
 
+<file path="builder/page_parser.py">
+from bs4 import BeautifulSoup
+
+class Page:
+    def __init__(self, file_path):
+        self.path = file_path
+        self.title = ""
+        self.date = ""
+        self.summary = ""
+        self.body = ""
+        self.metadata = {}
+        self.size_in_bits = 0  # 新增属性，用于存储文件大小（比特）
+        self.parse()
+
+    def parse(self):
+        with open(self.path, 'r', encoding='utf-8') as f:
+            soup = BeautifulSoup(f.read(), 'html.parser')
+
+        # 解析元数据
+        meta_tags = soup.find_all('meta')
+        for tag in meta_tags:
+            if tag.get('name', '').startswith('blog-'):
+                key = tag['name'].replace('blog-', '')
+                self.metadata[key] = tag['content']
+        
+        self.title = self.metadata.get('title', '无标题')
+        self.date = self.metadata.get('date', '')
+        self.summary = self.metadata.get('summary', '')
+
+        # 解析正文
+        if soup.body:
+            # get_text() 方法可以提取纯文本内容，而 str(soup.body) 会保留HTML标签
+            self.body = ''.join(str(child) for child in soup.body.children)
+        else:
+            self.body = str(soup)
+
+    def render(self, template_content):
+        """使用页面数据渲染模板"""
+        content = template_content.replace('$title$', self.title)
+        content = content.replace('$date$', self.date)
+        content = content.replace('$body$', self.body)
+        return content
+</file>
+
 <file path="static/css/article.css">
 /* --- 全局与基础设定 --- */
 body {
@@ -864,125 +844,99 @@ body {
 }
 </file>
 
-<file path="templates/article.template">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>$title$</title>
-    <link rel="stylesheet" href="../static/css/article.css">
-</head>
-<body>
+<file path="builder/index_updater.py">
+def update_indexes(pages):
+    # 按日期对所有页面进行降序排序，这是确保逻辑一致性的必要步骤
+    pages.sort(key=lambda p: p.date, reverse=True)
 
-    <div class="article-container">
-        <header class="article-header">
-            <a href="../index.html" class="back-link">返回基地</a>
-            <h1 class="article-title">$title$</h1>
-            <p class="article-meta">记录于：$date$</p>
-        </header>
+    print("开始更新索引页...")
 
-        <main class="article-content">
-            $body$
-        </main>
-    </div>
+    # 更新主索引页
+    update_main_index(pages)
 
-</body>
-</html>
-</file>
-
-<file path="builder/main.py">
-import os
-import shutil
-from pathlib import Path
-from . import config
-from .page_parser import Page
-from . import index_updater # 导入索引更新器
-
-def build():
-    print("演算开始：开始构建站点...")
-
-    # 1. 清空输出目录
-    if config.OUTPUT_DIR.exists():
-        shutil.rmtree(config.OUTPUT_DIR)
-    os.makedirs(config.OUTPUT_DIR)
+    # 更新分类索引页
+    update_category_indexes(pages)
     
-    # 2. 复制静态文件
-    shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
-    print("静态文件已复制。")
+    print("索引页更新完毕。")
 
-    # 复制 pages 目录
-    pages_dir = config.BASE_DIR / "pages"
-    if pages_dir.exists():
-        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
-        print("Pages 目录已复制。")
 
-    # 3. 读取模板
-    try:
-        with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
-            article_template = f.read()
-        print("文章模板已加载。")
-    except FileNotFoundError:
-        print("错误：未找到文章模板。构建中止。")
-        return
+def update_main_index(pages):
+    from . import config
 
-    # 4. 解析所有页面
-    all_pages = []
-    print("开始处理内容文件...")
+    # (旧逻辑，保留以防万一)
+    post_list_html = "..." # 省略未改变部分
+    
+    # --- 为 Sector 01 生成文章卡片 ---
+    article_cards_html = ""
+    for page in pages:
+        relative_path = page.path.relative_to(config.CONTENT_DIR)
+        # --- 核心修改：添加一个带有 class="size" 的 <p> 标签来显示大小 ---
+        # 使用 f-string 的格式化功能 `{page.size_in_bits:,}` 来为数字添加千位分隔符
+        article_cards_html += f"""
+        <a href="{relative_path}" class="article-card-item">
+            <div class="card-content">
+                <h2>{page.title}</h2>
+                <p class="date">记录于：{page.date}</p>
+                <p class="summary">{page.summary}</p>
+                <p class="size">Size: {page.size_in_bits:,} bits</p>
+            </div>
+        </a>
+        """
+    
+    sector_1_content = f'<div class="article-cards-container">{article_cards_html}</div>'
+
+    # 读取主页模板
+    main_index_path = config.BASE_DIR / "index.html"
+    with open(main_index_path, 'r', encoding='utf-8') as f:
+        template = f.read()
+    
+    final_html = template.replace("<!-- ARTICLE_CARDS_HERE -->", sector_1_content)
+    final_html = final_html.replace("{{POST_LIST}}", "") # 清理旧占位符
+
+    # 写入最终的主页文件
+    output_path = config.OUTPUT_DIR / "index.html"
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(final_html)
+    print("  - 主索引页 [index.html] 已更新。")
+
+
+def update_category_indexes(pages):
+    # ... 此函数无需修改 ...
+    from . import config
+
     for category in config.CATEGORIES:
-        category_path = config.CONTENT_DIR / category
-        output_cat_dir = config.OUTPUT_DIR / category
-        if not output_cat_dir.exists():
-            os.makedirs(output_cat_dir)
-            
-        for file_path in category_path.glob("*.html"):
-            if file_path.name == "index.html":
-                continue
-            
-            page = Page(file_path)
-            all_pages.append(page)
-            
-            rendered_html = page.render(article_template)
-            
-            output_file_path = output_cat_dir / file_path.name
-            with open(output_file_path, 'w', encoding='utf-8') as f:
-                f.write(rendered_html)
-    print("所有页面已处理并生成。")
+        # 筛选出属于当前分类的文章
+        category_pages = [p for p in pages if p.path.parent.name == category]
+        
+        if not category_pages:
+            continue
 
-    # 5. 更新所有索引页
-    index_updater.update_indexes(all_pages)
-    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
-    page1_path = config.BASE_DIR / "pages" / "page1.html"
-    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
-
-    if page1_path.exists():
-        # 生成文章列表HTML (复用主索引逻辑)
+        # 生成文章列表的HTML
         post_list_html = ""
-        for page in all_pages:
-            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
+        # 确保这里也只有一个 for 循环
+        for page in category_pages:
+            # 在分类页中，链接是相对的
             post_list_html += f"""
             <article>
-                <h2><a href="{relative_path}">{page.title}</a></h2>
+                <h2><a href="{page.path.name}">{page.title}</a></h2>
                 <p class="date">{page.date}</p>
                 <p class="summary">{page.summary}</p>
             </article>
             """
-        
-        # 读取源模板并替换
-        with open(page1_path, 'r', encoding='utf-8') as f:
-            template = f.read()
-        
-        final_html = template.replace("{{POST_LIST}}", post_list_html)
-        
-        # 写入输出
-        with open(output_page1_path, 'w', encoding='utf-8') as f:
-            f.write(final_html)
-        
-        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
 
-    print("构建流程完毕。系统功能完整。")
+        # 读取分类索引页模板并注入
+        category_index_path = config.CONTENT_DIR / category / "index.html"
+        if category_index_path.exists():
+            with open(category_index_path, 'r', encoding='utf-8') as f:
+                template = f.read()
+            
+            final_html = template.replace("{{POST_LIST}}", post_list_html)
 
-if __name__ == '__main__':
-    build()
+            # 写入最终的分类索引页
+            output_path = config.OUTPUT_DIR / category / "index.html"
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(final_html)
+            print(f"  - 分类索引页 [{category}/index.html] 已更新。")
 </file>
 
 <file path="pages/page2.html">
@@ -1170,6 +1124,41 @@ body {
 .page-container {
     padding-top: 80px;  /* 原60px +20px 避线+标签 */
 }
+</file>
+
+<file path="templates/article.template">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>$title$</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <!-- 
+              核心修改：
+              1. 添加 onclick 事件处理器。
+              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
+                 这可以处理用户在新标签页直接打开文章的边缘情况。
+              3. `event.preventDefault()` 阻止链接的默认跳转行为。
+              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
+              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
+            -->
+            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
+            <h1 class="article-title">$title$</h1>
+            <p class="article-meta">记录于：$date$</p>
+        </header>
+
+        <main class="article-content">
+            $body$
+        </main>
+    </div>
+
+</body>
+</html>
 </file>
 
 <file path="pages/page3.html">
@@ -1381,6 +1370,117 @@ body {
     </div>
 </body>
 </html>
+</file>
+
+<file path="builder/main.py">
+import os
+import shutil
+from pathlib import Path
+from . import config
+from .page_parser import Page
+from . import index_updater # 导入索引更新器
+
+def build():
+    print("演算开始：开始构建站点...")
+
+    # 1. 清空输出目录
+    if config.OUTPUT_DIR.exists():
+        shutil.rmtree(config.OUTPUT_DIR)
+    os.makedirs(config.OUTPUT_DIR)
+    
+    # 2. 复制静态文件
+    shutil.copytree(config.STATIC_DIR, config.OUTPUT_DIR / "static")
+    print("静态文件已复制。")
+
+    # 复制 pages 目录
+    pages_dir = config.BASE_DIR / "pages"
+    if pages_dir.exists():
+        shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
+        print("Pages 目录已复制。")
+
+    # ==================== START: 新增代码 ====================
+    # 3. 复制 CNAME 文件 (如果存在)
+    cname_path = config.BASE_DIR / "CNAME"
+    if cname_path.exists():
+        shutil.copy(cname_path, config.OUTPUT_DIR / "CNAME")
+        print("CNAME 文件已复制。")
+    # ===================== END: 新增代码 =====================
+
+    # 3. 读取模板
+    try:
+        with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
+            article_template = f.read()
+        print("文章模板已加载。")
+    except FileNotFoundError:
+        print("错误：未找到文章模板。构建中止。")
+        return
+
+    # 4. 解析所有页面
+    all_pages = []
+    print("开始处理内容文件...")
+    for category in config.CATEGORIES:
+        category_path = config.CONTENT_DIR / category
+        output_cat_dir = config.OUTPUT_DIR / category
+        if not output_cat_dir.exists():
+            os.makedirs(output_cat_dir)
+            
+        for file_path in category_path.glob("*.html"):
+            if file_path.name == "index.html":
+                continue
+            
+            page = Page(file_path)
+            all_pages.append(page)
+            
+            rendered_html = page.render(article_template)
+            
+            output_file_path = output_cat_dir / file_path.name
+            with open(output_file_path, 'w', encoding='utf-8') as f:
+                f.write(rendered_html)
+
+            # --- 核心修改：在文件写入后，计算大小并存储 ---
+            try:
+                size_in_bytes = os.path.getsize(output_file_path)
+                page.size_in_bits = size_in_bytes * 8
+            except FileNotFoundError:
+                print(f"警告：无法获取文件 {output_file_path} 的大小。")
+
+    print("所有页面已处理并生成。")
+
+    # 5. 更新所有索引页
+    index_updater.update_indexes(all_pages)
+    # 6. 更新子页面索引 (新增：处理 page1.html 的文章列表)
+    page1_path = config.BASE_DIR / "pages" / "page1.html"
+    output_page1_path = config.OUTPUT_DIR / "pages" / "page1.html"
+
+    if page1_path.exists():
+        # 生成文章列表HTML (复用主索引逻辑)
+        post_list_html = ""
+        for page in all_pages:
+            relative_path = f"../content/{page.path.parent.name}/{page.path.name}"  # 相对 page1.html 的路径
+            post_list_html += f"""
+            <article>
+                <h2><a href="{relative_path}">{page.title}</a></h2>
+                <p class="date">{page.date}</p>
+                <p class="summary">{page.summary}</p>
+            </article>
+            """
+        
+        # 读取源模板并替换
+        with open(page1_path, 'r', encoding='utf-8') as f:
+            template = f.read()
+        
+        final_html = template.replace("{{POST_LIST}}", post_list_html)
+        
+        # 写入输出
+        with open(output_page1_path, 'w', encoding='utf-8') as f:
+            f.write(final_html)
+        
+        print("  - 子页面 [pages/page1.html] 已更新文章列表。")
+
+    print("构建流程完毕。系统功能完整。")
+
+if __name__ == '__main__':
+    build()
 </file>
 
 <file path="pages/page1.html">
@@ -1854,21 +1954,56 @@ body.homepage-effect::after {
     padding: 80px 50px;
     max-width: 1600px;
     margin: 0 auto;
-    /* --- 新增规则 --- */
-    box-sizing: border-box; /* 确保 padding 包含在高度计算之内 */
-    min-height: 100vh;      /* 强制此区域的最小高度为整个视口的高度 */
+    box-sizing: border-box; 
+    min-height: 100vh;
 }
 
-/* --- 新增：页面卡片容器 --- */
+/* 新增: 左侧内容列的容器 */
+.left-column {
+    flex: 2; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- 页面卡片容器 --- */
 .page-cards-container {
-    flex: 2; /* 占据 2/3 宽度 */
     display: grid;
-    /* 响应式网格：自动填充，每列最小280px */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px; /* 卡片间距 */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px; 
 }
 
-/* --- 新增：单个卡片样式 --- */
+/* 新增: 公告面板样式 */
+.announcement-panel {
+    margin-top: 30px; 
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 25px;
+    color: #c5c5c5;
+}
+
+.announcement-panel h3 {
+    font-family: 'Courier New', monospace;
+    color: #888;
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 15px;
+}
+
+.announcement-panel p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #aaa;
+    margin: 0 0 1em 0;
+}
+
+.announcement-panel p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- 单个卡片样式 --- */
 .page-card {
     background-color: #222;
     border: 1px solid #444;
@@ -1876,7 +2011,7 @@ body.homepage-effect::after {
     text-decoration: none;
     color: #c5c5c5;
     transition: all 0.3s ease;
-    overflow: hidden; /* 确保内部元素不溢出 */
+    overflow: hidden; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1894,7 +2029,7 @@ body.homepage-effect::after {
 }
 
 .page-card h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: #e0e0e0;
     margin: 0 0 10px 0;
 }
@@ -1905,9 +2040,9 @@ body.homepage-effect::after {
     margin: 0;
 }
 
-/* --- 新增：右侧面板样式 --- */
+/* --- 右侧面板样式 --- */
 .right-panel {
-    flex: 1; /* 占据 1/3 宽度 */
+    flex: 1; 
     padding-left: 50px;
 }
 
@@ -1929,30 +2064,52 @@ body.homepage-effect::after {
     font-size: 1rem;
 }
 
+/* ==== START: 核心修改 ==== */
+/* 新增: 用于定位文章卡片区域的锚点容器 */
+#sector-1-content-anchor {
+    position: absolute;
+    /* 核心: top 值与扇区1的深度线对齐，并留出 60px 的上边距 */
+    top: calc(100vh + 2640px + 60px); 
+    left: 50px;
+    right: 50px;
+    box-sizing: border-box;
+    /* 核心: 这个 padding-right 确保了内容不会与右侧面板重叠 */
+    padding-right: calc(33.33% + 50px); 
+}
+
+/* 文章卡片容器本身的样式: 只负责内部布局，不负责定位 */
+.article-cards-container {
+    display: grid;
+    grid-template-columns: 1fr; /* 单列网格 */
+    gap: 20px;
+}
+/* ==== END: 核心修改 ==== */
+
+
 /* 移动端禁用光斑效果（基于 hover 检测） */
 @media (hover: none) {
     body.homepage-effect {
-        background: #0d0d0d !important; /* 纯色 fallback，避免手电筒 */
-        cursor: auto !important; /* 恢复默认光标 */
+        background: #0d0d0d !important;
+        cursor: auto !important;
     }
     
     body.homepage-effect::after {
-        display: none !important; /* 隐藏噪点层 */
+        display: none !important;
     }
     
     .homepage-effect .cursor-dot {
-        display: none !important; /* 隐藏光标点 */
+        display: none !important;
     }
 }
 
 /* 桌面端优化：增强光斑响应 */
 @media (hover: hover) {
     body.homepage-effect {
-        cursor: none; /* 只在 hover 设备隐藏光标 */
+        cursor: none;
     }
     
     .homepage-effect .cursor-dot {
-        display: block; /* 确保显示 */
+        display: block;
     }
 }
 </file>
@@ -1962,7 +2119,7 @@ body.homepage-effect::after {
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的博客 - 主页</title>
+    <title>JioooBasement - 无根避难所</title>
     <link rel="stylesheet" href="static/css/main.css">
     <!-- 样式 -->
     <style>
@@ -2063,8 +2220,60 @@ body.homepage-effect::after {
         .page-cards-container {
             align-self: flex-start;
         }
+
+        /* --- 单个文章卡片的样式 --- */
+        .article-card-item {
+            background-color: #2a2a2a;
+            border: 1px solid #555;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #c5c5c5;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .article-card-item:hover {
+            transform: translateY(-5px);
+            border-color: #00aaff;
+            box-shadow: 0 5px 15px rgba(0, 170, 255, 0.2);
+        }
+
+        .article-card-item .card-content {
+            padding: 20px;
+            position: relative;
+            padding-bottom: 40px; 
+        }
+
+        .article-card-item h2 {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            margin: 0 0 10px 0;
+        }
+
+        .article-card-item .date {
+            font-size: 0.8rem;
+            color: #888;
+            margin: 0 0 10px 0;
+        }
+
+        .article-card-item .summary {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin: 0;
+        }
+        
+        .article-card-item .size {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.8rem;
+            font-family: 'Courier New', monospace;
+            color: #666;
+            margin: 0;
+        }
     </style>
 </head>
+
 <body class="homepage-effect">
     <div class="cursor-dot"></div>
     <section class="hero" id="hero-section">
@@ -2090,11 +2299,61 @@ body.homepage-effect::after {
     <div id="sector-8-line" class="border-line sector-depth-line depth-line-4565"><div class="border-text">Sector-08 Depth: 4565m</div></div>
 
     <main class="main-content-grid">
-        <div class="page-cards-container">
-            {{ARTICLE_CARDS}}
+        <div class="left-column">
+            <div class="page-cards-container">
+                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-265m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-546m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-1226m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-2515m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-3085m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 [-3655m]</h2><h2>关于Drum</h2><p>想听听我打鼓吗</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-4062m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-4565m]</h2><p>Undefined</p></div></a>
+            </div>
+            
+            <div class="announcement-panel">
+                <h3>//: ANNOUNCEMENT</h3>
+                <p>
+                    2025-10-19 
+                </p>
+                <p>
+                    // 地下室修建中 //
+                    请使用右侧的电梯在扇区之间移动
+                </p>
+                <p>
+                    或者喜欢的话，可以使用滚轮模拟走楼梯（尽管这会很久，但是我觉得是值得的？
+                </p>
+
+                <p>
+                     /
+                </p>
+
+                <p>
+                    2025-10-20
+                </p>
+
+                <p>
+                    更新了网络之梦
+                </p>
+
+                <p>
+                    好像是第一篇正式文章？还有很多随笔和笔记，之后再慢慢搬上来吧
+                </p>
+                
+            </div>
         </div>
+
         <aside class="right-panel"><div class="panel-content"><h3>//:Welcome to JioooBasement</h3><p>地下室深度导航系统已激活。</p><p>节点电梯通道链接稳定</p><p>等待指令...</p></div></aside>
     </main>
+    
+    <!-- ==== START: 核心修改 ==== -->
+    <!-- 创建一个新的、绝对定位的容器，专门用于放置文章卡片 -->
+    <div id="sector-1-content-anchor">
+        <!-- 文章卡片占位符现在位于这个锚点容器中 -->
+        <!-- ARTICLE_CARDS_HERE -->
+    </div>
+    <!-- ==== END: 核心修改 ==== -->
+
 
     <div class="depth-indicator-left"><div class="depth-text-left">0m</div><div class="depth-line-left"></div></div>
 
@@ -2105,7 +2364,7 @@ body.homepage-effect::after {
         <nav class="elevator-buttons">
             <ul>
                 <li><a href="#" class="elevator-button" data-target-id="hero-section">Return to surface</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-1-line">Go to Sector 01</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-1-line">Go to Sector 01 文章</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-2-line">Go to Sector 02</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-3-line">Go to Sector 03</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-4-line">Go to Sector 04</a></li>
@@ -2118,6 +2377,7 @@ body.homepage-effect::after {
     </div>
 
     <script>
+        // ... JavaScript 部分无需改动 ...
         // --- 深度指示器功能 ---
         function updateDepthIndicator() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -2171,8 +2431,7 @@ body.homepage-effect::after {
                     const targetId = this.dataset.targetId;
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
-                        // 特殊处理返回顶部，确保滚动到最顶端
-                        const topPosition = targetId === 'hero-section' ? 0 : targetElement.offsetTop;
+                        const topPosition = targetId === 'hero-section' ? 0 : targetElement.offsetTop - 20;
                         window.scrollTo({ top: topPosition, behavior: 'smooth' });
                     }
                 });
