@@ -23,6 +23,14 @@ def build():
         shutil.copytree(pages_dir, config.OUTPUT_DIR / "pages")
         print("Pages 目录已复制。")
 
+    # ==================== START: 新增代码 ====================
+    # 3. 复制 CNAME 文件 (如果存在)
+    cname_path = config.BASE_DIR / "CNAME"
+    if cname_path.exists():
+        shutil.copy(cname_path, config.OUTPUT_DIR / "CNAME")
+        print("CNAME 文件已复制。")
+    # ===================== END: 新增代码 =====================
+
     # 3. 读取模板
     try:
         with open(config.TEMPLATES_DIR / "article.template", 'r', encoding='utf-8') as f:
