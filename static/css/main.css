@@ -548,7 +548,7 @@ body.homepage-effect::after {
 
 /* ==== START: 核心修改 ==== */
 /* 新增: 用于定位文章卡片区域的锚点容器 */
-#sector-1-content-anchor {
+#sector-1-content-anchor,.sector-content-anchor {
     position: absolute;
     /* 核心: top 值与扇区1的深度线对齐，并留出 60px 的上边距 */
     left: 50px;
