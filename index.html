@@ -104,19 +104,7 @@
             align-self: flex-start;
         }
 
-        /* --- 文章卡片样式 --- */
-        .article-cards-container {
-            position: absolute;
-            top: calc(100vh + 2640px + 60px); /* 位于 sector-1-line 下方 60px */
-            left: 50px;
-            right: 50px;
-            padding-right: calc(33.33% + 50px);
-            box-sizing: border-box;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
+        /* --- 单个文章卡片的样式 --- */
         .article-card-item {
             background-color: #2a2a2a;
             border: 1px solid #555;
@@ -135,9 +123,7 @@
 
         .article-card-item .card-content {
             padding: 20px;
-            /* --- 核心修改 1: 设为相对定位的容器 --- */
             position: relative;
-            /* 增加底部内边距，为绝对定位的元素留出空间 */
             padding-bottom: 40px; 
         }
 
@@ -159,20 +145,17 @@
             margin: 0;
         }
         
-        /* --- 核心修改 2: 新增样式，用于定位文件大小 --- */
         .article-card-item .size {
             position: absolute;
-            bottom: 15px;      /* 距离底部 15px */
-            right: 20px;       /* 距离右侧 20px */
+            bottom: 15px;
+            right: 20px;
             font-size: 0.8rem;
-            font-family: 'Courier New', monospace; /* 使用等宽字体，更具技术感 */
-            color: #666;       /* 较暗的颜色，不喧宾夺主 */
-            margin: 0;         /* 移除默认的 p 标签边距 */
+            font-family: 'Courier New', monospace;
+            color: #666;
+            margin: 0;
         }
     </style>
 </head>
-
-<!-- ... body 部分保持不变 ... -->
 
 <body class="homepage-effect">
     <div class="cursor-dot"></div>
@@ -190,7 +173,44 @@
     </section>
 
     <div id="sector-1-line" class="border-line sector-depth-line depth-line-265"><div class="border-text">Sector-01 Depth: 265m</div></div>
-    <div class="article-cards-container">
+    <div id="sector-2-line" class="border-line sector-depth-line depth-line-546"><div class="border-text">Sector-02 Depth: 546m</div></div>
+    <div id="sector-3-line" class="border-line sector-depth-line depth-line-1226"><div class="border-text">Sector-03 Depth: 1226m</div></div>
+    <div id="sector-4-line" class="border-line sector-depth-line depth-line-2515"><div class="border-text">Sector-04 Depth: 2515m</div></div>
+    <div id="sector-5-line" class="border-line sector-depth-line depth-line-3085"><div class="border-text">Sector-05 Depth: 3085m</div></div>
+    <div id="sector-6-line" class="border-line sector-depth-line depth-line-3655"><div class="border-text">Sector-06 Depth: 3655m</div></div>
+    <div id="sector-7-line" class="border-line sector-depth-line depth-line-4062"><div class="border-text">Sector-07 Depth: 4062m</div></div>
+    <div id="sector-8-line" class="border-line sector-depth-line depth-line-4565"><div class="border-text">Sector-08 Depth: 4565m</div></div>
+
+    <main class="main-content-grid">
+        <div class="left-column">
+            <div class="page-cards-container">
+                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 储藏室 [-265m]</h2><p>文章的大归类仓库</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-546m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-1226m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-2515m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-3085m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 未写入 [-3655m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-4062m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-4565m]</h2><p>Undefined</p></div></a>
+            </div>
+            
+            <div class="announcement-panel">
+                <h3>//: 公告 / ANNOUNCEMENT</h3>
+                <p>
+                    请在这里填写您的公告内容。
+                    这里支持多行文本，您可以根据需要添加更多的 `<p>` 标签来分段。
+                </p>
+            </div>
+        </div>
+
+        <aside class="right-panel"><div class="panel-content"><h3>//:Welcome to JioooBasement</h3><p>地下室深度导航系统已激活。</p><p>节点电梯通道链接稳定</p><p>等待指令...</p></div></aside>
+    </main>
+    
+    <!-- ==== START: 核心修改 ==== -->
+    <!-- 创建一个新的、绝对定位的容器，专门用于放置文章卡片 -->
+    <div id="sector-1-content-anchor">
+        <!-- 文章卡片占位符现在位于这个锚点容器中 -->
+        <div class="article-cards-container">
         <a href="articles/test_delete_after_converte.html" class="article-card-item">
             <div class="card-content">
                 <h2>test for feature which remove md from source_md after converte to html into output</h2>
@@ -236,27 +256,9 @@
             </div>
         </a>
         </div>
-    <div id="sector-2-line" class="border-line sector-depth-line depth-line-546"><div class="border-text">Sector-02 Depth: 546m</div></div>
-    <div id="sector-3-line" class="border-line sector-depth-line depth-line-1226"><div class="border-text">Sector-03 Depth: 1226m</div></div>
-    <div id="sector-4-line" class="border-line sector-depth-line depth-line-2515"><div class="border-text">Sector-04 Depth: 2515m</div></div>
-    <div id="sector-5-line" class="border-line sector-depth-line depth-line-3085"><div class="border-text">Sector-05 Depth: 3085m</div></div>
-    <div id="sector-6-line" class="border-line sector-depth-line depth-line-3655"><div class="border-text">Sector-06 Depth: 3655m</div></div>
-    <div id="sector-7-line" class="border-line sector-depth-line depth-line-4062"><div class="border-text">Sector-07 Depth: 4062m</div></div>
-    <div id="sector-8-line" class="border-line sector-depth-line depth-line-4565"><div class="border-text">Sector-08 Depth: 4565m</div></div>
+    </div>
+    <!-- ==== END: 核心修改 ==== -->
 
-    <main class="main-content-grid">
-        <div class="page-cards-container">
-            <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 储藏室 [-265m]</h2><p>文章的大归类仓库</p></div></a>
-            <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-546m]</h2><p>Undefined</p></div></a>
-            <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-1226m]</h2><p>Undefined</p></div></a>
-            <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-2515m]</h2><p>Undefined</p></div></a>
-            <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-3085m]</h2><p>Undefined</p></div></a>
-            <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 未写入 [-3655m]</h2><p>Undefined</p></div></a>
-            <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-4062m]</h2><p>Undefined</p></div></a>
-            <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-4565m]</h2><p>Undefined</p></div></a>
-        </div>
-        <aside class="right-panel"><div class="panel-content"><h3>//:Welcome to JioooBasement</h3><p>地下室深度导航系统已激活。</p><p>节点电梯通道链接稳定</p><p>等待指令...</p></div></aside>
-    </main>
 
     <div class="depth-indicator-left"><div class="depth-text-left">0m</div><div class="depth-line-left"></div></div>
 
@@ -280,6 +282,7 @@
     </div>
 
     <script>
+        // ... JavaScript 部分无需改动 ...
         // --- 深度指示器功能 ---
         function updateDepthIndicator() {
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;

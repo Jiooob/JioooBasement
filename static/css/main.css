@@ -436,21 +436,56 @@ body.homepage-effect::after {
     padding: 80px 50px;
     max-width: 1600px;
     margin: 0 auto;
-    /* --- 新增规则 --- */
-    box-sizing: border-box; /* 确保 padding 包含在高度计算之内 */
-    min-height: 100vh;      /* 强制此区域的最小高度为整个视口的高度 */
+    box-sizing: border-box; 
+    min-height: 100vh;
 }
 
-/* --- 新增：页面卡片容器 --- */
+/* 新增: 左侧内容列的容器 */
+.left-column {
+    flex: 2; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- 页面卡片容器 --- */
 .page-cards-container {
-    flex: 2; /* 占据 2/3 宽度 */
     display: grid;
-    /* 响应式网格：自动填充，每列最小280px */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px; /* 卡片间距 */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px; 
 }
 
-/* --- 新增：单个卡片样式 --- */
+/* 新增: 公告面板样式 */
+.announcement-panel {
+    margin-top: 30px; 
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 25px;
+    color: #c5c5c5;
+}
+
+.announcement-panel h3 {
+    font-family: 'Courier New', monospace;
+    color: #888;
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 15px;
+}
+
+.announcement-panel p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #aaa;
+    margin: 0 0 1em 0;
+}
+
+.announcement-panel p:last-child {
+    margin-bottom: 0;
+}
+
+/* --- 单个卡片样式 --- */
 .page-card {
     background-color: #222;
     border: 1px solid #444;
@@ -458,7 +493,7 @@ body.homepage-effect::after {
     text-decoration: none;
     color: #c5c5c5;
     transition: all 0.3s ease;
-    overflow: hidden; /* 确保内部元素不溢出 */
+    overflow: hidden; 
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -487,9 +522,9 @@ body.homepage-effect::after {
     margin: 0;
 }
 
-/* --- 新增：右侧面板样式 --- */
+/* --- 右侧面板样式 --- */
 .right-panel {
-    flex: 1; /* 占据 1/3 宽度 */
+    flex: 1; 
     padding-left: 50px;
 }
 
@@ -511,29 +546,51 @@ body.homepage-effect::after {
     font-size: 1rem;
 }
 
+/* ==== START: 核心修改 ==== */
+/* 新增: 用于定位文章卡片区域的锚点容器 */
+#sector-1-content-anchor {
+    position: absolute;
+    /* 核心: top 值与扇区1的深度线对齐，并留出 60px 的上边距 */
+    top: calc(100vh + 2640px + 60px); 
+    left: 50px;
+    right: 50px;
+    box-sizing: border-box;
+    /* 核心: 这个 padding-right 确保了内容不会与右侧面板重叠 */
+    padding-right: calc(33.33% + 50px); 
+}
+
+/* 文章卡片容器本身的样式: 只负责内部布局，不负责定位 */
+.article-cards-container {
+    display: grid;
+    grid-template-columns: 1fr; /* 单列网格 */
+    gap: 20px;
+}
+/* ==== END: 核心修改 ==== */
+
+
 /* 移动端禁用光斑效果（基于 hover 检测） */
 @media (hover: none) {
     body.homepage-effect {
-        background: #0d0d0d !important; /* 纯色 fallback，避免手电筒 */
-        cursor: auto !important; /* 恢复默认光标 */
+        background: #0d0d0d !important;
+        cursor: auto !important;
     }
     
     body.homepage-effect::after {
-        display: none !important; /* 隐藏噪点层 */
+        display: none !important;
     }
     
     .homepage-effect .cursor-dot {
-        display: none !important; /* 隐藏光标点 */
+        display: none !important;
     }
 }
 
 /* 桌面端优化：增强光斑响应 */
 @media (hover: hover) {
     body.homepage-effect {
-        cursor: none; /* 只在 hover 设备隐藏光标 */
+        cursor: none;
     }
     
     .homepage-effect .cursor-dot {
-        display: block; /* 确保显示 */
+        display: block;
     }
 }
