@@ -177,7 +177,7 @@
     <main class="main-content-grid">
         <div class="left-column">
             <div class="page-cards-container">
-                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-265m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-100m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-546m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-1226m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-2515m]</h2><p>Undefined</p></div></a>
@@ -403,7 +403,6 @@
                     if (!titleElement) return;
 
                     const titleText = titleElement.textContent;
-                    // 使用正则表达式从 "[ -XXXm ]" 中提取数字
                     const match = titleText.match(/\[-?(\d+)m\]/);
 
                     if (match && match[1]) {
@@ -412,21 +411,37 @@
                         const lineElement = document.getElementById(targetId);
                         
                         if (lineElement) {
-                            // 核心计算逻辑：深度(米) * 10 = 像素位置
                             const depthInPixels = depthInMeters * 10;
                             const newTopPosition = `calc(100vh + ${depthInPixels}px)`;
                             
-                            // 动态应用样式
+                            // 动态应用分界线样式 (这部分不变)
                             lineElement.style.top = newTopPosition;
-
-                            // (可选增强) 同时更新分界线上的文本
+                            
+                            // (可选增强) 更新分界线文本 (这部分不变)
                             const lineTextElement = lineElement.querySelector('.border-text');
                             if (lineTextElement) {
-                                // 提取"Sector-XX"部分
                                 const sectorMatch = lineTextElement.textContent.match(/Sector-\d+/);
                                 const sectorLabel = sectorMatch ? sectorMatch[0] : 'Sector';
                                 lineTextElement.textContent = `${sectorLabel} Depth: ${depthInMeters}m`;
                             }
+
+                            // --- V V V V  新增的核心逻辑  V V V V ---
+                            // 如果当前处理的是扇区01，则额外定位其内容锚点
+                            if (targetId === 'sector-1-line') {
+                                const contentAnchor = document.getElementById('sector-1-content-anchor');
+                                if (contentAnchor) {
+                                    // 定义一个偏移量，让内容出现在分界线下方
+                                    const contentOffset = 60; // 60px 的间距
+                                    
+                                    // 计算内容锚点的新 top 值
+                                    const contentTopPosition = `calc(100vh + ${depthInPixels}px + ${contentOffset}px)`;
+                                    
+                                    // 动态应用样式
+                                    contentAnchor.style.top = contentTopPosition;
+                                    console.log(`扇区01内容锚点已动态定位至: ${contentTopPosition}`);
+                                }
+                            }
+                            // --- ^ ^ ^ ^  新增的核心逻辑结束  ^ ^ ^ ^ ---
                         }
                     }
                 });
