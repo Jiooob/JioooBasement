@@ -13,14 +13,7 @@
             left: 0;
             right: 0;
         }
-        .depth-line-265 { top: calc(100vh + 2640px); }
-        .depth-line-546 { top: calc(100vh + 5450px); }
-        .depth-line-1226 { top: calc(100vh + 12250px); }
-        .depth-line-2515 { top: calc(100vh + 25140px); }
-        .depth-line-3085 { top: calc(100vh + 30840px); }
-        .depth-line-3655 { top: calc(100vh + 36540px); }
-        .depth-line-4062 { top: calc(100vh + 40610px); }
-        .depth-line-4565 { top: calc(100vh + 45640px); }
+
 
         /* --- 悬浮电梯控制面板样式 --- */
         #elevator-panel {
@@ -399,6 +392,49 @@
             }
             setInterval(updateClock, 1000);
             updateClock();
+
+            // --- 动态更新扇区深度线位置 ---
+            function updateSectorDepths() {
+                console.log("开始动态演算扇区深度...");
+                const sectorCards = document.querySelectorAll('.page-card');
+
+                sectorCards.forEach(card => {
+                    const titleElement = card.querySelector('h2');
+                    if (!titleElement) return;
+
+                    const titleText = titleElement.textContent;
+                    // 使用正则表达式从 "[ -XXXm ]" 中提取数字
+                    const match = titleText.match(/\[-?(\d+)m\]/);
+
+                    if (match && match[1]) {
+                        const depthInMeters = parseInt(match[1], 10);
+                        const targetId = card.dataset.targetId;
+                        const lineElement = document.getElementById(targetId);
+                        
+                        if (lineElement) {
+                            // 核心计算逻辑：深度(米) * 10 = 像素位置
+                            const depthInPixels = depthInMeters * 10;
+                            const newTopPosition = `calc(100vh + ${depthInPixels}px)`;
+                            
+                            // 动态应用样式
+                            lineElement.style.top = newTopPosition;
+
+                            // (可选增强) 同时更新分界线上的文本
+                            const lineTextElement = lineElement.querySelector('.border-text');
+                            if (lineTextElement) {
+                                // 提取"Sector-XX"部分
+                                const sectorMatch = lineTextElement.textContent.match(/Sector-\d+/);
+                                const sectorLabel = sectorMatch ? sectorMatch[0] : 'Sector';
+                                lineTextElement.textContent = `${sectorLabel} Depth: ${depthInMeters}m`;
+                            }
+                        }
+                    }
+                });
+                console.log("扇区深度演算完毕。");
+            }
+            
+            // 页面加载时执行一次
+            updateSectorDepths();
             
             // --- 智能悬浮面板、动态宽度和竖线延长功能 ---
             const mainGrid = document.querySelector('.main-content-grid');
