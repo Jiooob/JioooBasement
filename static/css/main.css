@@ -593,3 +593,56 @@ body.homepage-effect::after {
         display: block;
     }
 }
+
+/* --- 卡片式页脚样式 --- */
+
+/* 1. 外部容器：负责占位和边距 */
+.footer-container {
+    /* 让容器从左到右撑满整个视口 */
+    width: 100%;
+    /* 在页脚的上下留出足够的呼吸空间 */
+    padding: 100px 50px 50px 50px; /* 上边距100px，左右和下边距50px */
+    box-sizing: border-box; /* 确保内边距不会增加容器的总宽度 */
+}
+
+/* 2. 内部卡片：负责视觉表现 */
+.footer-card {
+    /* 卡片的核心样式 */
+    background-color: #222; /* 和其他卡片一样的深色背景 */
+    border: 1px solid #444;   /* 和其他卡片一样的边框 */
+    border-radius: 4px;       /* 和其他卡片一样的圆角 */
+    
+    /* 卡片内部的边距和内容对齐 */
+    padding: 30px;
+    text-align: center;
+    
+    /* 字体和颜色 */
+    font-family: 'Courier New', monospace; /* 使用等宽字体，保持科技感 */
+    color: #666; /* 默认文字颜色设为较暗的灰色 */
+    font-size: 0.9rem;
+}
+
+/* 3. 卡片内不同段落的样式 */
+.footer-card p {
+    margin: 10px 0; /* 段落之间的垂直间距 */
+    letter-spacing: 1px; /* 增加字符间距 */
+}
+
+/* 技术致谢行的样式 */
+.footer-card .tech-credits {
+    color: #888;
+}
+
+/* 座右铭/引言的样式 */
+.footer-card .motto {
+    color: #aaa;
+    font-style: italic;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* 构建信息行的样式 */
+.footer-card .build-info {
+    color: #555; /* 最不重要的信息，颜色最暗 */
+    font-size: 0.8rem;
+}
