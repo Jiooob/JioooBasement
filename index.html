@@ -36,7 +36,6 @@
         /* --- 悬浮电梯控制面板样式 --- */
         #elevator-panel {
             position: absolute;
-            right: 20px;
             z-index: 1001;
             background-color: rgba(34, 34, 34, 0.9);
             border: 1px solid #444;
@@ -165,6 +164,56 @@
             color: #666;
             margin: 0;
         }
+
+        /* --- V V V V  新增：扇区07友链卡片样式  V V V V --- */
+
+        /* 友链卡片的基础布局和样式 */
+        .friend-link-card {
+            display: flex;         /* 核心：使用flex布局，让头像和信息水平排列 */
+            align-items: center;   /* 垂直居中对齐 */
+            padding: 20px;         /* 增加内部边距 */
+            gap: 20px;             /* 在头像和信息之间创建20px的间距 */
+        }
+
+        /* 友链卡片的悬停效果 */
+        .friend-link-card:hover {
+            border-color: #4ecdc4; /* 鼠标悬停时，边框变为标志性的青色 */
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2); /* 添加辉光效果 */
+        }
+
+        /* 友人头像样式 */
+        .friend-avatar {
+            width: 60px;           /* 固定头像宽度 */
+            height: 60px;          /* 固定头像高度 */
+            border-radius: 50%;    /* 将头像变为圆形 */
+            border: 2px solid #555;/* 给头像添加一个深灰色边框 */
+            object-fit: cover;     /* 确保图片不变形，裁剪以适应圆形 */
+            flex-shrink: 0;        /* 防止头像在flex布局中被压缩 */
+        }
+
+        /* 右侧信息区域的容器 */
+        .friend-info {
+            display: flex;
+            flex-direction: column; /* 让标题和描述垂直排列 */
+        }
+
+        /* 友人网站名称/标题的样式 */
+        .friend-name {
+            font-size: 1.2rem;     /* 稍大的字体 */
+            color: #e0e0e0;
+            margin: 0 0 5px 0;   /* 标题和描述之间的间距 */
+        }
+
+        /* 友人描述文本的样式 */
+        .friend-description {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin: 0;
+            line-height: 1.6;      /* 增加行高以提高可读性 */
+        }
+
+        /* --- ^ ^ ^ ^  新增：扇区07友链卡片样式结束  ^ ^ ^ ^ --- */
+        
     </style>
 </head>
 
@@ -202,7 +251,7 @@
                 <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-450m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 [-500m]</h2><h2>关于Drum</h2><p>想听听我打鼓吗</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-550m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-600m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-700m]</h2><p>Undefined</p></div></a>
             </div>
             
             <div class="announcement-panel">
@@ -268,15 +317,6 @@
     <!-- 创建一个新的、绝对定位的容器，专门用于放置文章卡片 -->
     <div id="sector-1-content-anchor">
         <div class="article-cards-container">
-                <a href="sector-01/test_delete_after_converte.html" class="article-card-item">
-                    <div class="card-content">
-                        <h2>test for feature which remove md from source_md after converte to html into output</h2>
-                        <p class="date">记录于：2025-9-25</p>
-                        <p class="summary">False</p>
-                        <p class="size">Size: 18,176 bits</p>
-                    </div>
-                </a>
-                
                 <a href="sector-01/群青色的网络之梦.html" class="article-card-item">
                     <div class="card-content">
                         <h2>1，蓝，极致体验和互联网21世纪黄金时代</h2>
@@ -301,6 +341,15 @@
                         <p class="date">记录于：2025-09-27</p>
                         <p class="summary"></p>
                         <p class="size">Size: 16,672 bits</p>
+                    </div>
+                </a>
+                
+                <a href="sector-01/test_delete_after_converte.html" class="article-card-item">
+                    <div class="card-content">
+                        <h2>test for feature which remove md from source_md after converte to html into output</h2>
+                        <p class="date">记录于：2025-09-25</p>
+                        <p class="summary">False</p>
+                        <p class="size">Size: 18,184 bits</p>
                     </div>
                 </a>
                 
@@ -354,9 +403,44 @@
     <div id="sector-6-content-anchor" class="sector-content-anchor">
         <!-- SECTOR_06_CARDS_HERE -->
     </div>
+
+
+
+
+
     <div id="sector-7-content-anchor" class="sector-content-anchor">
-        <!-- SECTOR_07_CARDS_HERE -->
+        <!-- ==== START: 扇区07友链卡片 ==== -->
+        <div class="article-cards-container">
+            <!-- 友链卡片 1 -->
+            <a href="[友人网站链接]" target="_blank" class="article-card-item friend-link-card">
+                <img src="[友人头像图片链接]" alt="友人头像" class="friend-avatar">
+                <div class="friend-info">
+                    <h2 class="friend-name">[友链]</h2>
+                    <p class="friend-description">[不是，你在期待什么？？我没有朋友]</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="article-cards-container">
+            <!-- 友链卡片 2 -->
+            <a href="https://woodash.cc/" target="_blank" class="article-card-item friend-link-card">
+                <img src="static/images/tomotachi_favicon/woodash_favicon.png" alt="Woodash的头像" class="friend-avatar">
+                <div class="friend-info">
+                    <h2 class="friend-name">[WoodAsh 灰分]</h2>
+                    <p class="friend-description">[这是一位老大]</p>
+                </div>
+            </a>
+        </div>
+
+
+        <!-- ==== END: 扇区07友链卡片 ==== -->
     </div>
+
+
+
+
+
+
     <div id="sector-8-content-anchor" class="sector-content-anchor">
         <!-- SECTOR_08_CARDS_HERE -->
     </div>
@@ -573,8 +657,27 @@
                 }
 
                 if (rightPanel && elevatorPanel) {
-                    const rect = rightPanel.getBoundingClientRect();
+                    // 核心修改：选择器从 .right-panel 变为 .right-panel .panel-content
+                    const rightPanelContent = document.querySelector('.right-panel .panel-content');
+
+                    // 确保我们找到了这个更精确的元素
+                   if (rightPanelContent) {
+                    const rect = rightPanelContent.getBoundingClientRect();
+
+                    // --- V V V V  在这里精调水平位置  V V V V ---
+                    
+                    // 定义一个水平偏移量（单位：像素）
+                    // 正数向右移动，负数向左移动
+                    const horizontalOffset = 32; 
+                    
+                    // --- ^ ^ ^ ^  在这里精调水平位置  ^ ^ ^ ^ ---
+
+                    // 设置宽度
                     elevatorPanel.style.width = rect.width + 'px';
+
+                    // 设置左侧位置时，加上我们的偏移量
+                    elevatorPanel.style.left = (rect.left + horizontalOffset) + 'px';
+                    }
                 }
 
                 if (elevatorPanel && zeroDepthLine) {
