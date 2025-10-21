@@ -525,6 +525,38 @@
             
             // 页面加载时执行一次
             updateSectorDepths();
+
+            // --- V V V V  全新添加的对齐逻辑  V V V V ---
+
+            // 定义一个函数，用于测量源容器并对齐所有文章卡片锚点
+            function alignArticleContainers() {
+                // 源容器：我们以此为基准进行对齐（即导航卡片所在的左侧栏）
+                const sourceContainer = document.querySelector('.left-column');
+                // 目标容器：所有需要被对齐的文章卡片容器
+                const articleAnchors = document.querySelectorAll('[id$="-content-anchor"]');
+
+                if (sourceContainer && articleAnchors.length > 0) {
+                    // 使用 getBoundingClientRect() 获取源容器在视口中的精确位置和尺寸
+                    const rect = sourceContainer.getBoundingClientRect();
+                    
+                    // 遍历所有文章卡片容器
+                    articleAnchors.forEach(anchor => {
+                        // 将源容器的 left 和 width 值应用到目标上
+                        // rect.left 是源容器左边界距离视口左侧的距离
+                        // rect.width 是源容器的实际渲染宽度
+                        anchor.style.left = `${rect.left}px`;
+                        anchor.style.width = `${rect.width}px`;
+                    });
+                }
+            }
+
+            // 在页面首次加载时，执行一次对齐
+            alignArticleContainers();
+
+            // 在浏览器窗口大小改变时，重新执行对齐，以确保响应式
+            window.addEventListener('resize', alignArticleContainers);
+
+            // --- ^ ^ ^ ^  全新添加的对齐逻辑结束  ^ ^ ^ ^ ---
             
             // --- 智能悬浮面板、动态宽度和竖线延长功能 ---
             const mainGrid = document.querySelector('.main-content-grid');
