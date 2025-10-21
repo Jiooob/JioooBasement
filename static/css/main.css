@@ -550,12 +550,7 @@ body.homepage-effect::after {
 /* 新增: 用于定位文章卡片区域的锚点容器 */
 #sector-1-content-anchor,.sector-content-anchor {
     position: absolute;
-    /* 核心: top 值与扇区1的深度线对齐，并留出 60px 的上边距 */
-    left: 50px;
-    right: 50px;
     box-sizing: border-box;
-    /* 核心: 这个 padding-right 确保了内容不会与右侧面板重叠 */
-    padding-right: calc(33.33% + 50px); 
 }
 
 /* 文章卡片容器本身的样式: 只负责内部布局，不负责定位 */

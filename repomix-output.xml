@@ -54,7 +54,6 @@ content/notes/index.html
 content/sector-01/群青色的网络之梦.html
 content/sector-01/文件结构方案.html
 content/sector-01/img_test.html
-content/sector-01/index.html
 content/sector-01/my-first-article.html
 content/sector-01/my-second-article.html
 content/sector-01/test_delete_after_converte.html
@@ -306,36 +305,6 @@ This section contains the contents of the repository's files.
 </html>
 </file>
 
-<file path="static/icons/favicon.svg">
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64"><image width="64" height="64" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAqdJREFUeJztmT9P20Acht8LUQf4CkxZukZnJiSWSLTO0iHfoUIs7ZqZibVThfgMsNoqUhakTjhiZQlSx+xkQ9cBjsT/z3fn/HzKPUvsEzm/v+f+2MEMgMAO06MOQI0XQB2AGi+AOgA1XgB1AGq8AOoA1HgB1AGo8QKoA1Cz8wL6YRhSZyCFidVIAMDvqxkA4PxsBBfOx5NPqUK+fY21+ut1oZim51l0iz8/G6FHXUzT86PjmbXiAcc2wWzx0TA27tMpAVnGj+YbuLMCbIw+4LAAwC8BK3gB1AGa8vD3/UHIwgYIAH0rvWwJWTwuZoiGdvp0bgbgYv0sYGMWsDAMnXo3KHf+8WOIaBgbS+gvl0sAwHw+Nw5XB+fcWl9xHIPFAKB/K+Scg2Hj7XBZwG3IUUFMgaMYeHgf9OCPeV7GORdtF1gktsk1xfTtk12uz9nl+tMkF+Ocf8yAroz0JtkixTQ98smXeelMUCG1BDYxXa9tyCwa8WzOJtflnKvdBaLb11zbeLKnfCEb2NjxszwdxvUCottXsP27XLtYnW5dQhnRzbP2dyufBMuKBwC2f9cJCdHNMwY/n7S/XyqgqngJtQRZ/OLXZ+0+CgWoFC+REiD+aYfQRRbfygzQCbNtTIsHLAowmYa62JDe6gxYXK9vMIPvTKlNtqu0Aaywvya0+nNYBtoMVtQmz03b8oLqKRQwnuy9bWwKiNUpBj/UNswuUroEpISqu0FXitcZeUnlEqiaCXXFm4RqStGyUKV2EyyToDLyRRJk2+JapEJX/W1dmwmpn8NVJPcvCE4OcsfUJEnycRwEQePvKwsAuivBhEa3weDkAMn9S+7YZRo/BxRJcFlE6X+EdgX3XoxYxgugDkCNF0AdgBovgDoANV4AdQBqvADqANTsvID/NXKE9E2jTm4AAAAASUVORK5CYII="></image><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
-</style></svg>
-</file>
-
-<file path="static/icons/site.webmanifest">
-{
-  "name": "MyWebSite",
-  "short_name": "MySite",
-  "icons": [
-    {
-      "src": "/static/icons/web-app-manifest-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/static/icons/web-app-manifest-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
-}
-</file>
-
 <file path=".github/workflows/deploy.yml">
 name: Deploy to GitHub Pages
 
@@ -428,25 +397,6 @@ jiooobasement.generaltechstudio.com
 </html>
 </file>
 
-<file path="content/sector-01/index.html">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>分类：文章</title>
-    <link rel="stylesheet" href="../static/css/main.css">
-</head>
-<body>
-    <header>
-        <h1>分类：文章</h1>
-    </header>
-    <main id="post-list">
-        {{POST_LIST}}
-    </main>
-</body>
-</html>
-</file>
-
 <file path="content/sector-01/my-first-article.html">
 <!DOCTYPE html>
 <html>
@@ -473,34 +423,6 @@ jiooobasement.generaltechstudio.com
 <body>
     <p>系统的鲁棒性需要通过处理多个输入单元来验证。</p>
     <p>如果此页面成功生成，说明循环和渲染逻辑基本正确。</p>
-</body>
-</html>
-</file>
-
-<file path="content/sector-01/test_delete_after_converte.html">
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="blog-title" content="test for feature which remove md from source_md after converte to html into output">
-    <meta name="blog-date" content="2025-9-21">
-    <meta name="blog-summary" content="False">
-</head>
-<body>
-<h1>test</h1>
-<p>no no no no</p>
-</body>
-</html>
-</file>
-
-<file path="content/sector-01/test.html">
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="blog-title" content="test">
-    <meta name="blog-date" content="2025-09-20">
-</head>
-<body>
-
 </body>
 </html>
 </file>
@@ -674,6 +596,36 @@ if __name__ == '__main__':
     build()
 </file>
 
+<file path="static/icons/favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64"><image width="64" height="64" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAqdJREFUeJztmT9P20Acht8LUQf4CkxZukZnJiSWSLTO0iHfoUIs7ZqZibVThfgMsNoqUhakTjhiZQlSx+xkQ9cBjsT/z3fn/HzKPUvsEzm/v+f+2MEMgMAO06MOQI0XQB2AGi+AOgA1XgB1AGq8AOoA1HgB1AGo8QKoA1Cz8wL6YRhSZyCFidVIAMDvqxkA4PxsBBfOx5NPqUK+fY21+ut1oZim51l0iz8/G6FHXUzT86PjmbXiAcc2wWzx0TA27tMpAVnGj+YbuLMCbIw+4LAAwC8BK3gB1AGa8vD3/UHIwgYIAH0rvWwJWTwuZoiGdvp0bgbgYv0sYGMWsDAMnXo3KHf+8WOIaBgbS+gvl0sAwHw+Nw5XB+fcWl9xHIPFAKB/K+Scg2Hj7XBZwG3IUUFMgaMYeHgf9OCPeV7GORdtF1gktsk1xfTtk12uz9nl+tMkF+Ocf8yAroz0JtkixTQ98smXeelMUCG1BDYxXa9tyCwa8WzOJtflnKvdBaLb11zbeLKnfCEb2NjxszwdxvUCottXsP27XLtYnW5dQhnRzbP2dyufBMuKBwC2f9cJCdHNMwY/n7S/XyqgqngJtQRZ/OLXZ+0+CgWoFC+REiD+aYfQRRbfygzQCbNtTIsHLAowmYa62JDe6gxYXK9vMIPvTKlNtqu0Aaywvya0+nNYBtoMVtQmz03b8oLqKRQwnuy9bWwKiNUpBj/UNswuUroEpISqu0FXitcZeUnlEqiaCXXFm4RqStGyUKV2EyyToDLyRRJk2+JapEJX/W1dmwmpn8NVJPcvCE4OcsfUJEnycRwEQePvKwsAuivBhEa3weDkAMn9S+7YZRo/BxRJcFlE6X+EdgX3XoxYxgugDkCNF0AdgBovgDoANV4AdQBqvADqANTsvID/NXKE9E2jTm4AAAAASUVORK5CYII="></image><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>
+</file>
+
+<file path="static/icons/site.webmanifest">
+{
+  "name": "MyWebSite",
+  "short_name": "MySite",
+  "icons": [
+    {
+      "src": "web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
+</file>
+
 <file path=".gitignore">
 # 忽略所有 output 目录下的内容
 output/
@@ -726,6 +678,34 @@ class Page:
         content = content.replace('$date$', self.date)
         content = content.replace('$body$', self.body)
         return content
+</file>
+
+<file path="content/sector-01/test_delete_after_converte.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="test for feature which remove md from source_md after converte to html into output">
+    <meta name="blog-date" content="2025-9-25">
+    <meta name="blog-summary" content="False">
+</head>
+<body>
+<h1>test</h1>
+<p>no no no no</p>
+</body>
+</html>
+</file>
+
+<file path="content/sector-01/test.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="test">
+    <meta name="blog-date" content="2025-09-27">
+</head>
+<body>
+
+</body>
+</html>
 </file>
 
 <file path="static/css/article.css">
@@ -1163,41 +1143,6 @@ body {
 }
 </file>
 
-<file path="templates/article.template">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>$title$</title>
-    <link rel="stylesheet" href="../static/css/article.css">
-</head>
-<body>
-
-    <div class="article-container">
-        <header class="article-header">
-            <!-- 
-              核心修改：
-              1. 添加 onclick 事件处理器。
-              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
-                 这可以处理用户在新标签页直接打开文章的边缘情况。
-              3. `event.preventDefault()` 阻止链接的默认跳转行为。
-              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
-              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
-            -->
-            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
-            <h1 class="article-title">$title$</h1>
-            <p class="article-meta">记录于：$date$</p>
-        </header>
-
-        <main class="article-content">
-            $body$
-        </main>
-    </div>
-
-</body>
-</html>
-</file>
-
 <file path="pages/page3.html">
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -1405,6 +1350,57 @@ body {
             <!-- 无内容 -->
         </main>
     </div>
+</body>
+</html>
+</file>
+
+<file path="templates/article.template">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>$title$</title>
+    <link rel="stylesheet" href="../static/css/article.css">
+
+    <!-- 
+    ============================================================
+    == V V V V      添加网站图标代码 (Favicon)      V V V V ==
+    ============================================================
+    -->
+    <link rel="icon" type="image/png" href="../static/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../static/icons/favicon.svg" />
+    <link rel="shortcut icon" href="../static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../static/icons/site.webmanifest" />
+    <!-- 
+    ============================================================
+    == ^ ^ ^ ^          网站图标代码结束          ^ ^ ^ ^ ==
+    ============================================================
+    -->    
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <!-- 
+              核心修改：
+              1. 添加 onclick 事件处理器。
+              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
+                 这可以处理用户在新标签页直接打开文章的边缘情况。
+              3. `event.preventDefault()` 阻止链接的默认跳转行为。
+              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
+              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
+            -->
+            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
+            <h1 class="article-title">$title$</h1>
+            <p class="article-meta">记录于：$date$</p>
+        </header>
+
+        <main class="article-content">
+            $body$
+        </main>
+    </div>
+
 </body>
 </html>
 </file>
@@ -2229,11 +2225,11 @@ body.homepage-effect::after {
     == V V V V      新的网站图标代码 (Favicon)      V V V V ==
     ============================================================
     -->
-    <link rel="icon" type="image/png" href="/static/icons/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/static/icons/favicon.svg" />
-    <link rel="shortcut icon" href="/static/icons/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/apple-touch-icon.png" />
-    <link rel="manifest" href="/static/icons/site.webmanifest" />
+    <link rel="icon" type="image/png" href="static/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="static/icons/favicon.svg" />
+    <link rel="shortcut icon" href="static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="static/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="static/icons/site.webmanifest" />
     <!-- 
     ============================================================
     == ^ ^ ^ ^          网站图标代码结束          ^ ^ ^ ^ ==
@@ -2414,7 +2410,7 @@ body.homepage-effect::after {
     <main class="main-content-grid">
         <div class="left-column">
             <div class="page-cards-container">
-                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-100m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-150m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-300m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-350m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-400m]</h2><p>Undefined</p></div></a>
@@ -2473,7 +2469,7 @@ body.homepage-effect::after {
             <p>© 2025 Jiooob_Mouse</p>
             <p class="tech-credits">Powered by Gemini 2.5 Pro & Jiooob.</p>
             <p class="motto">"苦来兮，苦走，苦完该剩些甜"</p>
-            <p class="motto">请自便，或是在这个基地休息片刻，我的朋友</p>
+            <p class="motto">请随意逛逛，或是在这个基地休息片刻，我的朋友</p>
             <p class="build-info">// Version: 25_10_20 //</p>
         </div>
     </div>
