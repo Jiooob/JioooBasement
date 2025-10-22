@@ -1,7 +1,7 @@
 /* --- 全局与基础设定 --- */
 body {
-    background-color: #1a1a1a;
-    color: #c5c5c5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     line-height: 1.8;
     margin: 0;
@@ -17,51 +17,46 @@ body {
 
 /* --- "返回基地"按钮 (核心修改区域) --- */
 .back-link {
-    /* 定位逻辑 */
     position: fixed;
     top: 20px;
     left: 20px;
     z-index: 1000;
-
-    /* 视觉风格 */
-    background-color: #2a2a2a;
-    border: 1px solid #444;
+    background-color: var(--bg-article-card);
+    border: 1px solid var(--border-primary);
     border-radius: 2px;
     padding: 8px 15px;
-    color: #4ecdc4;
+    color: var(--primary-accent);
     text-decoration: none;
-    font-family: 'Courier New', monospace; /* 切换为等宽字体 */
+    font-family: 'Courier New', monospace;
     font-size: 0.9rem;
     font-weight: bold;
-    text-transform: uppercase; /* 全部大写 */
+    text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
 }
 
 .back-link:hover {
-    color: #fff;
-    border-color: #4ecdc4;
-    box-shadow: 0 0 10px rgba(78, 205, 196, 0.5); /* 添加辉光效果 */
+    color: var(--text-white);
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.5);
 }
-
 
 /* --- 页头与导航 --- */
 .article-header {
     margin-bottom: 40px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #333;
-    /* 移除 text-align: center，恢复左对齐 */
+    border-bottom: 1px solid var(--divider-color);
 }
 
 .article-title {
     font-size: 2.8rem;
-    color: #e0e0e0;
+    color: var(--text-bright);
     margin: 0 0 10px 0;
 }
 
 .article-meta {
     font-size: 0.9rem;
-    color: #888;
+    color: var(--text-secondary);
     margin: 0;
     font-style: italic;
 }
@@ -73,8 +68,8 @@ body {
 
 .article-content h2,
 .article-content h3 {
-    color: #00aaff;
-    border-bottom: 1px solid #444;
+    color: var(--secondary-accent);
+    border-bottom: 1px solid var(--border-primary);
     padding-bottom: 10px;
     margin-top: 40px;
 }
@@ -84,15 +79,15 @@ body {
 }
 
 .article-content a {
-    color: #4ecdc4;
+    color: var(--primary-accent);
     text-decoration: none;
-    border-bottom: 1px dashed #4ecdc4;
+    border-bottom: 1px dashed var(--primary-accent);
     transition: all 0.3s ease;
 }
 
 .article-content a:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    border-bottom: 1px solid #4ecdc4;
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    border-bottom: 1px solid var(--primary-accent);
 }
 
 .article-content ul,
@@ -105,8 +100,8 @@ body {
     margin: 2em 0;
     padding: 1em 1.5em;
     background-color: rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #444;
-    color: #aaa;
+    border-left: 4px solid var(--border-primary);
+    color: var(--text-muted);
     font-style: italic;
 }
 
@@ -116,8 +111,8 @@ body {
 
 /* --- 代码块样式 --- */
 .article-content pre {
-    background-color: #222;
-    border: 1px solid #333;
+    background-color: var(--bg-card);
+    border: 1px solid var(--divider-color);
     padding: 1em;
     overflow-x: auto;
     font-size: 0.9em;
@@ -127,7 +122,7 @@ body {
 
 .article-content code {
     font-family: 'Courier New', 'Fira Code', monospace;
-    background-color: #333;
+    background-color: var(--bg-code);
     padding: 2px 5px;
     border-radius: 3px;
     font-size: 0.9em;
@@ -146,5 +141,5 @@ body {
     display: block;
     margin: 2em auto;
     border-radius: 4px;
-    border: 1px solid #444;
+    border: 1px solid var(--border-primary);
 }
