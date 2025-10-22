@@ -32,13 +32,12 @@
             right: 0;
         }
 
-
         /* --- 悬浮电梯控制面板样式 --- */
         #elevator-panel {
             position: absolute;
             z-index: 1001;
-            background-color: rgba(34, 34, 34, 0.9);
-            border: 1px solid #444;
+            background-color: rgba(var(--bg-card-rgb), 0.9); /* <--- MODIFIED */
+            border: 1px solid var(--border-primary); /* <--- MODIFIED */
             border-radius: 4px;
             padding: 15px;
             font-family: 'Courier New', monospace;
@@ -49,15 +48,15 @@
         .panel-header {
             text-align: center;
             font-size: 1rem;
-            color: #888;
-            border-bottom: 1px solid #444;
+            color: var(--text-secondary); /* <--- MODIFIED */
+            border-bottom: 1px solid var(--border-primary); /* <--- MODIFIED */
             padding-bottom: 10px;
             margin-bottom: 10px;
             letter-spacing: 2px;
         }
         #clock-display {
             text-align: center;
-            color: #4ecdc4;
+            color: var(--primary-accent); /* <--- MODIFIED */
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
@@ -66,16 +65,16 @@
             letter-spacing: 1px;
         }
         .panel-status-display {
-            border-top: 1px solid #444;
-            border-bottom: 1px solid #444;
+            border-top: 1px solid var(--border-primary); /* <--- MODIFIED */
+            border-bottom: 1px solid var(--border-primary); /* <--- MODIFIED */
             padding: 10px 0;
             margin: 15px 0;
             font-size: 0.8rem;
-            color: #888;
+            color: var(--text-secondary); /* <--- MODIFIED */
         }
         .panel-status-display h3 {
             margin: 0 0 5px 0;
-            color: #aaa;
+            color: var(--text-muted); /* <--- MODIFIED */
             font-size: 0.9rem;
             font-weight: normal;
         }
@@ -94,10 +93,10 @@
             display: block;
             width: 100%;
             padding: 8px 10px;
-            background-color: #333;
-            color: #c5c5c5;
+            background-color: var(--bg-code); /* <--- MODIFIED */
+            color: var(--text-primary); /* <--- MODIFIED */
             text-decoration: none;
-            border: 1px solid #555;
+            border: 1px solid var(--border-secondary); /* <--- MODIFIED */
             border-radius: 2px;
             font-size: 0.8rem;
             text-align: center;
@@ -105,10 +104,10 @@
             box-sizing: border-box;
         }
         .elevator-button:hover {
-            background-color: #4ecdc4;
-            color: #1a1a1a;
-            border-color: #4ecdc4;
-            box-shadow: 0 0 8px rgba(78, 205, 196, 0.5);
+            background-color: var(--primary-accent); /* <--- MODIFIED */
+            color: var(--text-on-accent); /* <--- MODIFIED */
+            border-color: var(--primary-accent); /* <--- MODIFIED */
+            box-shadow: 0 0 8px rgba(var(--primary-accent-rgb), 0.5); /* <--- MODIFIED */
         }
         .page-cards-container {
             align-self: flex-start;
@@ -116,18 +115,18 @@
 
         /* --- 单个文章卡片的样式 --- */
         .article-card-item {
-            background-color: #2a2a2a;
-            border: 1px solid #555;
+            background-color: var(--bg-article-card); /* <--- MODIFIED */
+            border: 1px solid var(--border-secondary); /* <--- MODIFIED */
             border-radius: 4px;
             text-decoration: none;
-            color: #c5c5c5;
+            color: var(--text-primary); /* <--- MODIFIED */
             transition: all 0.3s ease;
             overflow: hidden;
         }
 
         .article-card-item:hover {
             transform: translateY(-5px);
-            border-color: #00aaff;
+            border-color: var(--secondary-accent); /* <--- MODIFIED */
             box-shadow: 0 5px 15px rgba(0, 170, 255, 0.2);
         }
 
@@ -139,19 +138,19 @@
 
         .article-card-item h2 {
             font-size: 1.3rem;
-            color: #e0e0e0;
+            color: var(--text-bright); /* <--- MODIFIED */
             margin: 0 0 10px 0;
         }
 
         .article-card-item .date {
             font-size: 0.8rem;
-            color: #888;
+            color: var(--text-secondary); /* <--- MODIFIED */
             margin: 0 0 10px 0;
         }
 
         .article-card-item .summary {
             font-size: 0.9rem;
-            color: #aaa;
+            color: var(--text-muted); /* <--- MODIFIED */
             margin: 0;
         }
         
@@ -161,105 +160,78 @@
             right: 20px;
             font-size: 0.8rem;
             font-family: 'Courier New', monospace;
-            color: #666;
+            color: var(--text-dark-muted); /* <--- MODIFIED */
             margin: 0;
         }
 
-        /* --- V V V V  新增：扇区07友链卡片样式  V V V V --- */
-
-        /* 友链卡片的基础布局和样式 */
+        /* --- V V V V  友链卡片样式  V V V V --- */
         .friend-link-card {
-            display: flex;         /* 核心：使用flex布局，让头像和信息水平排列 */
-            align-items: center;   /* 垂直居中对齐 */
-            padding: 20px;         /* 增加内部边距 */
-            gap: 20px;             /* 在头像和信息之间创建20px的间距 */
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
         }
-
-        /* 友链卡片的悬停效果 */
         .friend-link-card:hover {
-            border-color: #4ecdc4; /* 鼠标悬停时，边框变为标志性的青色 */
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2); /* 添加辉光效果 */
+            border-color: var(--primary-accent); /* <--- MODIFIED */
+            box-shadow: 0 5px 15px rgba(var(--primary-accent-rgb), 0.2); /* <--- MODIFIED */
         }
-
-        /* 友人头像样式 */
         .friend-avatar {
-            width: 60px;           /* 固定头像宽度 */
-            height: 60px;          /* 固定头像高度 */
-            border-radius: 50%;    /* 将头像变为圆形 */
-            border: 2px solid #555;/* 给头像添加一个深灰色边框 */
-            object-fit: cover;     /* 确保图片不变形，裁剪以适应圆形 */
-            flex-shrink: 0;        /* 防止头像在flex布局中被压缩 */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--border-secondary); /* <--- MODIFIED */
+            object-fit: cover;
+            flex-shrink: 0;
         }
-
-        /* 右侧信息区域的容器 */
         .friend-info {
             display: flex;
-            flex-direction: column; /* 让标题和描述垂直排列 */
+            flex-direction: column;
         }
-
-        /* 友人网站名称/标题的样式 */
         .friend-name {
-            font-size: 1.2rem;     /* 稍大的字体 */
-            color: #e0e0e0;
-            margin: 0 0 5px 0;   /* 标题和描述之间的间距 */
-        }
-
-        /* 友人描述文本的样式 */
-        .friend-description {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin: 0;
-            line-height: 1.6;      /* 增加行高以提高可读性 */
-        }
-
-        /* --- ^ ^ ^ ^  新增：扇区07友链卡片样式结束  ^ ^ ^ ^ --- */
-
-        /* --- V V V V  新增：扇区07“关于我”卡片样式  V V V V --- */
-
-        /* “关于我”卡片的基础布局，类似友链卡片 */
-        .about-me-card {
-            display: flex;         /* 启用flex布局，让头像和信息水平排列 */
-            align-items: center;   /* 垂直居中对齐 */
-            padding: 25px;         /* 增加内部边距 */
-            gap: 25px;             /* 在头像和信息之间创建间距 */
-        }
-
-        /* 右侧信息区域的容器 */
-        .about-me-info {
-            display: flex;
-            flex-direction: column; /* 让标题和描述垂直排列 */
-            padding: 80px 0;
-        }
-
-        /* “关于我”卡片的标题样式 */
-        .about-me-title {
-            font-family: 'Courier New', monospace; /* 使用终端风格字体 */
-            font-size: 1.4rem;
-            color: #e0e0e0;
+            font-size: 1.2rem;
+            color: var(--text-bright); /* <--- MODIFIED */
             margin: 0 0 5px 0;
         }
+        .friend-description {
+            font-size: 0.9rem;
+            color: var(--text-muted); /* <--- MODIFIED */
+            margin: 0;
+            line-height: 1.6;
+        }
         
-        /* 副标题/身份的样式 */
+        /* --- V V V V  “关于我”卡片样式  V V V V --- */
+        .about-me-card {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            gap: 25px;
+        }
+        .about-me-info {
+            display: flex;
+            flex-direction: column;
+            padding: 80px 0;
+        }
+        .about-me-title {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            color: var(--text-bright); /* <--- MODIFIED */
+            margin: 0 0 5px 0;
+        }
         .about-me-subtitle {
             font-size: 1rem;
-            color: #888;
-            margin-bottom: 20px; /* 和正文拉开距离 */
+            color: var(--text-secondary); /* <--- MODIFIED */
+            margin-bottom: 20px;
             font-style: italic;
         }
-
-        /* 描述文本的样式 */
         .about-me-description {
             font-size: 1rem;
-            color: #aaa;
-            margin: 0 0 1em 0; /* 段落之间的间距 */
+            color: var(--text-muted); /* <--- MODIFIED */
+            margin: 0 0 1em 0;
             line-height: 1.7;
         }
         .about-me-description:last-child {
             margin-bottom: 0;
         }
-
-        /* --- ^ ^ ^ ^  新增：“关于我”卡片样式结束  ^ ^ ^ ^ --- */
-
     </style>
 </head>
 

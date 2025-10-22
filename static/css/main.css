@@ -3,38 +3,34 @@
 /* ============================================================ */
 :root {
   /* -- Accent Colors -- */
-  /* 主色调 (链接、悬停、高亮) */
-  --primary-accent: #4ecdc4;
-  --primary-accent-rgb: 78, 205, 196; /* 用于RGBA辉光效果 */
-  
-  /* 次要色调 (文章标题悬停) */
-  --secondary-accent: #00aaff;
-  
-  /* 状态色 */
-  --danger-accent: #ff6b6b;
-  --warning-accent: #ffaa44;
+  --primary-accent: #4D9FFF;
+  --primary-accent-rgb: 77, 159, 255;
+  --secondary-accent: #A855F7;
+  --danger-accent: #EF4444;
+  --warning-accent: #F59E0B;
 
   /* -- Background Colors -- */
-  --bg-primary: #1a1a1a;
-  --bg-darker: #0d0d0d; /* 用于手电筒效果 */
-  --bg-card: #222;
-  --bg-article-card: #2a2a2a;
-  --bg-code: #333;
+  --bg-primary: #0A192F;
+  --bg-darker: #020C1B;
+  --bg-card: #112240;
+  --bg-card-rgb: 17, 34, 64;
+  --bg-article-card: #172A45;
+  --bg-code: #233554;
 
   /* -- Text Colors -- */
-  --text-primary: #c5c5c5;
-  --text-bright: #e0e0e0; /* 用于标题 */
-  --text-secondary: #888;  /* 用于日期、副标题 */
-  --text-muted: #aaa;
-  --text-dark-muted: #666;
+  --text-primary: #CCD6F6;
+  --text-bright: #E6F1FF;
+  --text-secondary: #8892B0;
+  --text-muted: #A8B2D1;
+  --text-dark-muted: #64748B;
   --text-white: #ffffff;
-  --text-on-accent: #1a1a1a; /* 用于彩色按钮上的文字 */
+  --text-on-accent: #0A192F;
 
   /* -- Border & Divider Colors -- */
-  --border-primary: #444;
-  --border-secondary: #555;
-  --border-tertiary: #666;
-  --divider-color: #333;
+  --border-primary: #233554;
+  --border-secondary: #303C55;
+  --border-tertiary: #64748B;
+  --divider-color: #112240;
 }
 /* ============================================================ */
 /* == ^ ^ ^ ^        颜色变量定义结束          ^ ^ ^ ^ == */
