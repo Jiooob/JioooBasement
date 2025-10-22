@@ -1,3 +1,46 @@
+/* ============================================================ */
+/* == V V V V        颜色变量中央控制室        V V V V == */
+/* ============================================================ */
+:root {
+  /* -- Accent Colors -- */
+  /* 主色调 (链接、悬停、高亮) */
+  --primary-accent: #4ecdc4;
+  --primary-accent-rgb: 78, 205, 196; /* 用于RGBA辉光效果 */
+  
+  /* 次要色调 (文章标题悬停) */
+  --secondary-accent: #00aaff;
+  
+  /* 状态色 */
+  --danger-accent: #ff6b6b;
+  --warning-accent: #ffaa44;
+
+  /* -- Background Colors -- */
+  --bg-primary: #1a1a1a;
+  --bg-darker: #0d0d0d; /* 用于手电筒效果 */
+  --bg-card: #222;
+  --bg-article-card: #2a2a2a;
+  --bg-code: #333;
+
+  /* -- Text Colors -- */
+  --text-primary: #c5c5c5;
+  --text-bright: #e0e0e0; /* 用于标题 */
+  --text-secondary: #888;  /* 用于日期、副标题 */
+  --text-muted: #aaa;
+  --text-dark-muted: #666;
+  --text-white: #ffffff;
+  --text-on-accent: #1a1a1a; /* 用于彩色按钮上的文字 */
+
+  /* -- Border & Divider Colors -- */
+  --border-primary: #444;
+  --border-secondary: #555;
+  --border-tertiary: #666;
+  --divider-color: #333;
+}
+/* ============================================================ */
+/* == ^ ^ ^ ^        颜色变量定义结束          ^ ^ ^ ^ == */
+/* ============================================================ */
+
+
 /* --- 核心布局逻辑 --- */
 
 /* 确保 html 和 body 能够支撑全屏高度 */
@@ -11,26 +54,20 @@ html, body {
 
 /* 模块一：Hero Section 布局 */
 .hero {
-    /* 关键：高度等于视窗高度的100%，实现全屏效果 */
     height: 100vh;
-    /* 使用 Flexbox 实现内容垂直和水平居中 */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    /* 为内部绝对定位的箭头提供参照系 */
     position: relative;
     padding-left: 50px;
     padding-right: 50px;
-    /* 添加蓝色渐变背景，从上往下变浅 */
-    background: linear-gradient(to bottom, #00aaff, transparent);
+    background: linear-gradient(to bottom, var(--secondary-accent), transparent);
 }
 
 /* 模块二：文章列表区的间距 */
 #main-content {
-    /* 在文章列表顶部和底部留出足够的呼吸空间 */
     padding: 80px 20px;
-    /* 限制最大宽度，提高可读性 */
     max-width: 700px;
     margin: 0 auto;
 }
@@ -39,8 +76,8 @@ html, body {
 /* --- 视觉样式整合 (采纳你的暗色主题) --- */
 
 body {
-    background-color: #1a1a1a;
-    color: #c5c5c5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
 }
 
@@ -49,13 +86,13 @@ body {
     font-size: 5rem;
     font-weight: normal;
     margin: 0;
-    letter-spacing: 2px; /* 增加字符间距 */
-    text-align: center; /* 修改为居中 */
+    letter-spacing: 2px;
+    text-align: center;
 }
 
 .hero-subtitle-center {
     font-size: 1.2rem;
-    color: #888;
+    color: var(--text-secondary);
     margin-top: 20px;
     line-height: 1.8;
     text-align: center;
@@ -79,7 +116,7 @@ body {
     bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
-    color: #555;
+    color: var(--border-secondary);
     text-decoration: none;
     animation: bounce 2s infinite;
     display: flex;
@@ -117,7 +154,7 @@ body {
 }
 
 .scroll-down-arrow:hover {
-    color: #c5c5c5;
+    color: var(--text-primary);
 }
 
 /* 国境线样式的边界线 */
@@ -129,12 +166,12 @@ body {
     height: 5px;
     background: repeating-linear-gradient(
         to right,
-        #666 0px,
-        #666 15px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 15px,
         transparent 15px,
         transparent 25px
     );
-    border-top: 1px dashed #666;
+    border-top: 1px dashed var(--border-tertiary);
 }
 
 .border-text {
@@ -142,10 +179,10 @@ body {
     top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #1a1a1a;
+    background-color: var(--bg-primary);
     padding: 0 15px;
     font-size: 1.5rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -158,7 +195,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.8rem;
-    color: #ff6b6b;
+    color: var(--danger-accent);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 2px;
     font-weight: bold;
@@ -172,11 +209,11 @@ body {
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.8rem;
-    color: #4ecdc4;
+    color: var(--primary-accent);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 2px;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(78, 205, 196, 0.3);
+    text-shadow: 2px 2px 4px rgba(var(--primary-accent-rgb), 0.3);
 }
 
 /* --- 深度指示器 (核心修改区域) --- */
@@ -187,39 +224,35 @@ body {
     transform: translateY(-50%);
     z-index: 1000;
     display: flex;
-    /* 修改：将主轴方向改为水平 */
     flex-direction: row;
     align-items: center;
 }
 
 .depth-line {
-    /* 修改：交换宽高，变为水平线 */
     width: 60px;
     height: 3px;
-    /* 修改：渐变方向改为水平 */
     background: repeating-linear-gradient(
         to right,
-        #666 0px,
-        #666 8px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 8px,
         transparent 8px,
         transparent 12px
     );
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
-    /* 修改：调整为右边距 */
+    border-top: 1px solid var(--border-tertiary);
+    border-bottom: 1px solid var(--border-tertiary);
     margin-right: 10px;
     opacity: 0.8;
 }
 
 .depth-text {
     font-size: 1rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     background-color: rgba(26, 26, 26, 0.9);
     padding: 5px 10px;
     border-radius: 3px;
-    border: 1px solid #666;
+    border: 1px solid var(--border-tertiary);
     min-width: 40px;
     text-align: center;
     font-weight: bold;
@@ -242,13 +275,13 @@ body {
     height: 3px;
     background: repeating-linear-gradient(
         to left,
-        #666 0px,
-        #666 8px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 8px,
         transparent 8px,
         transparent 12px
     );
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
+    border-top: 1px solid var(--border-tertiary);
+    border-bottom: 1px solid var(--border-tertiary);
     margin-left: 10px;
     opacity: 0.8;
     transform: rotate(180deg);
@@ -256,13 +289,13 @@ body {
 
 .depth-text-left {
     font-size: 1rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     background-color: rgba(26, 26, 26, 0.9);
     padding: 5px 10px;
     border-radius: 3px;
-    border: 1px solid #666;
+    border: 1px solid var(--border-tertiary);
     min-width: 40px;
     text-align: center;
     font-weight: bold;
@@ -271,13 +304,11 @@ body {
 /* 子页面链接样式 - 以边境线为参照 */
 .nav-link-container {
     position: absolute;
-    /* 以边境线为参照，边境线位置是 100vh - 5px */
-    top: calc(100vh - 5px + 100px); /* 边境线下方100px处 */
-    left: 50px; /* 文章列表左侧空白区域 */
+    top: calc(100vh - 5px + 100px);
+    left: 50px;
     z-index: 100;
 }
 
-/* 竖直排列的偏移量 */
 .nav-link-2 { top: calc(100vh - 5px + 140px); }
 .nav-link-3 { top: calc(100vh - 5px + 180px); }
 .nav-link-4 { top: calc(100vh - 5px + 220px); }
@@ -289,10 +320,10 @@ body {
 .nav-link {
     position: relative;
     display: inline-block;
-    background-color: #1a1a1a;
+    background-color: var(--bg-primary);
     padding: 0 15px;
     font-size: 1.5rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -301,7 +332,7 @@ body {
 }
 
 .nav-link:hover {
-    color: #4ecdc4;
+    color: var(--primary-accent);
 }
 
 .nav-border-line {
@@ -312,18 +343,18 @@ body {
     height: 5px;
     background: repeating-linear-gradient(
         to right,
-        #666 0px,
-        #666 15px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 15px,
         transparent 15px,
         transparent 25px
     );
-    border-top: 1px dashed #666;
+    border-top: 1px dashed var(--border-tertiary);
     z-index: -1;
 }
 
 /* 文章列表部分的样式 (之前 index_updater.py 生成) */
 #main-content article {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--divider-color);
     padding-bottom: 2rem;
     margin-bottom: 2rem;
 }
@@ -333,47 +364,44 @@ body {
 }
 
 #main-content h2 a {
-    color: #e0e0e0;
+    color: var(--text-bright);
     text-decoration: none;
     font-size: 1.5rem;
 }
 
 #main-content h2 a:hover {
-    color: #00aaff;
+    color: var(--secondary-accent);
 }
 
 #main-content .date {
-    color: #888;
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
 #main-content .summary {
-    color: #c5c5c5;
+    color: var(--text-primary);
     line-height: 1.7;
 }
 
 /* --- 地下室环境效果整合 --- */
 
-/* 1. CSS 变量与基础设定 */
 :root {
     --cursor-x: 50vw;
     --cursor-y: 50vh;
 }
 
 body.homepage-effect {
-    /* 核心变更：应用手电筒效果背景 */
     background: radial-gradient(
         circle at var(--cursor-x) var(--cursor-y),
-        rgba(55, 55, 55, 0.8) 0%,   /* 稍微调亮中心点 */
-        rgba(13, 13, 13, 0) 10px,  /* [修正] 缩小核心光圈半径 */
-        #0d0d0d 10px              /* [修正] 缩小整体光照范围 */
+        rgba(55, 55, 55, 0.8) 0%,
+        rgba(13, 13, 13, 0) 10px,
+        var(--bg-darker) 10px
     );
-    background-repeat: no-repeat;     /* [修正] 强制背景不重复 */
-    background-attachment: fixed;     /* [修正] 将背景固定于视口，防止滚动 */
-    cursor: none;                     /* 隐藏默认光标 */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    cursor: none;
 }
 
-/* 2. 视觉噪点与扫描线层 */
 body.homepage-effect::after {
     content: "";
     position: fixed;
@@ -403,34 +431,31 @@ body.homepage-effect::after {
     100% { transform: translateY(0); }
 }
 
-/* 3. 自定义光标 */
 .homepage-effect .cursor-dot {
     position: fixed;
     width: 8px;
     height: 8px;
-    background-color: #4ecdc4;
+    background-color: var(--primary-accent);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 1001;
-    box-shadow: 0 0 10px #4ecdc4;
-    transition: transform 0.1s ease-out; /* 为光标移动增加平滑过渡 */
+    box-shadow: 0 0 10px var(--primary-accent);
+    transition: transform 0.1s ease-out;
 }
 
-/* 4. 交互闪烁效果 */
 .nav-link:hover {
     animation: flicker 0.15s infinite steps(1);
 }
 
 @keyframes flicker {
-    0% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+    0% { opacity: 1; text-shadow: 0 0 5px var(--primary-accent); }
     25% { opacity: 0.8; }
     50% { opacity: 1; text-shadow: none; }
     75% { opacity: 0.6; }
-    100% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+    100% { opacity: 1; text-shadow: 0 0 5px var(--primary-accent); }
 }
 
-/* --- 新增：主内容网格布局 --- */
 .main-content-grid {
     display: flex;
     padding: 80px 50px;
@@ -440,44 +465,41 @@ body.homepage-effect::after {
     min-height: 100vh;
 }
 
-/* 新增: 左侧内容列的容器 */
 .left-column {
     flex: 2; 
     display: flex;
     flex-direction: column;
 }
 
-/* --- 页面卡片容器 --- */
 .page-cards-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px; 
 }
 
-/* 新增: 公告面板样式 */
 .announcement-panel {
     margin-top: 30px; 
-    background-color: #222;
-    border: 1px solid #444;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
     padding: 25px;
-    color: #c5c5c5;
+    color: var(--text-primary);
 }
 
 .announcement-panel h3 {
     font-family: 'Courier New', monospace;
-    color: #888;
+    color: var(--text-secondary);
     font-size: 1.2rem;
     margin-top: 0;
     margin-bottom: 20px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid var(--border-primary);
     padding-bottom: 15px;
 }
 
 .announcement-panel p {
     font-size: 1rem;
     line-height: 1.7;
-    color: #aaa;
+    color: var(--text-muted);
     margin: 0 0 1em 0;
 }
 
@@ -485,13 +507,12 @@ body.homepage-effect::after {
     margin-bottom: 0;
 }
 
-/* --- 单个卡片样式 --- */
 .page-card {
-    background-color: #222;
-    border: 1px solid #444;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
     text-decoration: none;
-    color: #c5c5c5;
+    color: var(--text-primary);
     transition: all 0.3s ease;
     overflow: hidden; 
     display: flex;
@@ -502,8 +523,8 @@ body.homepage-effect::after {
 
 .page-card:hover {
     transform: translateY(-5px);
-    border-color: #4ecdc4;
-    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+    border-color: var(--primary-accent);
+    box-shadow: 0 5px 15px rgba(var(--primary-accent-rgb), 0.2);
 }
 
 .page-card .card-content {
@@ -512,73 +533,62 @@ body.homepage-effect::after {
 
 .page-card h2 {
     font-size: 1.4rem;
-    color: #e0e0e0;
+    color: var(--text-bright);
     margin: 0 0 10px 0;
 }
 
 .page-card p {
     font-size: 1rem;
-    color: #888;
+    color: var(--text-secondary);
     margin: 0;
 }
 
-/* --- 右侧面板样式 --- */
 .right-panel {
     flex: 1; 
     padding-left: 50px;
 }
 
 .right-panel .panel-content {
-    border-left: 2px solid #444;
+    border-left: 2px solid var(--border-primary);
     padding-left: 30px;
     height: 100%;
     font-family: 'Courier New', monospace;
 }
 
 .right-panel h3 {
-    color: #888;
+    color: var(--text-secondary);
     font-size: 1.2rem;
     margin-bottom: 20px;
 }
 
 .right-panel p {
-    color: #666;
+    color: var(--text-dark-muted);
     font-size: 1rem;
 }
 
-/* ==== START: 核心修改 ==== */
-/* 新增: 用于定位文章卡片区域的锚点容器 */
 #sector-1-content-anchor,.sector-content-anchor {
     position: absolute;
     box-sizing: border-box;
 }
 
-/* 文章卡片容器本身的样式: 只负责内部布局，不负责定位 */
 .article-cards-container {
     display: grid;
-    grid-template-columns: 1fr; /* 单列网格 */
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 35px; /* Adjusted from 20px in previous turn */
 }
-/* ==== END: 核心修改 ==== */
 
-
-/* 移动端禁用光斑效果（基于 hover 检测） */
 @media (hover: none) {
     body.homepage-effect {
-        background: #0d0d0d !important;
+        background: var(--bg-darker) !important;
         cursor: auto !important;
     }
     
-    body.homepage-effect::after {
-        display: none !important;
-    }
-    
+    body.homepage-effect::after,
     .homepage-effect .cursor-dot {
         display: none !important;
     }
 }
 
-/* 桌面端优化：增强光斑响应 */
 @media (hover: hover) {
     body.homepage-effect {
         cursor: none;
@@ -589,55 +599,40 @@ body.homepage-effect::after {
     }
 }
 
-/* --- 卡片式页脚样式 --- */
-
-/* 1. 外部容器：负责占位和边距 */
 .footer-container {
-    /* 让容器从左到右撑满整个视口 */
     width: 100%;
-    /* 在页脚的上下留出足够的呼吸空间 */
-    padding: 100px 50px 50px 50px; /* 上边距100px，左右和下边距50px */
-    box-sizing: border-box; /* 确保内边距不会增加容器的总宽度 */
+    padding: 100px 50px 50px 50px;
+    box-sizing: border-box;
 }
 
-/* 2. 内部卡片：负责视觉表现 */
 .footer-card {
-    /* 卡片的核心样式 */
-    background-color: #222; /* 和其他卡片一样的深色背景 */
-    border: 1px solid #444;   /* 和其他卡片一样的边框 */
-    border-radius: 4px;       /* 和其他卡片一样的圆角 */
-    
-    /* 卡片内部的边距和内容对齐 */
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 4px;
     padding: 30px;
     text-align: center;
-    
-    /* 字体和颜色 */
-    font-family: 'Courier New', monospace; /* 使用等宽字体，保持科技感 */
-    color: #666; /* 默认文字颜色设为较暗的灰色 */
+    font-family: 'Courier New', monospace;
+    color: var(--text-dark-muted);
     font-size: 0.9rem;
 }
 
-/* 3. 卡片内不同段落的样式 */
 .footer-card p {
-    margin: 10px 0; /* 段落之间的垂直间距 */
-    letter-spacing: 1px; /* 增加字符间距 */
+    margin: 10px 0;
+    letter-spacing: 1px;
 }
 
-/* 技术致谢行的样式 */
 .footer-card .tech-credits {
-    color: #888;
+    color: var(--text-secondary);
 }
 
-/* 座右铭/引言的样式 */
 .footer-card .motto {
-    color: #aaa;
+    color: var(--text-muted);
     font-style: italic;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-/* 构建信息行的样式 */
 .footer-card .build-info {
-    color: #555; /* 最不重要的信息，颜色最暗 */
+    color: var(--border-secondary);
     font-size: 0.8rem;
 }

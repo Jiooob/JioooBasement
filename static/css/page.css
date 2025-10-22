@@ -2,8 +2,8 @@
 
 /* --- 全局与基础设定 (与 main.css 保持一致) --- */
 body {
-    background-color: #1a1a1a;
-    color: #c5c5c5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     line-height: 1.8;
     margin: 0;
@@ -24,13 +24,12 @@ body {
     align-items: center;
     margin-bottom: 50px;
     padding-bottom: 25px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--divider-color);
 }
 
 .page-header h1 {
-    /* --- 核心修改：减小字号 --- */
     font-size: 2.2rem;
-    color: #e0e0e0;
+    color: var(--text-bright);
     margin: 0;
     font-weight: normal;
 }
@@ -38,12 +37,11 @@ body {
 /* --- 返回主页链接 --- */
 .back-home {
     display: inline-block;
-    color: #4ecdc4;
+    color: var(--primary-accent);
     text-decoration: none;
     font-size: 1rem;
-    /* --- 核心修改：增加内边距 --- */
     padding: 10px 18px;
-    border: 1px solid #4ecdc4;
+    border: 1px solid var(--primary-accent);
     border-radius: 4px;
     transition: all 0.3s ease;
     font-family: 'Courier New', monospace;
@@ -51,42 +49,39 @@ body {
 }
 
 .back-home:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    color: #fff;
-    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    color: var(--text-white);
+    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.3);
 }
 
 /* --- 页面正文内容 --- */
 .page-content {
     font-size: 1.1rem;
-    color: #c5c5c5;
-    padding-top: 20px; /* 增加一点顶部间距 */
+    color: var(--text-primary);
+    padding-top: 20px;
 }
 
-/* 统一内容区域的链接样式 */
 .page-content a {
-    color: #4ecdc4;
+    color: var(--primary-accent);
     text-decoration: none;
-    border-bottom: 1px dashed #4ecdc4;
+    border-bottom: 1px dashed var(--primary-accent);
     transition: all 0.3s ease;
 }
 
 .page-content a:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    border-bottom: 1px solid #4ecdc4;
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    border-bottom: 1px solid var(--primary-accent);
 }
-
-
 
 /* --- 新增：从 main.css 迁移的文章列表样式 --- */
 #post-list-container {
-    margin-top: 60px; /* 与页头分隔开 */
-    border-top: 1px solid #333;
+    margin-top: 60px;
+    border-top: 1px solid var(--divider-color);
     padding-top: 40px;
 }
 
 #post-list-container article {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--divider-color);
     padding-bottom: 2rem;
     margin-bottom: 2rem;
 }
@@ -96,42 +91,42 @@ body {
 }
 
 #post-list-container h2 a {
-    color: #e0e0e0;
+    color: var(--text-bright);
     text-decoration: none;
     font-size: 1.5rem;
 }
 
 #post-list-container h2 a:hover {
-    color: #00aaff;
+    color: var(--secondary-accent);
 }
 
 #post-list-container .date {
-    color: #888;
+    color: var(--text-secondary);
     font-size: 0.9rem;
     margin-top: 0;
 }
 
 #post-list-container .summary {
-    color: #c5c5c5;
+    color: var(--text-primary);
     line-height: 1.7;
 }
 
 /* --- 边境线样式（移植自 main.css，子页顶锚） --- */
 .border-line {
-    position: fixed;  /* 固定在视窗顶 */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 5px;
     background: repeating-linear-gradient(
         to right,
-        #666 0px,
-        #666 15px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 15px,
         transparent 15px,
         transparent 25px
     );
-    border-top: 1px dashed #666;
-    z-index: 999;  /* 高于内容，低于指示器 */
+    border-top: 1px dashed var(--border-tertiary);
+    z-index: 999;
 }
 
 .border-text {
@@ -139,16 +134,15 @@ body {
     top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #1a1a1a;
+    background-color: var(--bg-primary);
     padding: 0 15px;
     font-size: 1.5rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     white-space: nowrap;
 }
 
-/* 内容区顶间距补偿（防线遮挡） */
 .page-container {
-    padding-top: 80px;  /* 原60px +20px 避线+标签 */
+    padding-top: 80px;
 }
