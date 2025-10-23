@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>前日谈：基地的开始</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/article.css">
+
+    <!-- 
+    ============================================================
+    == V V V V      添加网站图标代码 (Favicon)      V V V V ==
+    ============================================================
+    -->
+    <link rel="icon" type="image/png" href="../static/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../static/icons/favicon.svg" />
+    <link rel="shortcut icon" href="../static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../static/icons/site.webmanifest" />
+    <!-- 
+    ============================================================
+    == ^ ^ ^ ^          网站图标代码结束          ^ ^ ^ ^ ==
+    ============================================================
+    -->    
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <!-- 
+              核心修改：
+              1. 添加 onclick 事件处理器。
+              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
+                 这可以处理用户在新标签页直接打开文章的边缘情况。
+              3. `event.preventDefault()` 阻止链接的默认跳转行为。
+              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
+              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
+            -->
+            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
+            <h1 class="article-title">前日谈：基地的开始</h1>
+            <p class="article-meta">记录于：2025-10-24</p>
+        </header>
+
+        <main class="article-content">
+            
+<h2>基地的建造</h2>
+<p>空闲的晚上，十点钟开始，反反复复用ai磨了一个月，总算能够示人了。还得感谢小g老师的代码攥写，还有友链第一位老大的启发</p>
+<h2>为什么想写博客</h2>
+<p>第一，其实写博客的欲望是在上个学期开始的，总有点东西发在空间没意思，但是又怕空友们觉得dinner，于是暑假试着用hexo搭了一个。结果觉得神秘搞笑，遂作罢。中途因为不会配置github的workflow红温了</p>
+<p>其次，学习嵌入式的过程中阅读了很多大佬的博客，受益颇多，想要输出有意思的内容（但我只是个没有产出的dinner而已。。</p>
+<p>最后，友链第一位的老大，灰分，*数字花园*，对我的影响极大，在此引用其文章*序言：燃尽之前*的内容：</p>
+<blockquote>
+<p>/
+        </p>
+<p>数字花园是自由的，随意的，而且绝不应该是固定的，死板的。这里会有作者的各种内容：无论是写完或者没写完的文章，还是不时增添的修改、评论，亦或者崭新稚嫩的想法。数字花园是包容性的，它可以承载作者的所有内容。我渴望建立这样一个花园，尽管目前看上去这里还是空旷得有些滑稽。但，这里终将变得丰富，繁茂，鸟语花香。</p>
+<p>/
+        </p>
+<p>目前来说，整个网站都是独立设计完成的。尽管目前已经有大量博客框架与生成工具，可以更快更好地实现华丽的效果，却似乎都不是我想要的。一是目之所及的模板都不是自己偏爱的风格；二是，在我的观念中，网站应该同样作为个人的独特表达。</p>
+</blockquote>
+<p>独特的美学和观念，促使我思考博客的意义</p>
+<h2>其二</h2>
+<p>得益于llm技术的发展，从来没学过html和和css还有js以及网页设计的我，开始用自然语言向ai提问</p>
+<p><img alt="请教" src="../static/images/article_img/屏幕截图 2025-10-23 235536.png"/></p>
+<p>在加上之前些许接触过vibecoding，于是便决定请小g老师负责了所有的代码</p>
+<p>当然bug也是频繁出现，估计到目前，在博客上消耗的token已经超过10million（还好是免费的学生用户），创建了20次左右的对话</p>
+<p>什么？你问我遇到bug怎么办？请看如下：</p>
+<p>
+<img alt="红温中" src="../static/images/article_img/屏幕截图 2025-10-24 000240.png"/>
+<img alt="红温中" src="../static/images/article_img/屏幕截图 2025-10-24 000331.png"/>
+<img alt="红温中" src="../static/images/article_img/屏幕截图 2025-10-24 000350.png"/>
+</p>
+<p>（过于红温的我就不放出来了）</p>
+<h2>关于页面设计</h2>
+<p>其实一开始，我确实是想让它像其他的博客那样，在某处有个边栏或者顶部栏，上面会写着“Archive”,”About”,”Links”......等等类似的</p>
+<p>但是不酷啊。我想要的是个“基地”</p>
+<p>我想要让区域跳转的时候，有一个”深度掠过“的效果，但是我不会写，所以我把所有内容都放在了同一页，除了文章正文内容之外。</p>
+<p>添加了”深度指示器“和”扇区“、”水平深度指示器“......至少这几个设定我觉得能让我觉得比较满意，所有卡片都根据扇区所在的区域排布，只需要修改导航卡片的深度数字，水平分界线就可以放到指定的位置，卡片也会随着移动</p>
+<p>扇区么。这里没有坏道。嗯，至少现在是这样</p>
+<p>你甚至可以不使用右边的电梯，手动滚轮，模拟爬楼的过程（？？？</p>
+<p><img alt="git commit" src="../static/images/article_img/屏幕截图 2025-10-24 003008.png"/></p>
+<h2>内容</h2>
+<p>其实到现在，还是没想好每一个扇区放什么，所以他们都是*Undefined*状态</p>
+<p>日后再补上吧</p>
+<h2>伟大的二进制日</h2>
+<p>今天是10.24，1024</p>
+<h2>请漫步</h2>
+<p>随便转转吧————这里是我的基地————或者休息一会</p>
+
+        </main>
+    </div>
+
+</body>
+</html>
