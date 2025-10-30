@@ -51,6 +51,7 @@ builder/page_parser.py
 builder/rss_generator.py
 CNAME
 content/notes/index.html
+content/sector-01/前日谈.html
 content/sector-01/群青色的网络之梦.html
 content/sector-01/文件结构方案.html
 content/sector-01/img_test.html
@@ -82,6 +83,12 @@ static/icons/site.webmanifest
 static/icons/web-app-manifest-192x192.png
 static/icons/web-app-manifest-512x512.png
 static/images/屏幕截图 2025-10-19 002929.png
+static/images/article_img/屏幕截图 2025-10-23 235536.png
+static/images/article_img/屏幕截图 2025-10-24 000240.png
+static/images/article_img/屏幕截图 2025-10-24 000331.png
+static/images/article_img/屏幕截图 2025-10-24 000350.png
+static/images/article_img/屏幕截图 2025-10-24 003008.png
+static/images/my_profile_icon/IMG_20250826_003537.png
 static/images/tomotachi_favicon/woodash_favicon.png
 templates/article.template
 </directory_structure>
@@ -180,6 +187,91 @@ This section contains the contents of the repository's files.
    - 重新生成 `feed.xml` 并保存到 `output/`。
    - 将 `static/` 目录下的所有资源复制到 `output/`。
 4. 将 `output/` 目录下的所有内容部署到你的服务器。
+</file>
+
+<file path="content/sector-01/前日谈.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="前日谈：基地的开始">
+    <meta name="blog-date" content="2025-10-24">
+    <meta name="blog-summary" content="前文">
+</head>
+<body>
+    <h2>基地的建造</h2>
+
+    <p>空闲的晚上，十点钟开始，反反复复用ai磨了一个月，总算能够示人了。还得感谢小g老师的代码攥写，还有友链第一位老大的启发</p>
+    
+    <h2>为什么想写博客</h2>
+    
+    <p>第一，其实写博客的欲望是在上个学期开始的，总有点东西发在空间没意思，但是又怕空友们觉得dinner，于是暑假试着用hexo搭了一个。结果觉得神秘搞笑，遂作罢。中途因为不会配置github的workflow红温了</p>
+    
+    <p>其次，学习嵌入式的过程中阅读了很多大佬的博客，受益颇多，想要输出有意思的内容（但我只是个没有产出的dinner而已。。</p>
+    
+    <p>最后，友链第一位的老大，灰分，*数字花园*，对我的影响极大，在此引用其文章*序言：燃尽之前*的内容：</p>
+    
+    <blockquote>
+        <p>/
+        </p>
+        <p>数字花园是自由的，随意的，而且绝不应该是固定的，死板的。这里会有作者的各种内容：无论是写完或者没写完的文章，还是不时增添的修改、评论，亦或者崭新稚嫩的想法。数字花园是包容性的，它可以承载作者的所有内容。我渴望建立这样一个花园，尽管目前看上去这里还是空旷得有些滑稽。但，这里终将变得丰富，繁茂，鸟语花香。</p>
+        <p>/
+        </p>
+        <p>目前来说，整个网站都是独立设计完成的。尽管目前已经有大量博客框架与生成工具，可以更快更好地实现华丽的效果，却似乎都不是我想要的。一是目之所及的模板都不是自己偏爱的风格；二是，在我的观念中，网站应该同样作为个人的独特表达。</p>
+    </blockquote>
+    
+    <p>独特的美学和观念，促使我思考博客的意义</p>
+    
+    <h2>其二</h2>
+    
+    <p>得益于llm技术的发展，从来没学过html和和css还有js以及网页设计的我，开始用自然语言向ai提问</p>
+
+    <p><img src="../static/images/article_img/屏幕截图 2025-10-23 235536.png" alt="请教"></p>
+    
+    <p>在加上之前些许接触过vibecoding，于是便决定请小g老师负责了所有的代码</p>
+    
+    <p>当然bug也是频繁出现，估计到目前，在博客上消耗的token已经超过10million（还好是免费的学生用户），创建了20次左右的对话</p>
+    
+    <p>什么？你问我遇到bug怎么办？请看如下：</p>
+    
+    <p>
+        <img src="../static/images/article_img/屏幕截图 2025-10-24 000240.png" alt="红温中">
+        <img src="../static/images/article_img/屏幕截图 2025-10-24 000331.png" alt="红温中">
+        <img src="../static/images/article_img/屏幕截图 2025-10-24 000350.png" alt="红温中">
+    </p>
+    
+    <p>（过于红温的我就不放出来了）</p>
+    
+    <h2>关于页面设计</h2>
+    
+    <p>其实一开始，我确实是想让它像其他的博客那样，在某处有个边栏或者顶部栏，上面会写着“Archive”,”About”,”Links”......等等类似的</p>
+    
+    <p>但是不酷啊。我想要的是个“基地”</p>
+    
+    <p>我想要让区域跳转的时候，有一个”深度掠过“的效果，但是我不会写，所以我把所有内容都放在了同一页，除了文章正文内容之外。</p>
+    
+    <p>添加了”深度指示器“和”扇区“、”水平深度指示器“......至少这几个设定我觉得能让我觉得比较满意，所有卡片都根据扇区所在的区域排布，只需要修改导航卡片的深度数字，水平分界线就可以放到指定的位置，卡片也会随着移动</p>
+    
+    <p>扇区么。这里没有坏道。嗯，至少现在是这样</p>
+    
+    <p>你甚至可以不使用右边的电梯，手动滚轮，模拟爬楼的过程（？？？</p>
+
+    <p><img src="../static/images/article_img/屏幕截图 2025-10-24 003008.png" alt="git commit"></p>
+    
+    <h2>内容</h2>
+    
+    <p>其实到现在，还是没想好每一个扇区放什么，所以他们都是*Undefined*状态</p>
+    
+    <p>日后再补上吧</p>
+
+    <h2>伟大的二进制日</h2>
+
+    <p>今天是10.24，1024</p>
+    
+    <h2>请漫步</h2>
+    
+    <p>随便转转吧————这里是我的基地————或者休息一会</p>
+</body>
+</html>
 </file>
 
 <file path="content/sector-01/群青色的网络之梦.html">
@@ -694,159 +786,6 @@ class Page:
 </html>
 </file>
 
-<file path="static/css/article.css">
-/* --- 全局与基础设定 --- */
-body {
-    background-color: #1a1a1a;
-    color: #c5c5c5;
-    font-family: 'Times New Roman', 'Noto Sans SC', serif;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
-}
-
-/* --- 布局容器 --- */
-.article-container {
-    max-width: 750px;
-    margin: 0 auto;
-    padding: 40px 20px 80px 20px;
-}
-
-/* --- "返回基地"按钮 (核心修改区域) --- */
-.back-link {
-    /* 定位逻辑 */
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-
-    /* 视觉风格 */
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 2px;
-    padding: 8px 15px;
-    color: #4ecdc4;
-    text-decoration: none;
-    font-family: 'Courier New', monospace; /* 切换为等宽字体 */
-    font-size: 0.9rem;
-    font-weight: bold;
-    text-transform: uppercase; /* 全部大写 */
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-}
-
-.back-link:hover {
-    color: #fff;
-    border-color: #4ecdc4;
-    box-shadow: 0 0 10px rgba(78, 205, 196, 0.5); /* 添加辉光效果 */
-}
-
-
-/* --- 页头与导航 --- */
-.article-header {
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #333;
-    /* 移除 text-align: center，恢复左对齐 */
-}
-
-.article-title {
-    font-size: 2.8rem;
-    color: #e0e0e0;
-    margin: 0 0 10px 0;
-}
-
-.article-meta {
-    font-size: 0.9rem;
-    color: #888;
-    margin: 0;
-    font-style: italic;
-}
-
-/* --- 文章正文排版 --- */
-.article-content {
-    font-size: 1.1rem;
-}
-
-.article-content h2,
-.article-content h3 {
-    color: #00aaff;
-    border-bottom: 1px solid #444;
-    padding-bottom: 10px;
-    margin-top: 40px;
-}
-
-.article-content p {
-    margin: 0 0 1.5em 0;
-}
-
-.article-content a {
-    color: #4ecdc4;
-    text-decoration: none;
-    border-bottom: 1px dashed #4ecdc4;
-    transition: all 0.3s ease;
-}
-
-.article-content a:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    border-bottom: 1px solid #4ecdc4;
-}
-
-.article-content ul,
-.article-content ol {
-    padding-left: 25px;
-}
-
-/* --- 引用块样式 --- */
-.article-content blockquote {
-    margin: 2em 0;
-    padding: 1em 1.5em;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #444;
-    color: #aaa;
-    font-style: italic;
-}
-
-.article-content blockquote p {
-    margin: 0;
-}
-
-/* --- 代码块样式 --- */
-.article-content pre {
-    background-color: #222;
-    border: 1px solid #333;
-    padding: 1em;
-    overflow-x: auto;
-    font-size: 0.9em;
-    line-height: 1.5;
-    border-radius: 4px;
-}
-
-.article-content code {
-    font-family: 'Courier New', 'Fira Code', monospace;
-    background-color: #333;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-size: 0.9em;
-}
-
-.article-content pre code {
-    background-color: transparent;
-    padding: 0;
-    border-radius: 0;
-}
-
-/* --- 图像样式 --- */
-.article-content img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 2em auto;
-    border-radius: 4px;
-    border: 1px solid #444;
-}
-</file>
-
 <file path="builder/index_updater.py">
 def update_indexes(pages):
     # 按日期对所有页面进行降序排序，这是确保逻辑一致性的必要步骤
@@ -987,160 +926,151 @@ def update_category_indexes(pages):
 </html>
 </file>
 
-<file path="static/css/page.css">
-/* static/css/page.css */
-
-/* --- 全局与基础设定 (与 main.css 保持一致) --- */
+<file path="static/css/article.css">
+/* --- 全局与基础设定 --- */
 body {
-    background-color: #1a1a1a;
-    color: #c5c5c5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     line-height: 1.8;
     margin: 0;
     padding: 0;
 }
 
-/* --- 页面布局容器 --- */
-.page-container {
-    max-width: 800px;
+/* --- 布局容器 --- */
+.article-container {
+    max-width: 750px;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 40px 20px 80px 20px;
 }
 
-/* --- 页头样式 --- */
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 50px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid #333;
-}
-
-.page-header h1 {
-    /* --- 核心修改：减小字号 --- */
-    font-size: 2.2rem;
-    color: #e0e0e0;
-    margin: 0;
-    font-weight: normal;
-}
-
-/* --- 返回主页链接 --- */
-.back-home {
-    display: inline-block;
-    color: #4ecdc4;
+/* --- "返回基地"按钮 (核心修改区域) --- */
+.back-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    background-color: var(--bg-article-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 2px;
+    padding: 8px 15px;
+    color: var(--primary-accent);
     text-decoration: none;
-    font-size: 1rem;
-    /* --- 核心修改：增加内边距 --- */
-    padding: 10px 18px;
-    border: 1px solid #4ecdc4;
-    border-radius: 4px;
-    transition: all 0.3s ease;
     font-family: 'Courier New', monospace;
-    white-space: nowrap;
-}
-
-.back-home:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    color: #fff;
-    box-shadow: 0 0 10px rgba(78, 205, 196, 0.3);
-}
-
-/* --- 页面正文内容 --- */
-.page-content {
-    font-size: 1.1rem;
-    color: #c5c5c5;
-    padding-top: 20px; /* 增加一点顶部间距 */
-}
-
-/* 统一内容区域的链接样式 */
-.page-content a {
-    color: #4ecdc4;
-    text-decoration: none;
-    border-bottom: 1px dashed #4ecdc4;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: all 0.3s ease;
 }
 
-.page-content a:hover {
-    background-color: rgba(78, 205, 196, 0.1);
-    border-bottom: 1px solid #4ecdc4;
+.back-link:hover {
+    color: var(--text-white);
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.5);
 }
 
-
-
-/* --- 新增：从 main.css 迁移的文章列表样式 --- */
-#post-list-container {
-    margin-top: 60px; /* 与页头分隔开 */
-    border-top: 1px solid #333;
-    padding-top: 40px;
+/* --- 页头与导航 --- */
+.article-header {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--divider-color);
 }
 
-#post-list-container article {
-    border-bottom: 1px solid #333;
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
+.article-title {
+    font-size: 2.8rem;
+    color: var(--text-bright);
+    margin: 0 0 10px 0;
 }
 
-#post-list-container h2 {
-    margin-bottom: 0.5rem;
-}
-
-#post-list-container h2 a {
-    color: #e0e0e0;
-    text-decoration: none;
-    font-size: 1.5rem;
-}
-
-#post-list-container h2 a:hover {
-    color: #00aaff;
-}
-
-#post-list-container .date {
-    color: #888;
+.article-meta {
     font-size: 0.9rem;
-    margin-top: 0;
+    color: var(--text-secondary);
+    margin: 0;
+    font-style: italic;
 }
 
-#post-list-container .summary {
-    color: #c5c5c5;
-    line-height: 1.7;
+/* --- 文章正文排版 --- */
+.article-content {
+    font-size: 1.1rem;
 }
 
-/* --- 边境线样式（移植自 main.css，子页顶锚） --- */
-.border-line {
-    position: fixed;  /* 固定在视窗顶 */
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: repeating-linear-gradient(
-        to right,
-        #666 0px,
-        #666 15px,
-        transparent 15px,
-        transparent 25px
-    );
-    border-top: 1px dashed #666;
-    z-index: 999;  /* 高于内容，低于指示器 */
+.article-content h2,
+.article-content h3 {
+    color: var(--secondary-accent);
+    border-bottom: 1px solid var(--border-primary);
+    padding-bottom: 10px;
+    margin-top: 40px;
 }
 
-.border-text {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #1a1a1a;
-    padding: 0 15px;
-    font-size: 1.5rem;
-    color: #888;
-    font-family: 'Times New Roman', 'Noto Sans SC', serif;
-    letter-spacing: 1px;
-    white-space: nowrap;
+.article-content p {
+    margin: 0 0 1.5em 0;
 }
 
-/* 内容区顶间距补偿（防线遮挡） */
-.page-container {
-    padding-top: 80px;  /* 原60px +20px 避线+标签 */
+.article-content a {
+    color: var(--primary-accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary-accent);
+    transition: all 0.3s ease;
+}
+
+.article-content a:hover {
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    border-bottom: 1px solid var(--primary-accent);
+}
+
+.article-content ul,
+.article-content ol {
+    padding-left: 25px;
+}
+
+/* --- 引用块样式 --- */
+.article-content blockquote {
+    margin: 2em 0;
+    padding: 1em 1.5em;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-left: 4px solid var(--border-primary);
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.article-content blockquote p {
+    margin: 0;
+}
+
+/* --- 代码块样式 --- */
+.article-content pre {
+    background-color: var(--bg-card);
+    border: 1px solid var(--divider-color);
+    padding: 1em;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+    border-radius: 4px;
+}
+
+.article-content code {
+    font-family: 'Courier New', 'Fira Code', monospace;
+    background-color: var(--bg-code);
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.article-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+}
+
+/* --- 图像样式 --- */
+.article-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2em auto;
+    border-radius: 4px;
+    border: 1px solid var(--border-primary);
 }
 </file>
 
@@ -1355,12 +1285,164 @@ body {
 </html>
 </file>
 
+<file path="static/css/page.css">
+/* static/css/page.css */
+
+/* --- 全局与基础设定 (与 main.css 保持一致) --- */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 页面布局容器 --- */
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* --- 页头样式 --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.page-header h1 {
+    font-size: 2.2rem;
+    color: var(--text-bright);
+    margin: 0;
+    font-weight: normal;
+}
+
+/* --- 返回主页链接 --- */
+.back-home {
+    display: inline-block;
+    color: var(--primary-accent);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 18px;
+    border: 1px solid var(--primary-accent);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+}
+
+.back-home:hover {
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    color: var(--text-white);
+    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.3);
+}
+
+/* --- 页面正文内容 --- */
+.page-content {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    padding-top: 20px;
+}
+
+.page-content a {
+    color: var(--primary-accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary-accent);
+    transition: all 0.3s ease;
+}
+
+.page-content a:hover {
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    border-bottom: 1px solid var(--primary-accent);
+}
+
+/* --- 新增：从 main.css 迁移的文章列表样式 --- */
+#post-list-container {
+    margin-top: 60px;
+    border-top: 1px solid var(--divider-color);
+    padding-top: 40px;
+}
+
+#post-list-container article {
+    border-bottom: 1px solid var(--divider-color);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#post-list-container h2 {
+    margin-bottom: 0.5rem;
+}
+
+#post-list-container h2 a {
+    color: var(--text-bright);
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#post-list-container h2 a:hover {
+    color: var(--secondary-accent);
+}
+
+#post-list-container .date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+#post-list-container .summary {
+    color: var(--text-primary);
+    line-height: 1.7;
+}
+
+/* --- 边境线样式（移植自 main.css，子页顶锚） --- */
+.border-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed var(--border-tertiary);
+    z-index: 999;
+}
+
+.border-text {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg-primary);
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.page-container {
+    padding-top: 80px;
+}
+</file>
+
 <file path="templates/article.template">
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>$title$</title>
+    <link rel="stylesheet" href="../static/css/main.css">
     <link rel="stylesheet" href="../static/css/article.css">
 
     <!-- 
@@ -1563,6 +1645,45 @@ if __name__ == '__main__':
 </file>
 
 <file path="static/css/main.css">
+/* ============================================================ */
+/* == V V V V        颜色变量中央控制室        V V V V == */
+/* ============================================================ */
+:root {
+  /* -- Accent Colors -- */
+  --primary-accent: #4D9FFF;
+  --primary-accent-rgb: 77, 159, 255;
+  --secondary-accent: #fd842e; /* SaddleBrown */
+  --danger-accent: #EF4444;
+  --warning-accent: #F59E0B;
+
+  /* -- Background Colors -- */
+  --bg-primary: #0A192F;
+  --bg-darker: #020C1B;
+  --bg-card: #112240;
+  --bg-card-rgb: 17, 34, 64;
+  --bg-article-card: #172A45;
+  --bg-code: #233554;
+
+  /* -- Text Colors -- */
+  --text-primary: #CCD6F6;
+  --text-bright: #E6F1FF;
+  --text-secondary: #8892B0;
+  --text-muted: #A8B2D1;
+  --text-dark-muted: #64748B;
+  --text-white: #ffffff;
+  --text-on-accent: #0A192F;
+
+  /* -- Border & Divider Colors -- */
+  --border-primary: #233554;
+  --border-secondary: #303C55;
+  --border-tertiary: #64748B;
+  --divider-color: #112240;
+}
+/* ============================================================ */
+/* == ^ ^ ^ ^        颜色变量定义结束          ^ ^ ^ ^ == */
+/* ============================================================ */
+
+
 /* --- 核心布局逻辑 --- */
 
 /* 确保 html 和 body 能够支撑全屏高度 */
@@ -1576,26 +1697,20 @@ html, body {
 
 /* 模块一：Hero Section 布局 */
 .hero {
-    /* 关键：高度等于视窗高度的100%，实现全屏效果 */
     height: 100vh;
-    /* 使用 Flexbox 实现内容垂直和水平居中 */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    /* 为内部绝对定位的箭头提供参照系 */
     position: relative;
     padding-left: 50px;
     padding-right: 50px;
-    /* 添加蓝色渐变背景，从上往下变浅 */
-    background: linear-gradient(to bottom, #00aaff, transparent);
+    background: linear-gradient(to bottom, var(--secondary-accent), transparent);
 }
 
 /* 模块二：文章列表区的间距 */
 #main-content {
-    /* 在文章列表顶部和底部留出足够的呼吸空间 */
     padding: 80px 20px;
-    /* 限制最大宽度，提高可读性 */
     max-width: 700px;
     margin: 0 auto;
 }
@@ -1604,8 +1719,8 @@ html, body {
 /* --- 视觉样式整合 (采纳你的暗色主题) --- */
 
 body {
-    background-color: #1a1a1a;
-    color: #c5c5c5;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
 }
 
@@ -1614,13 +1729,13 @@ body {
     font-size: 5rem;
     font-weight: normal;
     margin: 0;
-    letter-spacing: 2px; /* 增加字符间距 */
-    text-align: center; /* 修改为居中 */
+    letter-spacing: 2px;
+    text-align: center;
 }
 
 .hero-subtitle-center {
     font-size: 1.2rem;
-    color: #888;
+    color: var(--text-secondary);
     margin-top: 20px;
     line-height: 1.8;
     text-align: center;
@@ -1644,7 +1759,7 @@ body {
     bottom: 20%;
     left: 50%;
     transform: translateX(-50%);
-    color: #555;
+    color: var(--border-secondary);
     text-decoration: none;
     animation: bounce 2s infinite;
     display: flex;
@@ -1682,7 +1797,7 @@ body {
 }
 
 .scroll-down-arrow:hover {
-    color: #c5c5c5;
+    color: var(--text-primary);
 }
 
 /* 国境线样式的边界线 */
@@ -1694,12 +1809,12 @@ body {
     height: 5px;
     background: repeating-linear-gradient(
         to right,
-        #666 0px,
-        #666 15px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 15px,
         transparent 15px,
         transparent 25px
     );
-    border-top: 1px dashed #666;
+    border-top: 1px dashed var(--border-tertiary);
 }
 
 .border-text {
@@ -1707,10 +1822,10 @@ body {
     top: -15px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #1a1a1a;
+    background-color: var(--bg-primary);
     padding: 0 15px;
     font-size: 1.5rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -1723,7 +1838,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.8rem;
-    color: #ff6b6b;
+    color: var(--danger-accent);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 2px;
     font-weight: bold;
@@ -1737,11 +1852,11 @@ body {
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.8rem;
-    color: #4ecdc4;
+    color: var(--primary-accent);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 2px;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(78, 205, 196, 0.3);
+    text-shadow: 2px 2px 4px rgba(var(--primary-accent-rgb), 0.3);
 }
 
 /* --- 深度指示器 (核心修改区域) --- */
@@ -1752,39 +1867,35 @@ body {
     transform: translateY(-50%);
     z-index: 1000;
     display: flex;
-    /* 修改：将主轴方向改为水平 */
     flex-direction: row;
     align-items: center;
 }
 
 .depth-line {
-    /* 修改：交换宽高，变为水平线 */
     width: 60px;
     height: 3px;
-    /* 修改：渐变方向改为水平 */
     background: repeating-linear-gradient(
         to right,
-        #666 0px,
-        #666 8px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 8px,
         transparent 8px,
         transparent 12px
     );
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
-    /* 修改：调整为右边距 */
+    border-top: 1px solid var(--border-tertiary);
+    border-bottom: 1px solid var(--border-tertiary);
     margin-right: 10px;
     opacity: 0.8;
 }
 
 .depth-text {
     font-size: 1rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     background-color: rgba(26, 26, 26, 0.9);
     padding: 5px 10px;
     border-radius: 3px;
-    border: 1px solid #666;
+    border: 1px solid var(--border-tertiary);
     min-width: 40px;
     text-align: center;
     font-weight: bold;
@@ -1807,13 +1918,13 @@ body {
     height: 3px;
     background: repeating-linear-gradient(
         to left,
-        #666 0px,
-        #666 8px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 8px,
         transparent 8px,
         transparent 12px
     );
-    border-top: 1px solid #666;
-    border-bottom: 1px solid #666;
+    border-top: 1px solid var(--border-tertiary);
+    border-bottom: 1px solid var(--border-tertiary);
     margin-left: 10px;
     opacity: 0.8;
     transform: rotate(180deg);
@@ -1821,13 +1932,13 @@ body {
 
 .depth-text-left {
     font-size: 1rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     background-color: rgba(26, 26, 26, 0.9);
     padding: 5px 10px;
     border-radius: 3px;
-    border: 1px solid #666;
+    border: 1px solid var(--border-tertiary);
     min-width: 40px;
     text-align: center;
     font-weight: bold;
@@ -1836,13 +1947,11 @@ body {
 /* 子页面链接样式 - 以边境线为参照 */
 .nav-link-container {
     position: absolute;
-    /* 以边境线为参照，边境线位置是 100vh - 5px */
-    top: calc(100vh - 5px + 100px); /* 边境线下方100px处 */
-    left: 50px; /* 文章列表左侧空白区域 */
+    top: calc(100vh - 5px + 100px);
+    left: 50px;
     z-index: 100;
 }
 
-/* 竖直排列的偏移量 */
 .nav-link-2 { top: calc(100vh - 5px + 140px); }
 .nav-link-3 { top: calc(100vh - 5px + 180px); }
 .nav-link-4 { top: calc(100vh - 5px + 220px); }
@@ -1854,10 +1963,10 @@ body {
 .nav-link {
     position: relative;
     display: inline-block;
-    background-color: #1a1a1a;
+    background-color: var(--bg-primary);
     padding: 0 15px;
     font-size: 1.5rem;
-    color: #888;
+    color: var(--text-secondary);
     font-family: 'Times New Roman', 'Noto Sans SC', serif;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -1866,7 +1975,7 @@ body {
 }
 
 .nav-link:hover {
-    color: #4ecdc4;
+    color: var(--primary-accent);
 }
 
 .nav-border-line {
@@ -1877,18 +1986,18 @@ body {
     height: 5px;
     background: repeating-linear-gradient(
         to right,
-        #666 0px,
-        #666 15px,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 15px,
         transparent 15px,
         transparent 25px
     );
-    border-top: 1px dashed #666;
+    border-top: 1px dashed var(--border-tertiary);
     z-index: -1;
 }
 
 /* 文章列表部分的样式 (之前 index_updater.py 生成) */
 #main-content article {
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--divider-color);
     padding-bottom: 2rem;
     margin-bottom: 2rem;
 }
@@ -1898,47 +2007,44 @@ body {
 }
 
 #main-content h2 a {
-    color: #e0e0e0;
+    color: var(--text-bright);
     text-decoration: none;
     font-size: 1.5rem;
 }
 
 #main-content h2 a:hover {
-    color: #00aaff;
+    color: var(--secondary-accent);
 }
 
 #main-content .date {
-    color: #888;
+    color: var(--text-secondary);
     font-size: 0.9rem;
 }
 
 #main-content .summary {
-    color: #c5c5c5;
+    color: var(--text-primary);
     line-height: 1.7;
 }
 
 /* --- 地下室环境效果整合 --- */
 
-/* 1. CSS 变量与基础设定 */
 :root {
     --cursor-x: 50vw;
     --cursor-y: 50vh;
 }
 
 body.homepage-effect {
-    /* 核心变更：应用手电筒效果背景 */
     background: radial-gradient(
         circle at var(--cursor-x) var(--cursor-y),
-        rgba(55, 55, 55, 0.8) 0%,   /* 稍微调亮中心点 */
-        rgba(13, 13, 13, 0) 10px,  /* [修正] 缩小核心光圈半径 */
-        #0d0d0d 10px              /* [修正] 缩小整体光照范围 */
+        rgba(55, 55, 55, 0.8) 0%,
+        rgba(13, 13, 13, 0) 10px,
+        var(--bg-darker) 10px
     );
-    background-repeat: no-repeat;     /* [修正] 强制背景不重复 */
-    background-attachment: fixed;     /* [修正] 将背景固定于视口，防止滚动 */
-    cursor: none;                     /* 隐藏默认光标 */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    cursor: none;
 }
 
-/* 2. 视觉噪点与扫描线层 */
 body.homepage-effect::after {
     content: "";
     position: fixed;
@@ -1968,34 +2074,39 @@ body.homepage-effect::after {
     100% { transform: translateY(0); }
 }
 
-/* 3. 自定义光标 */
 .homepage-effect .cursor-dot {
     position: fixed;
     width: 8px;
     height: 8px;
-    background-color: #4ecdc4;
+    background-color: var(--primary-accent);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    z-index: 1001;
-    box-shadow: 0 0 10px #4ecdc4;
-    transition: transform 0.1s ease-out; /* 为光标移动增加平滑过渡 */
+    z-index: 9999;
+    box-shadow: 0 0 10px var(--primary-accent);
+    transition: transform 0.1s ease-out;
 }
 
-/* 4. 交互闪烁效果 */
+.homepage-effect,
+.homepage-effect a,
+.homepage-effect button,
+.homepage-effect .page-card,
+.homepage-effect .elevator-button {
+    cursor: none;
+}
+
 .nav-link:hover {
     animation: flicker 0.15s infinite steps(1);
 }
 
 @keyframes flicker {
-    0% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+    0% { opacity: 1; text-shadow: 0 0 5px var(--primary-accent); }
     25% { opacity: 0.8; }
     50% { opacity: 1; text-shadow: none; }
     75% { opacity: 0.6; }
-    100% { opacity: 1; text-shadow: 0 0 5px #4ecdc4; }
+    100% { opacity: 1; text-shadow: 0 0 5px var(--primary-accent); }
 }
 
-/* --- 新增：主内容网格布局 --- */
 .main-content-grid {
     display: flex;
     padding: 80px 50px;
@@ -2005,44 +2116,41 @@ body.homepage-effect::after {
     min-height: 100vh;
 }
 
-/* 新增: 左侧内容列的容器 */
 .left-column {
     flex: 2; 
     display: flex;
     flex-direction: column;
 }
 
-/* --- 页面卡片容器 --- */
 .page-cards-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px; 
 }
 
-/* 新增: 公告面板样式 */
 .announcement-panel {
     margin-top: 30px; 
-    background-color: #222;
-    border: 1px solid #444;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
     padding: 25px;
-    color: #c5c5c5;
+    color: var(--text-primary);
 }
 
 .announcement-panel h3 {
     font-family: 'Courier New', monospace;
-    color: #888;
+    color: var(--text-secondary);
     font-size: 1.2rem;
     margin-top: 0;
     margin-bottom: 20px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid var(--border-primary);
     padding-bottom: 15px;
 }
 
 .announcement-panel p {
     font-size: 1rem;
     line-height: 1.7;
-    color: #aaa;
+    color: var(--text-muted);
     margin: 0 0 1em 0;
 }
 
@@ -2050,13 +2158,12 @@ body.homepage-effect::after {
     margin-bottom: 0;
 }
 
-/* --- 单个卡片样式 --- */
 .page-card {
-    background-color: #222;
-    border: 1px solid #444;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-primary);
     border-radius: 4px;
     text-decoration: none;
-    color: #c5c5c5;
+    color: var(--text-primary);
     transition: all 0.3s ease;
     overflow: hidden; 
     display: flex;
@@ -2067,8 +2174,8 @@ body.homepage-effect::after {
 
 .page-card:hover {
     transform: translateY(-5px);
-    border-color: #4ecdc4;
-    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2);
+    border-color: var(--primary-accent);
+    box-shadow: 0 5px 15px rgba(var(--primary-accent-rgb), 0.2);
 }
 
 .page-card .card-content {
@@ -2077,73 +2184,62 @@ body.homepage-effect::after {
 
 .page-card h2 {
     font-size: 1.4rem;
-    color: #e0e0e0;
+    color: var(--text-bright);
     margin: 0 0 10px 0;
 }
 
 .page-card p {
     font-size: 1rem;
-    color: #888;
+    color: var(--text-secondary);
     margin: 0;
 }
 
-/* --- 右侧面板样式 --- */
 .right-panel {
     flex: 1; 
     padding-left: 50px;
 }
 
 .right-panel .panel-content {
-    border-left: 2px solid #444;
+    border-left: 2px solid var(--border-primary);
     padding-left: 30px;
     height: 100%;
     font-family: 'Courier New', monospace;
 }
 
 .right-panel h3 {
-    color: #888;
+    color: var(--text-secondary);
     font-size: 1.2rem;
     margin-bottom: 20px;
 }
 
 .right-panel p {
-    color: #666;
+    color: var(--text-dark-muted);
     font-size: 1rem;
 }
 
-/* ==== START: 核心修改 ==== */
-/* 新增: 用于定位文章卡片区域的锚点容器 */
 #sector-1-content-anchor,.sector-content-anchor {
     position: absolute;
     box-sizing: border-box;
 }
 
-/* 文章卡片容器本身的样式: 只负责内部布局，不负责定位 */
 .article-cards-container {
     display: grid;
-    grid-template-columns: 1fr; /* 单列网格 */
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 35px; /* Adjusted from 20px in previous turn */
 }
-/* ==== END: 核心修改 ==== */
 
-
-/* 移动端禁用光斑效果（基于 hover 检测） */
 @media (hover: none) {
     body.homepage-effect {
-        background: #0d0d0d !important;
+        background: var(--bg-darker) !important;
         cursor: auto !important;
     }
     
-    body.homepage-effect::after {
-        display: none !important;
-    }
-    
+    body.homepage-effect::after,
     .homepage-effect .cursor-dot {
         display: none !important;
     }
 }
 
-/* 桌面端优化：增强光斑响应 */
 @media (hover: hover) {
     body.homepage-effect {
         cursor: none;
@@ -2154,56 +2250,41 @@ body.homepage-effect::after {
     }
 }
 
-/* --- 卡片式页脚样式 --- */
-
-/* 1. 外部容器：负责占位和边距 */
 .footer-container {
-    /* 让容器从左到右撑满整个视口 */
     width: 100%;
-    /* 在页脚的上下留出足够的呼吸空间 */
-    padding: 100px 50px 50px 50px; /* 上边距100px，左右和下边距50px */
-    box-sizing: border-box; /* 确保内边距不会增加容器的总宽度 */
+    padding: 100px 50px 50px 50px;
+    box-sizing: border-box;
 }
 
-/* 2. 内部卡片：负责视觉表现 */
 .footer-card {
-    /* 卡片的核心样式 */
-    background-color: #222; /* 和其他卡片一样的深色背景 */
-    border: 1px solid #444;   /* 和其他卡片一样的边框 */
-    border-radius: 4px;       /* 和其他卡片一样的圆角 */
-    
-    /* 卡片内部的边距和内容对齐 */
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-primary);
+    border-radius: 4px;
     padding: 30px;
     text-align: center;
-    
-    /* 字体和颜色 */
-    font-family: 'Courier New', monospace; /* 使用等宽字体，保持科技感 */
-    color: #666; /* 默认文字颜色设为较暗的灰色 */
+    font-family: 'Courier New', monospace;
+    color: var(--text-dark-muted);
     font-size: 0.9rem;
 }
 
-/* 3. 卡片内不同段落的样式 */
 .footer-card p {
-    margin: 10px 0; /* 段落之间的垂直间距 */
-    letter-spacing: 1px; /* 增加字符间距 */
+    margin: 10px 0;
+    letter-spacing: 1px;
 }
 
-/* 技术致谢行的样式 */
 .footer-card .tech-credits {
-    color: #888;
+    color: var(--text-secondary);
 }
 
-/* 座右铭/引言的样式 */
 .footer-card .motto {
-    color: #aaa;
+    color: var(--text-muted);
     font-style: italic;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-/* 构建信息行的样式 */
 .footer-card .build-info {
-    color: #555; /* 最不重要的信息，颜色最暗 */
+    color: var(--border-secondary);
     font-size: 0.8rem;
 }
 </file>
@@ -2243,13 +2324,12 @@ body.homepage-effect::after {
             right: 0;
         }
 
-
         /* --- 悬浮电梯控制面板样式 --- */
         #elevator-panel {
             position: absolute;
             z-index: 1001;
-            background-color: rgba(34, 34, 34, 0.9);
-            border: 1px solid #444;
+            background-color: rgba(var(--bg-card-rgb), 0.9); /* <--- MODIFIED */
+            border: 1px solid var(--border-primary); /* <--- MODIFIED */
             border-radius: 4px;
             padding: 15px;
             font-family: 'Courier New', monospace;
@@ -2260,15 +2340,15 @@ body.homepage-effect::after {
         .panel-header {
             text-align: center;
             font-size: 1rem;
-            color: #888;
-            border-bottom: 1px solid #444;
+            color: var(--text-secondary); /* <--- MODIFIED */
+            border-bottom: 1px solid var(--border-primary); /* <--- MODIFIED */
             padding-bottom: 10px;
             margin-bottom: 10px;
             letter-spacing: 2px;
         }
         #clock-display {
             text-align: center;
-            color: #4ecdc4;
+            color: var(--primary-accent); /* <--- MODIFIED */
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
@@ -2277,16 +2357,16 @@ body.homepage-effect::after {
             letter-spacing: 1px;
         }
         .panel-status-display {
-            border-top: 1px solid #444;
-            border-bottom: 1px solid #444;
+            border-top: 1px solid var(--border-primary); /* <--- MODIFIED */
+            border-bottom: 1px solid var(--border-primary); /* <--- MODIFIED */
             padding: 10px 0;
             margin: 15px 0;
             font-size: 0.8rem;
-            color: #888;
+            color: var(--text-secondary); /* <--- MODIFIED */
         }
         .panel-status-display h3 {
             margin: 0 0 5px 0;
-            color: #aaa;
+            color: var(--text-muted); /* <--- MODIFIED */
             font-size: 0.9rem;
             font-weight: normal;
         }
@@ -2305,10 +2385,10 @@ body.homepage-effect::after {
             display: block;
             width: 100%;
             padding: 8px 10px;
-            background-color: #333;
-            color: #c5c5c5;
+            background-color: var(--bg-code); /* <--- MODIFIED */
+            color: var(--text-primary); /* <--- MODIFIED */
             text-decoration: none;
-            border: 1px solid #555;
+            border: 1px solid var(--border-secondary); /* <--- MODIFIED */
             border-radius: 2px;
             font-size: 0.8rem;
             text-align: center;
@@ -2316,10 +2396,10 @@ body.homepage-effect::after {
             box-sizing: border-box;
         }
         .elevator-button:hover {
-            background-color: #4ecdc4;
-            color: #1a1a1a;
-            border-color: #4ecdc4;
-            box-shadow: 0 0 8px rgba(78, 205, 196, 0.5);
+            background-color: var(--primary-accent); /* <--- MODIFIED */
+            color: var(--text-on-accent); /* <--- MODIFIED */
+            border-color: var(--primary-accent); /* <--- MODIFIED */
+            box-shadow: 0 0 8px rgba(var(--primary-accent-rgb), 0.5); /* <--- MODIFIED */
         }
         .page-cards-container {
             align-self: flex-start;
@@ -2327,18 +2407,18 @@ body.homepage-effect::after {
 
         /* --- 单个文章卡片的样式 --- */
         .article-card-item {
-            background-color: #2a2a2a;
-            border: 1px solid #555;
+            background-color: var(--bg-article-card); /* <--- MODIFIED */
+            border: 1px solid var(--border-secondary); /* <--- MODIFIED */
             border-radius: 4px;
             text-decoration: none;
-            color: #c5c5c5;
+            color: var(--text-primary); /* <--- MODIFIED */
             transition: all 0.3s ease;
             overflow: hidden;
         }
 
         .article-card-item:hover {
             transform: translateY(-5px);
-            border-color: #00aaff;
+            border-color: var(--secondary-accent); /* <--- MODIFIED */
             box-shadow: 0 5px 15px rgba(0, 170, 255, 0.2);
         }
 
@@ -2350,19 +2430,19 @@ body.homepage-effect::after {
 
         .article-card-item h2 {
             font-size: 1.3rem;
-            color: #e0e0e0;
+            color: var(--text-bright); /* <--- MODIFIED */
             margin: 0 0 10px 0;
         }
 
         .article-card-item .date {
             font-size: 0.8rem;
-            color: #888;
+            color: var(--text-secondary); /* <--- MODIFIED */
             margin: 0 0 10px 0;
         }
 
         .article-card-item .summary {
             font-size: 0.9rem;
-            color: #aaa;
+            color: var(--text-muted); /* <--- MODIFIED */
             margin: 0;
         }
         
@@ -2372,59 +2452,78 @@ body.homepage-effect::after {
             right: 20px;
             font-size: 0.8rem;
             font-family: 'Courier New', monospace;
-            color: #666;
+            color: var(--text-dark-muted); /* <--- MODIFIED */
             margin: 0;
         }
 
-        /* --- V V V V  新增：扇区07友链卡片样式  V V V V --- */
-
-        /* 友链卡片的基础布局和样式 */
+        /* --- V V V V  友链卡片样式  V V V V --- */
         .friend-link-card {
-            display: flex;         /* 核心：使用flex布局，让头像和信息水平排列 */
-            align-items: center;   /* 垂直居中对齐 */
-            padding: 20px;         /* 增加内部边距 */
-            gap: 20px;             /* 在头像和信息之间创建20px的间距 */
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
         }
-
-        /* 友链卡片的悬停效果 */
         .friend-link-card:hover {
-            border-color: #4ecdc4; /* 鼠标悬停时，边框变为标志性的青色 */
-            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.2); /* 添加辉光效果 */
+            border-color: var(--primary-accent); /* <--- MODIFIED */
+            box-shadow: 0 5px 15px rgba(var(--primary-accent-rgb), 0.2); /* <--- MODIFIED */
         }
-
-        /* 友人头像样式 */
         .friend-avatar {
-            width: 60px;           /* 固定头像宽度 */
-            height: 60px;          /* 固定头像高度 */
-            border-radius: 50%;    /* 将头像变为圆形 */
-            border: 2px solid #555;/* 给头像添加一个深灰色边框 */
-            object-fit: cover;     /* 确保图片不变形，裁剪以适应圆形 */
-            flex-shrink: 0;        /* 防止头像在flex布局中被压缩 */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--border-secondary); /* <--- MODIFIED */
+            object-fit: cover;
+            flex-shrink: 0;
         }
-
-        /* 右侧信息区域的容器 */
         .friend-info {
             display: flex;
-            flex-direction: column; /* 让标题和描述垂直排列 */
+            flex-direction: column;
         }
-
-        /* 友人网站名称/标题的样式 */
         .friend-name {
-            font-size: 1.2rem;     /* 稍大的字体 */
-            color: #e0e0e0;
-            margin: 0 0 5px 0;   /* 标题和描述之间的间距 */
+            font-size: 1.2rem;
+            color: var(--text-bright); /* <--- MODIFIED */
+            margin: 0 0 5px 0;
         }
-
-        /* 友人描述文本的样式 */
         .friend-description {
             font-size: 0.9rem;
-            color: #aaa;
+            color: var(--text-muted); /* <--- MODIFIED */
             margin: 0;
-            line-height: 1.6;      /* 增加行高以提高可读性 */
+            line-height: 1.6;
         }
-
-        /* --- ^ ^ ^ ^  新增：扇区07友链卡片样式结束  ^ ^ ^ ^ --- */
         
+        /* --- V V V V  “关于我”卡片样式  V V V V --- */
+        .about-me-card {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            gap: 25px;
+        }
+        .about-me-info {
+            display: flex;
+            flex-direction: column;
+            padding: 80px 0;
+        }
+        .about-me-title {
+            font-family: 'Courier New', monospace;
+            font-size: 1.4rem;
+            color: var(--text-bright); /* <--- MODIFIED */
+            margin: 0 0 5px 0;
+        }
+        .about-me-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary); /* <--- MODIFIED */
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .about-me-description {
+            font-size: 1rem;
+            color: var(--text-muted); /* <--- MODIFIED */
+            margin: 0 0 1em 0;
+            line-height: 1.7;
+        }
+        .about-me-description:last-child {
+            margin-bottom: 0;
+        }
     </style>
 </head>
 
@@ -2459,10 +2558,10 @@ body.homepage-effect::after {
                 <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-300m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-350m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-400m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 未写入 [-450m]</h2><p>Undefined</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 未写入 [-500m]</h2><h2></h2><p></p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 [-550m]</h2><h2>友達だ！</h2><p>Tomodachi</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-700m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 [-450m]</h2><h2>拙劣之作</h2><p>一些胡思乱想的小构思</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-6-line"><div class="card-content"><h2>扇区-06 [-500m]</h2><h2>友達だ！</h2><p>Tomodachi</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-7-line"><div class="card-content"><h2>扇区-07 未写入 [-550m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-8-line"><div class="card-content"><h2>扇区-08 未写入 [-600m]</h2><p>Undefined</p></div></a>
             </div>
             
             <div class="announcement-panel">
@@ -2478,6 +2577,10 @@ body.homepage-effect::after {
                 <p> 2025-10-22  </p>
                 <p>添加两位老大的友链  </p>
                 <p>老大建议我在1024发布博客</p>
+                <p>/</p>
+                <p> 2025-10-24  </p>
+                <p>今天是伟大的二进制日</p>
+                <p>想把链接挂在空间</p>
             </div>
         </div>
 
@@ -2499,7 +2602,7 @@ body.homepage-effect::after {
             <p class="tech-credits">Powered by Gemini 2.5 Pro & Jiooob.</p>
             <p class="motto">"苦来兮，苦走，苦完该剩些甜"</p>
             <p class="motto">请随意逛逛，或是在这个基地休息片刻，我的朋友</p>
-            <p class="build-info">// Version: 25_10_20 //</p>
+            <p class="build-info">// Version: 25_10_24 //</p>
         </div>
     </div>
     <!-- 
@@ -2529,9 +2632,31 @@ body.homepage-effect::after {
     <div id="sector-4-content-anchor" class="sector-content-anchor">
         <!-- SECTOR_04_CARDS_HERE -->
     </div>
+
+
     <div id="sector-5-content-anchor" class="sector-content-anchor">
-        <!-- SECTOR_05_CARDS_HERE -->
+        <!-- 1. 添加了和其他扇区一样的 article-cards-container 外壳 -->
+        <div class="article-cards-container">
+            <a href="https://yanskcity.generaltechstudio.com/" target="_blank" rel="noopener noreferrer" class="article-card-item">
+                <!-- 2. 内部 card-content 的结构与标准文章卡片完全一致 -->
+                <div class="card-content">
+                    <h2>Yansk City</h2>
+                    
+                    <!-- 3. 将所有描述性文字都放在一个 <p class="summary"> 标签里 -->
+                    <p class="summary">
+                        这是扬斯克城的设定，理论上说，这个基地是在扬斯克的底部下钻探而成的。
+                    </p>
+                </div>
+            </a>
+        </div>
     </div>
+
+
+
+
+
+
+
     <div id="sector-6-content-anchor" class="sector-content-anchor">
          <!-- ==== START: 扇区07友链卡片 ==== -->
         <div class="article-cards-container">
@@ -2569,7 +2694,25 @@ body.homepage-effect::after {
 
 
     <div id="sector-7-content-anchor" class="sector-content-anchor">
-       <!-- SECTOR_07_CARDS_HERE -->
+       <div class="article-cards-container">
+        <!-- 这是一个非链接的卡片，所以我们用 <div> 而不是 <a> -->
+            <div class="article-card-item about-me-card">
+                <!-- 左侧头像 -->
+                <img src="static\images\my_profile_icon\IMG_20250826_003537.png" alt="博主头像" class="friend-avatar">
+                
+                <!-- 右侧信息 -->
+                <div class="about-me-info">
+                    <h2 class="about-me-title">About Jiooob</h2>
+                    <p class="about-me-subtitle">我是Jiooob</p>
+                    <p class="about-me-description">
+                        这里是基地
+                    </p>
+                    <p class="about-me-description">
+                        请自便
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -2596,14 +2739,14 @@ body.homepage-effect::after {
         <nav class="elevator-buttons">
             <ul>
                 <li><a href="#" class="elevator-button" data-target-id="hero-section">Return to surface</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-1-line">Go to Sector 01 文章</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-2-line">Go to Sector 02</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-3-line">Go to Sector 03</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-4-line">Go to Sector 04</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-5-line">Go to Sector 05</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-6-line">Go to Sector 06</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-7-line">Go to Sector 07</a></li>
-                <li><a href="#" class="elevator-button" data-target-id="sector-8-line">Go to Sector 08</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-1-line">To 01</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-2-line">To 02</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-3-line">To 03</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-4-line">To 04</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-5-line">To 05</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-6-line">To 06</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-7-line">To 07</a></li>
+                <li><a href="#" class="elevator-button" data-target-id="sector-8-line">To 08</a></li>
             </ul>
         </nav>
     </div>
