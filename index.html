@@ -236,6 +236,17 @@
 </head>
 
 <body class="homepage-effect">
+    <!-- V V V V  新增：电梯门结构  V V V V -->
+    <div id="elevator-overlay">
+        <div class="elevator-door elevator-door-left"></div>
+        <!-- 门缝中间的光条，放在左门或右门内均可，或者独立定位 -->
+        <div class="elevator-door elevator-door-right"></div>
+    </div>
+    
+    <!-- 音效文件 (可选，你需要自己找一个 elevator.mp3 放在 static/audio/ 下) -->
+    <!-- <audio id="elevator-sound" src="static/audio/elevator.mp3" preload="auto"></audio> -->
+    <!-- ^ ^ ^ ^  新增结束  ^ ^ ^ ^ -->
+
     <div class="cursor-dot"></div>
     <section class="hero" id="hero-section">
         <div class="hero-content">
@@ -513,19 +524,50 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // --- 平滑滚动功能 ---
+            // --- V V V V  新功能：电梯转场逻辑 (替换了原有的平滑滚动)  V V V V ---
             const scrollTriggers = document.querySelectorAll('[data-target-id]');
+            
             scrollTriggers.forEach(trigger => {
                 trigger.addEventListener('click', function(event) {
                     event.preventDefault();
                     const targetId = this.dataset.targetId;
                     const targetElement = document.getElementById(targetId);
+
                     if (targetElement) {
-                        const topPosition = targetId === 'hero-section' ? 0 : targetElement.offsetTop - 20;
-                        window.scrollTo({ top: topPosition, behavior: 'smooth' });
+                        // 1. 激活电梯关门动画
+                        // 给 body 添加类名，触发 CSS 中的 .elevator-door transform 动画
+                        document.body.classList.add('elevator-active');
+
+                        // 2. 等待关门动画完成 
+                        // (设置 900ms 是因为 CSS 动画设置了 0.8s，留 100ms 缓冲确保门已关严)
+                        setTimeout(() => {
+                            
+                            // 3. 计算目标位置
+                            const topPosition = targetId === 'hero-section' ? 0 : targetElement.offsetTop - 20;
+                            
+                            // 4. 瞬间跳转 (Instant Jump)
+                            // 关键点：behavior 必须是 'auto'，这样是在黑暗中瞬间完成的，用户感觉不到
+                            window.scrollTo({
+                                top: topPosition,
+                                behavior: 'auto' 
+                            });
+
+                            // 5. 强制更新状态
+                            // 跳转后立即更新深度指示器和侧边栏，防止开门瞬间看到旧的数值闪烁
+                            if (typeof updateDepthIndicator === 'function') updateDepthIndicator();
+                            // 如果有 performUpdates 函数（用于侧边栏定位），最好也调用一次
+                            if (typeof performUpdates === 'function') performUpdates();
+
+                            // 6. 稍微停顿后开门 (模拟电梯运行到达的感觉)
+                            setTimeout(() => {
+                                document.body.classList.remove('elevator-active');
+                            }, 600); // 关门状态保持 600ms
+
+                        }, 900); // 900ms 后执行跳转逻辑
                     }
                 });
             });
+            // --- ^ ^ ^ ^  电梯逻辑结束  ^ ^ ^ ^ ---
 
             // --- 实时时钟功能 ---
             const dateElement = document.getElementById('date-display');

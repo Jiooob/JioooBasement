@@ -2,7 +2,8 @@
 body {
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    font-family: var(--font-serif); /* 使用正文衬线体 */
+    letter-spacing: 0.03em;
     line-height: 1.8;
     margin: 0;
     padding: 0;
@@ -27,7 +28,7 @@ body {
     padding: 8px 15px;
     color: var(--primary-accent);
     text-decoration: none;
-    font-family: 'Courier New', monospace;
+    font-family: var(--font-mono); /* 按钮使用机械字体 */
     font-size: 0.9rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -49,6 +50,8 @@ body {
 }
 
 .article-title {
+    font-family: var(--font-mono); /* 标题使用机械字体 */
+    letter-spacing: -0.03em;
     font-size: 2.8rem;
     color: var(--text-bright);
     margin: 0 0 10px 0;

@@ -31,10 +31,46 @@
   --border-secondary: #303C55;
   --border-tertiary: #64748B;
   --divider-color: #112240;
+
+  /* -- Fonts -- */
+  /* 机械感/终端字体：用于标题、元数据、仪表盘 */
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  /* 阅读字体：衬线体，用于正文 */
+  --font-serif: 'Noto Serif SC', 'Times New Roman', serif;
+  /* 备用无衬线 */
+  --font-sans: 'Inter', 'Noto Sans SC', sans-serif;
+
 }
 /* ============================================================ */
 /* == ^ ^ ^ ^        颜色变量定义结束          ^ ^ ^ ^ == */
 /* ============================================================ */
+
+/* 2. 全局字体调整 */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    /* 默认使用衬线体，增加字间距提升呼吸感 */
+    font-family: var(--font-serif);
+    letter-spacing: 0.03em; 
+    line-height: 1.8;
+}
+
+/* 3. 针对特定元素强制使用等宽字体 (Monospace) */
+h1, h2, h3, h4, h5, h6,
+.hero-title,
+.depth-text, .depth-text-left,
+.elevator-button,
+.panel-header,
+#clock-display,
+.article-meta,
+.date, .size,
+.border-text,
+.nav-link,
+.back-link,
+.footer-card {
+    font-family: var(--font-mono) !important;
+    letter-spacing: -0.02em; /* 等宽字体通常比较宽，稍微收紧一点 */
+}
 
 
 /* --- 核心布局逻辑 --- */
@@ -639,4 +675,55 @@ body.homepage-effect::after {
 .footer-card .build-info {
     color: var(--border-secondary);
     font-size: 0.8rem;
+}
+
+/* --- V V V V  新增：电梯门动画样式  V V V V --- */
+#elevator-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none; /* 默认不阻挡点击 */
+    display: flex;
+    justify-content: space-between;
+}
+
+.elevator-door {
+    width: 50%;
+    height: 100%;
+    background-color: #0a0a0a; /* 深色金属质感 */
+    position: relative;
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); /* 模拟重型机械的缓动 */
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+    background-image: 
+        linear-gradient(90deg, transparent 95%, rgba(255,255,255,0.02) 95%),
+        linear-gradient(0deg, transparent 95%, rgba(255,255,255,0.02) 95%);
+    background-size: 20px 20px;
+}
+
+/* 左门初始状态：移出屏幕左侧 */
+.elevator-door-left {
+    transform: translateX(-102%);
+    border-right: 2px solid #333;
+}
+
+/* 右门初始状态：移出屏幕右侧 */
+.elevator-door-right {
+    transform: translateX(102%);
+    border-left: 2px solid #333;
+}
+
+/* 激活状态：门关上 */
+body.elevator-active #elevator-overlay {
+    pointer-events: all; /* 关门时禁止操作其他元素 */
+}
+
+body.elevator-active .elevator-door-left {
+    transform: translateX(0);
+}
+
+body.elevator-active .elevator-door-right {
+    transform: translateX(0);
 }
