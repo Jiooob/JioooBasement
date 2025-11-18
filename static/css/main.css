@@ -727,3 +727,66 @@ body.elevator-active .elevator-door-left {
 body.elevator-active .elevator-door-right {
     transform: translateX(0);
 }
+
+/* --- V V V V  横向分裂式电梯门文字效果 (修改版)  V V V V --- */
+
+.elevator-door {
+    position: relative;
+    overflow: hidden; /* 裁切掉超出部分 */
+}
+
+/* 1. 定义文字的通用样式 */
+.elevator-door::after {
+    content: "JioooBasement";
+    
+    position: absolute;
+    top: 50%; /* 垂直居中 */
+    
+    /* 字体样式 */
+    font-family: var(--font-mono);
+    font-weight: 900;
+    /* 改用 vw (视口宽度) 单位，确保横向放得下 */
+    font-size: 8vw;       
+    letter-spacing: 1vw;  /* 间距也用相对单位 */
+    white-space: nowrap;
+    
+    /* 颜色：深色背景上的浅印花 */
+    color: rgba(255, 255, 255, 0.06); 
+    
+    /* 细节 */
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
+}
+
+/* 2. 左门的文字设置 */
+.elevator-door-left::after {
+    /* 锚点定在右侧（也就是门的接缝处） */
+    right: 0;
+    
+    /* 
+       逻辑：
+       1. right: 0 -> 元素的右边缘贴在门的右边缘。
+       2. translate(50%, -50%):
+          - X轴 +50%: 向右移动自身宽度的一半。这样元素的【中心点】就正好位于门的右边缘（接缝）上了。
+          - Y轴 -50%: 垂直居中修正。
+       结果：文字中心对齐接缝，左半部分在门内显示。
+    */
+    transform: translate(50%, -50%);
+}
+
+/* 3. 右门的文字设置 */
+.elevator-door-right::after {
+    /* 锚点定在左侧（也就是门的接缝处） */
+    left: 0;
+    
+    /* 
+       逻辑：
+       1. left: 0 -> 元素的左边缘贴在门的左边缘。
+       2. translate(-50%, -50%):
+          - X轴 -50%: 向左移动自身宽度的一半。这样元素的【中心点】就正好位于门的左边缘（接缝）上了。
+          - Y轴 -50%: 垂直居中修正。
+       结果：文字中心对齐接缝，右半部分在门内显示。
+    */
+    transform: translate(-50%, -50%);
+}
