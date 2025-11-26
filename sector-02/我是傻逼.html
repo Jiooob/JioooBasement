@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>愚钝</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/article.css">
+
+    <!-- 
+    ============================================================
+    == V V V V      添加网站图标代码 (Favicon)      V V V V ==
+    ============================================================
+    -->
+    <link rel="icon" type="image/png" href="../static/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../static/icons/favicon.svg" />
+    <link rel="shortcut icon" href="../static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../static/icons/site.webmanifest" />
+    <!-- 
+    ============================================================
+    == ^ ^ ^ ^          网站图标代码结束          ^ ^ ^ ^ ==
+    ============================================================
+    -->    
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <!-- 
+              核心修改：
+              1. 添加 onclick 事件处理器。
+              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
+                 这可以处理用户在新标签页直接打开文章的边缘情况。
+              3. `event.preventDefault()` 阻止链接的默认跳转行为。
+              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
+              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
+            -->
+            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
+            <h1 class="article-title">愚钝</h1>
+            <p class="article-meta">记录于：2025-11-27</p>
+        </header>
+
+        <main class="article-content">
+            
+<h2>
+    思维上的不劳亦不获之人
+  </h2>
+<p>
+    大家又开始汴京一样说话了，这些有点点严肃又有一点深奥需要思考量的话题。。。
+    每到这种时候我就显得很低能，大家都发表自己的看法，只有我啥也想不清楚，脑子里啥都没有，
+    这些问题也没有纳入过我的思考范畴，想说些啥又觉得特别浅薄低能，所以最后不了了之。
+    大家的见闻和思考都好深刻好广博，到底怎么才能变成他们一样。。。
+    要是有一天哪怕我能这样说啥都头头是道，那也一定只是从某处偷来别人的看法，
+    残酷的是，我对它唯一的了解仅仅是会读它的汉字然后用键盘敲出来，甚至可能用的是Ctrlcv，我想吐，，，。
+    我是思维上的懒人，想到这一点的我更加不想说话了。。。我讨厌我的愚钝和思维茧房。。。
+  </p>
+
+        </main>
+    </div>
+
+</body>
+</html>
