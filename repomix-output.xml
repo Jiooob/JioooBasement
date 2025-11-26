@@ -56,6 +56,7 @@ content/sector-01/平淡一周.html
 content/sector-01/前日谈.html
 content/sector-01/群青色的网络之梦.html
 content/sector-01/文件结构方案.html
+content/sector-01/乌鸦.html
 content/sector-01/演出，大酒，和乐队家人们.html
 content/sector-01/img_test.html
 content/sector-01/my-first-article.html
@@ -86,6 +87,9 @@ static/icons/site.webmanifest
 static/icons/web-app-manifest-192x192.png
 static/icons/web-app-manifest-512x512.png
 static/images/屏幕截图 2025-10-19 002929.png
+static/images/article_img/-417930509.jpg
+static/images/article_img/278580665.jpg
+static/images/article_img/472528464.jpg
 static/images/article_img/8filmscover封面.png
 static/images/article_img/屏幕截图 2025-10-23 235536.png
 static/images/article_img/屏幕截图 2025-10-24 000240.png
@@ -94,7 +98,13 @@ static/images/article_img/屏幕截图 2025-10-24 000350.png
 static/images/article_img/屏幕截图 2025-10-24 003008.png
 static/images/article_img/Image_1761952105613.jpg
 static/images/article_img/Image_1761952122515.jpg
+static/images/article_img/Image_1763798609448.jpg
+static/images/article_img/Image_1763798703708.jpg
+static/images/article_img/Image_1763809409978.jpg
+static/images/article_img/Image_1763831360424.jpg
+static/images/article_img/Image_1763859505688.jpg
 static/images/article_img/IMG_20251102_151400.jpg
+static/images/article_img/IMG_20251123_091945.jpg
 static/images/my_profile_icon/IMG_20250826_003537.png
 static/images/tomotachi_favicon/woodash_favicon.png
 templates/article.template
@@ -542,17 +552,78 @@ This section contains the contents of the repository's files.
 </html>
 </file>
 
+<file path="content/sector-01/乌鸦.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="乌鸦">
+    <meta name="blog-date" content="2025-11-24">
+    <meta name="blog-summary" content="小雪已过">
+</head>
+<body>
+  
+  <h2>Gemini3 与 Nano Banana Pro 震撼发布！！！</h2>
+  <p>
+    前几天醒来之后，发现<a href="linux.do">论坛</a>里，最新帖子全是大香蕉与小g老师3的事情......
+    <a href="https://linux.do/t/topic/1169316">g3的前端设计</a>在视觉上确实厉害，没有以前ai千篇一律的红蓝配色和圆角设计，
+    而且成图能力尤其是<a href="https://linux.do/t/topic/1202784">汉字</a>乱码率低的离谱。。。
+  </p>
+  <p>
+    太夸张了
+  </p>
+  <p>
+    但我很喜欢wwy说的
+  </p>
+  <blockquote>
+    <p>
+      我知道，设计不是靠脑洞大开的，每个细节都要做好才行，ai显然还差很远，不过像样不少了
+    </p>
+    <p>
+      满足于预制菜的人不懂什么是美食
+    </p>
+    <p>
+      界面好不好看其实没那么重要，设计的从来就不是好看不好看，你要说软件的话就是信息架构和交互效率，平面的话就是传达效果之类的，
+    </p>
+    <p>
+      好看只是一个手段，只是因为设计师受不了太丑的东西，顺手给你做好看一点
+    </p>
+  </blockquote>
+  <p> 
+    所以，即便画出完美的图，视觉上很吊的UI，难替代的还是构建框架的人。除非说AI某一天真的理解了工程架构。预制菜无法提供的营养
+  </p>
+  <p>
+    我很敬仰那些工程架构和模板还有库写得很吊的人
+  </p>
+  <p>
+    但貌似，论坛的氛围感觉，现在从事web的人确实越来越少亲手设计这些了。。。
+  </p>
+  <p>
+    所以我才觉得
+  </p>
+
+
+
+
+
+
+
+
+
+  
+</body>
+</file>
+
 <file path="content/sector-01/演出，大酒，和乐队家人们.html">
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="blog-title" content="演出，大酒，和乐队家人们">
     <meta name="blog-date" content="2025-11-23">
-    <meta name="blog-summary" content="太好了">
+    <meta name="blog-summary" content="醉酒与开心与醒来">
 </head>
 
 <body>
-  
+
   <h2>乐队家人</h2>
   <p>总算排了两个月的曲子演了</p>
   <p>有点意外，但，其实觉得更多的心情更像是，爱乐队、喜欢乐队里的家人们一样的存在。。。</p>
@@ -562,7 +633,7 @@ This section contains the contents of the repository's files.
   </p>
   <p>
     首先是清璇和pu老大，其实完全可以说没有清璇就没有现在的鼓手Jiooob(详见:问Jiooob去)，pu老大很好地给我加入了终电大家庭，
-    和wwy都是，呃，要不然你去看看<a href="..\sector-01\老大回来了.html">老大回来了</a>。
+    和wwy都是，呃，要不然你去看看<a href="../sector-01/老大回来了.html">老大回来了</a>。
   </p>
   <p>
     小王起初给我的印象就是地雷男(笑)，还留长发，和puwwy一起辩论见证，打舞萌，od，割手手，而且跟不健全地雷妹谈恋爱。噢，他也是果园的。
@@ -584,9 +655,53 @@ This section contains the contents of the repository's files.
   <p>我靠，演完了，我真的困在了1122的那个晚上，我爱乐队，我爱大家。。。。</p>
   <p>
     全程几乎没有抬头，飞白的谱架立在炸镲与踩镲的缝隙，透过长发我能清晰看到。wwyq0卡通大小王都等着我的鼓点，所以我很难抬头走神。
-    全程只听得见dsl的q0，间间事事的wwy小王，endlessrain的卡通wwy。。。  
+    全程只听得见dsl的q0，间间事事的wwy小王，rain的卡通wwy。。。  
   </p>
+  <p>没人朝我们扔水瓶</p>
 
+  <!-- 父容器：控制滚动和排列 -->
+ <div style="display: flex; overflow-x: auto; gap: 20px; padding-bottom: 15px; width: 100%; align-items: center;">
+
+    <img src="../static/images/article_img/Image_1763809409978.jpg" style="height: 300px; width: auto; flex-shrink: 0; border-radius: 4px;" alt="演出中">
+    
+    <img src="../static/images/article_img/Image_1763798609448.jpg" style="height: 300px; width: auto; flex-shrink: 0; border-radius: 4px;" alt="妈咪">
+    
+    <img src="../static/images/article_img/Image_1763798703708.jpg" style="height: 300px; width: auto; flex-shrink: 0; border-radius: 4px;" alt="老大">
+    
+    <img src="../static/images/article_img/Image_1763859505688.jpg" style="height: 300px; width: auto; flex-shrink: 0; border-radius: 4px;" alt="合影">
+
+</div>
+
+  <p>这是歌单</p>
+
+  <!-- dsl -->
+  <a href="https://music.163.com/song?id=1311347389&uct2=U2FsdGVkX1+kHxg+RaJpH53V1sIdwQHDed+3DmZXw2Y=" target="_blank">
+    <img src="../static/images/article_img/472528464.jpg" style="width: 300px; height: auto;" alt="Don't say lazy">
+  </a>
+
+  <!-- 空间 -->
+  <a href="https://music.163.com/song?id=2052435891&uct2=U2FsdGVkX18jthN++mORit5KidpsfzY0PhjZW0dqIX4=" target="_blank">
+    <img src="../static/images/article_img/278580665.jpg" style="width: 300px; height: auto;" alt="空間、事情、時間、事象。">
+  </a>
+
+  <!-- 雨 -->
+  <a href="https://music.163.com/song?id=865251&uct2=U2FsdGVkX18HaIQlY0MtTi+78b+ModBKezRjeOyCrW4=" target="_blank">
+    <img src="../static/images/article_img/-417930509.jpg" style="width: 300px; height: auto;" alt="ENDLESS RAIN">
+  </a>
+
+  <h2>大酒 & Jiooob没有小虎队</h2>
+
+  <p>太好了，又可以喝大酒</p>
+  <p>北平机器外面很冷，或者说北京晚上很冷，两杯大酒没有烫伤我的脸，但当我站起来，鼓手引以为傲的的小脑冻上了双腿</p>
+  <p>然后真的记忆模糊，回到宿舍酒醒才回忆</p>
+  <p>想知道Jio喝醉会说什么吗？那就下次和Jio一起喝酒吧！</p>
+
+  <div style="display: flex; overflow-x: auto; gap: 20px; padding-bottom: 15px; width: 100%; align-items: center;">
+    <img src="../static/images/article_img/IMG_20251123_091945.jpg" style="height: 300px; width: auto; flex-shrink: 0; border-radius: 4px;" alt="合影">
+    <img src="../static/images/article_img/Image_1763831360424.jpg" style="height: 300px; width: auto; flex-shrink: 0; border-radius: 4px;" alt="敬礼！">
+  </div>
+
+  <p>喝完之后他们去了小虎队，我被飞白和马哥送到了宿舍</p>
 
 </body>
 </file>
@@ -1330,6 +1445,157 @@ def update_category_indexes(pages):
 </html>
 </file>
 
+<file path="static/css/page.css">
+/* static/css/page.css */
+
+/* --- 全局与基础设定 (与 main.css 保持一致) --- */
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 页面布局容器 --- */
+.page-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* --- 页头样式 --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.page-header h1 {
+    font-size: 2.2rem;
+    color: var(--text-bright);
+    margin: 0;
+    font-weight: normal;
+}
+
+/* --- 返回主页链接 --- */
+.back-home {
+    display: inline-block;
+    color: var(--primary-accent);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 10px 18px;
+    border: 1px solid var(--primary-accent);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
+    white-space: nowrap;
+}
+
+.back-home:hover {
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    color: var(--text-white);
+    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.3);
+}
+
+/* --- 页面正文内容 --- */
+.page-content {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    padding-top: 20px;
+}
+
+.page-content a {
+    color: var(--primary-accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--primary-accent);
+    transition: all 0.3s ease;
+}
+
+.page-content a:hover {
+    background-color: rgba(var(--primary-accent-rgb), 0.1);
+    border-bottom: 1px solid var(--primary-accent);
+}
+
+/* --- 新增：从 main.css 迁移的文章列表样式 --- */
+#post-list-container {
+    margin-top: 60px;
+    border-top: 1px solid var(--divider-color);
+    padding-top: 40px;
+}
+
+#post-list-container article {
+    border-bottom: 1px solid var(--divider-color);
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+#post-list-container h2 {
+    margin-bottom: 0.5rem;
+}
+
+#post-list-container h2 a {
+    color: var(--text-bright);
+    text-decoration: none;
+    font-size: 1.5rem;
+}
+
+#post-list-container h2 a:hover {
+    color: var(--secondary-accent);
+}
+
+#post-list-container .date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0;
+}
+
+#post-list-container .summary {
+    color: var(--text-primary);
+    line-height: 1.7;
+}
+
+/* --- 边境线样式（移植自 main.css，子页顶锚） --- */
+.border-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        to right,
+        var(--border-tertiary) 0px,
+        var(--border-tertiary) 15px,
+        transparent 15px,
+        transparent 25px
+    );
+    border-top: 1px dashed var(--border-tertiary);
+    z-index: 999;
+}
+
+.border-text {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--bg-primary);
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    font-family: 'Times New Roman', 'Noto Sans SC', serif;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.page-container {
+    padding-top: 80px;
+}
+</file>
+
 <file path="static/css/article.css">
 /* --- 全局与基础设定 --- */
 body {
@@ -1479,156 +1745,29 @@ body {
     border-radius: 4px;
     border: 1px solid var(--border-primary);
 }
-</file>
 
-<file path="static/css/page.css">
-/* static/css/page.css */
+/* 在 static/css/article.css 中添加 */
 
-/* --- 全局与基础设定 (与 main.css 保持一致) --- */
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    font-family: 'Times New Roman', 'Noto Sans SC', serif;
-    line-height: 1.8;
-    margin: 0;
-    padding: 0;
+/* 定义滚动条的整体宽度/高度 */
+::-webkit-scrollbar {
+    height: 8px; /* 横向滚动条的高度 */
+    width: 8px;  /* 纵向滚动条的宽度 */
 }
 
-/* --- 页面布局容器 --- */
-.page-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 60px 20px;
+/* 滚动条的轨道（背景） */
+::-webkit-scrollbar-track {
+    background: var(--bg-primary); 
 }
 
-/* --- 页头样式 --- */
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 50px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid var(--divider-color);
-}
-
-.page-header h1 {
-    font-size: 2.2rem;
-    color: var(--text-bright);
-    margin: 0;
-    font-weight: normal;
-}
-
-/* --- 返回主页链接 --- */
-.back-home {
-    display: inline-block;
-    color: var(--primary-accent);
-    text-decoration: none;
-    font-size: 1rem;
-    padding: 10px 18px;
-    border: 1px solid var(--primary-accent);
+/* 滚动条的滑块 */
+::-webkit-scrollbar-thumb {
+    background: var(--border-secondary); 
     border-radius: 4px;
-    transition: all 0.3s ease;
-    font-family: 'Courier New', monospace;
-    white-space: nowrap;
 }
 
-.back-home:hover {
-    background-color: rgba(var(--primary-accent-rgb), 0.1);
-    color: var(--text-white);
-    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.3);
-}
-
-/* --- 页面正文内容 --- */
-.page-content {
-    font-size: 1.1rem;
-    color: var(--text-primary);
-    padding-top: 20px;
-}
-
-.page-content a {
-    color: var(--primary-accent);
-    text-decoration: none;
-    border-bottom: 1px dashed var(--primary-accent);
-    transition: all 0.3s ease;
-}
-
-.page-content a:hover {
-    background-color: rgba(var(--primary-accent-rgb), 0.1);
-    border-bottom: 1px solid var(--primary-accent);
-}
-
-/* --- 新增：从 main.css 迁移的文章列表样式 --- */
-#post-list-container {
-    margin-top: 60px;
-    border-top: 1px solid var(--divider-color);
-    padding-top: 40px;
-}
-
-#post-list-container article {
-    border-bottom: 1px solid var(--divider-color);
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
-}
-
-#post-list-container h2 {
-    margin-bottom: 0.5rem;
-}
-
-#post-list-container h2 a {
-    color: var(--text-bright);
-    text-decoration: none;
-    font-size: 1.5rem;
-}
-
-#post-list-container h2 a:hover {
-    color: var(--secondary-accent);
-}
-
-#post-list-container .date {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-top: 0;
-}
-
-#post-list-container .summary {
-    color: var(--text-primary);
-    line-height: 1.7;
-}
-
-/* --- 边境线样式（移植自 main.css，子页顶锚） --- */
-.border-line {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 5px;
-    background: repeating-linear-gradient(
-        to right,
-        var(--border-tertiary) 0px,
-        var(--border-tertiary) 15px,
-        transparent 15px,
-        transparent 25px
-    );
-    border-top: 1px dashed var(--border-tertiary);
-    z-index: 999;
-}
-
-.border-text {
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--bg-primary);
-    padding: 0 15px;
-    font-size: 1.5rem;
-    color: var(--text-secondary);
-    font-family: 'Times New Roman', 'Noto Sans SC', serif;
-    letter-spacing: 1px;
-    white-space: nowrap;
-}
-
-.page-container {
-    padding-top: 80px;
+/* 鼠标悬停在滑块上时 */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-accent); 
 }
 </file>
 
@@ -2911,7 +3050,7 @@ body.elevator-active .elevator-door-right {
     <main class="main-content-grid">
         <div class="left-column">
             <div class="page-cards-container">
-                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-195m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-92m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-429m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-550m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-600m]</h2><p>Undefined</p></div></a>
@@ -2923,31 +3062,9 @@ body.elevator-active .elevator-door-right {
             
             <div class="announcement-panel">
                 <h3>//: ANNOUNCEMENT</h3>
-                <p> 2025-10-19 </p>
-                <p>// 地下室修建中 // 请使用右侧的电梯在扇区之间移动</p>
-                <p>或者喜欢的话，可以使用滚轮模拟走楼梯（尽管这会很久，但是我觉得是值得的？  </p>
-                <p>/</p>
-                <p>2025-10-20</p>
-                <p>更新了网络之梦</p>
-                <p>好像是第一篇正式文章？还有很多随笔和笔记，之后再慢慢搬上来吧 </p>
-                <p>/</p>
-                <p> 2025-10-22  </p>
-                <p>添加两位老大的友链  </p>
-                <p>老大建议我在1024发布博客</p>
-                <p>/</p>
-                <p> 2025-10-24  </p>
-                <p>今天是伟大的二进制日</p>
-                <p>想把链接挂在空间</p>
-                <p>/</p>
-                <p> 2025-10-30  </p>
-                <p>有一段时间没写博客了</p>
-                <p>忙碌。。。忙碌。。。。</p>
-                <p>/</p>
-                <p> 2025-11-02  </p>
-                <p>开心的周末</p>
-                <p>/</p>
                 <p> 2025-11-22.23  </p>
                 <p>1122专场</p>
+                <p>写的东西就跟日记似的，看个乐呵得了</p>
             </div>
         </div>
 
@@ -2967,9 +3084,8 @@ body.elevator-active .elevator-door-right {
             -->
             <p>© 2025 Jiooob_Mouse</p>
             <p class="tech-credits">Powered by Gemini 2.5 Pro & Jiooob.</p>
-            <p class="motto">"苦来兮，苦走，苦完该剩些甜"</p>
             <p class="motto">请随意逛逛，或是在这个基地休息片刻，我的朋友</p>
-            <p class="build-info">// Version: 25_10_24 //</p>
+            <p class="build-info">// Version: 25_11_23 //</p>
         </div>
     </div>
     <!-- 
