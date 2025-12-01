@@ -63,6 +63,7 @@ content/sector-01/my-first-article.html
 content/sector-01/my-second-article.html
 content/sector-01/test_delete_after_converte.html
 content/sector-01/test.html
+content/sector-02/我是傻逼.html
 content/weekly/index.html
 index.html
 md_converter.py
@@ -556,13 +557,13 @@ This section contains the contents of the repository's files.
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="blog-title" content="乌鸦">
+    <meta name="blog-title" content="无">
     <meta name="blog-date" content="2025-11-24">
     <meta name="blog-summary" content="小雪已过">
 </head>
 <body>
   
-  <h2>Gemini3 与 Nano Banana Pro 震撼发布！！！</h2>
+  <h2>小G老师3</h2>
   <p>
     前几天醒来之后，发现<a href="linux.do">论坛</a>里，最新帖子全是大香蕉与小g老师3的事情......
     <a href="https://linux.do/t/topic/1169316">g3的前端设计</a>在视觉上确实厉害，没有以前ai千篇一律的红蓝配色和圆角设计，
@@ -592,14 +593,22 @@ This section contains the contents of the repository's files.
     所以，即便画出完美的图，视觉上很吊的UI，难替代的还是构建框架的人。除非说AI某一天真的理解了工程架构。预制菜无法提供的营养
   </p>
   <p>
-    我很敬仰那些工程架构和模板还有库写得很吊的人
+    说到这里又想，我其实很敬仰那些工程架构和模板还有库写得很吊的人，接口、解耦、分层......你只需要把他们写好的东西download zip，
+    然后cv到工程里面，然后改改改，点点点，最多再对接一下驱动或者什么东西的接口，然后这工程就是你的了，然后把hex或者elf烧进板子，
+    手机对着开发板还是上位机拍个照录个像，顺便发朋友圈装个逼。。。
   </p>
   <p>
-    但貌似，论坛的氛围感觉，现在从事web的人确实越来越少亲手设计这些了。。。
+    调库、调库、调库......
   </p>
   <p>
-    所以我才觉得
+    我也要成为牛逼的写库的大牛而不是调库侠，如果毕业之前做不到就算了，回家进冶炼厂也挺好
   </p>
+  <p>
+    虽然不一定是找不到工作，但是与其这样低能地去写东西，我觉得还不如让自己的劳动回归到最质朴的地方
+  </p>
+
+  
+
 
 
 
@@ -703,6 +712,36 @@ This section contains the contents of the repository's files.
 
   <p>喝完之后他们去了小虎队，我被飞白和马哥送到了宿舍</p>
 
+</body>
+</file>
+
+<file path="content/sector-02/我是傻逼.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="愚钝">
+    <meta name="blog-date" content="2025-11-27">
+    <meta name="blog-summary" content="愚钝">
+</head>
+<body>
+  <h2>
+    思维上的不劳亦不获之人
+  </h2>
+  <p>
+    大家又开始汴京一样说话了，这些有点点严肃又有一点深奥需要思考量的话题。。。
+    每到这种时候我就显得很低能，大家都发表自己的看法，只有我啥也想不清楚，脑子里啥都没有，
+    这些问题也没有纳入过我的思考范畴，想说些啥又觉得特别浅薄低能，所以最后不了了之。
+    大家的见闻和思考都好深刻好广博，到底怎么才能变成他们一样。。。
+    要是有一天哪怕我能这样说啥都头头是道，那也一定只是从某处偷来别人的看法，
+    残酷的是，我对它唯一的了解仅仅是会读它的汉字然后用键盘敲出来，甚至可能用的是Ctrlcv，我想吐，，，。
+    我是思维上的懒人，想到这一点的我更加不想说话了。。。我讨厌我的愚钝和思维茧房。。。
+  </p>
+  <p>
+    这个时候如果加入+1复读的话，我会觉得我更加低能。。。。不合时宜的话在我嘴里从来不嫌少。。
+  </p>
+  <p>
+    于是静默。写一写博博空间
+  </p>
 </body>
 </file>
 
@@ -3051,7 +3090,7 @@ body.elevator-active .elevator-door-right {
         <div class="left-column">
             <div class="page-cards-container">
                 <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-92m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 未写入 [-429m]</h2><p>Undefined</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 [-348m]</h2><h2>突如其来的想法</h2><p>碎碎念...</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-550m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-600m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 [-650m]</h2><h2>拙劣之作</h2><p>一些胡思乱想的小构思</p></div></a>
