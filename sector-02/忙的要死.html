@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>忙的要死</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/article.css">
+
+    <!-- 
+    ============================================================
+    == V V V V      添加网站图标代码 (Favicon)      V V V V ==
+    ============================================================
+    -->
+    <link rel="icon" type="image/png" href="../static/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../static/icons/favicon.svg" />
+    <link rel="shortcut icon" href="../static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../static/icons/site.webmanifest" />
+    <!-- 
+    ============================================================
+    == ^ ^ ^ ^          网站图标代码结束          ^ ^ ^ ^ ==
+    ============================================================
+    -->    
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <!-- 
+              核心修改：
+              1. 添加 onclick 事件处理器。
+              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
+                 这可以处理用户在新标签页直接打开文章的边缘情况。
+              3. `event.preventDefault()` 阻止链接的默认跳转行为。
+              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
+              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
+            -->
+            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
+            <h1 class="article-title">忙的要死</h1>
+            <p class="article-meta">记录于：2025-12-1</p>
+        </header>
+
+        <main class="article-content">
+            
+<p>
+    我草拟吗的我真的吐了，我当时为什么要接这个队的委托啊，也不是说他们不好，他们都是很好的人，但是现在这几天我自己都顾不过来了，
+    学校和英方的破事又多，自己还有每周要交的canopen协议项目要推进和交报告。。。。后天还要进行那个傻得要死的整蛊AI课程的答辩，
+    靠他妈的，他们能指望一个全部作业和lab都是用AI辅助完成的学生能够说出什么好东西来，我真的吐了，nmd。
+    而且现在摇滚夜越来越近了，swim和18+1的排练还有试音的时间也都非常紧张，那我肯定是首先顾着终电的啊，终电的家人是我永远的家人一样的存在。
+    忙的要死，英语作业的视频还得我一点点做，他妈的英语课就是工科大学里面最傻逼的一门课程，没有营养还占用时间，想要学英语的人自然会在平时学，
+    为什么非要开一门英语课。写到这我又想起来我的六级还没有备考，草。
+  </p>
+<p>
+    如果没有乐队家人和好朋友们，我不知道该怎么缓解焦虑，和他们坐在一起就感到安心。
+  </p>
+<p>
+    我从来就没有适应过“悬而未决”的状态
+  </p>
+
+        </main>
+    </div>
+
+</body>
+</html>
