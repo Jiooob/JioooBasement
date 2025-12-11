@@ -512,6 +512,39 @@
             });
         }
 
+        // ============================================================
+        // == V V V V      新增：基地滚动位置记忆系统      V V V V ==
+        // ============================================================
+        
+        // 1. 定义存储键名
+        const SCROLL_KEY = 'jio_base_scroll_position';
+
+        // 2. 页面加载时：检查是否有保存的位置，如果有，尝试恢复
+        // 注意：这里不在 DOMContentLoaded 里执行，而是直接执行，能稍微减少闪烁
+        if (sessionStorage.getItem(SCROLL_KEY)) {
+            const savedPosition = parseInt(sessionStorage.getItem(SCROLL_KEY), 10);
+            
+            // 只有当位置大于 0 时才恢复
+            if (savedPosition > 0) {
+                // 告诉浏览器：我要手动恢复，你别插手（防止浏览器自带的恢复机制冲突）
+                if ('scrollRestoration' in history) {
+                    history.scrollRestoration = 'manual';
+                }
+                
+                // 立即滚动到该位置
+                window.scrollTo(0, savedPosition);
+            }
+        }
+
+        // 3. 页面离开前：保存当前的滚动位置
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+        });
+
+        // ============================================================
+        // == ^ ^ ^ ^          记忆系统结束              ^ ^ ^ ^ ==
+        // ============================================================
+
         document.addEventListener('DOMContentLoaded', function() {
             // --- V V V V  新功能：电梯转场逻辑 (替换了原有的平滑滚动)  V V V V ---
             const scrollTriggers = document.querySelectorAll('[data-target-id]');
