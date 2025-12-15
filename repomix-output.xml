@@ -58,11 +58,14 @@ content/sector-01/群青色的网络之梦.html
 content/sector-01/文件结构方案.html
 content/sector-01/乌鸦.html
 content/sector-01/演出，大酒，和乐队家人们.html
+content/sector-01/摇滚夜周.html
 content/sector-01/img_test.html
 content/sector-01/my-first-article.html
 content/sector-01/my-second-article.html
 content/sector-01/test_delete_after_converte.html
 content/sector-01/test.html
+content/sector-02/累得要死.html
+content/sector-02/忙的要死.html
 content/sector-02/我是傻逼.html
 content/weekly/index.html
 index.html
@@ -104,6 +107,7 @@ static/images/article_img/Image_1763798703708.jpg
 static/images/article_img/Image_1763809409978.jpg
 static/images/article_img/Image_1763831360424.jpg
 static/images/article_img/Image_1763859505688.jpg
+static/images/article_img/Image_1765048692109.jpg
 static/images/article_img/IMG_20251102_151400.jpg
 static/images/article_img/IMG_20251123_091945.jpg
 static/images/my_profile_icon/IMG_20250826_003537.png
@@ -557,8 +561,8 @@ This section contains the contents of the repository's files.
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="blog-title" content="无">
-    <meta name="blog-date" content="2025-11-24">
+    <meta name="blog-title" content="忙忙忙">
+    <meta name="blog-date" content="2025-12-1">
     <meta name="blog-summary" content="小雪已过">
 </head>
 <body>
@@ -608,16 +612,51 @@ This section contains the contents of the repository's files.
   </p>
 
   
+  <h2>摇滚夜前</h2>
+  <p>
+    写下这段话的时候，距离摇滚夜还有5天。
+  </p>
+  <p>
+    大家都很忙很累，我们只排了8films和甜孩。这周的排练定在周二下午的2~6点，不知道最后能演成什么样。。。
+  </p>
+  <p>
+    而且最近的忙碌程度也超越这个学期以往的任何时候，抛开正课的作业和论文，还有英方的傻逼答辩。我在的另外两个队，18+1早就把歌排好了，
+    但是swim or sink，一首原创仍未过完，海浪也感觉无法上台，眼望着北方我只需要拍拍卡洪鼓整蛊就好了。
+    还好今天说了把海浪换成收音机，虽然这首歌我也不太熟就对了。。。
+  </p>
+  <p>
+    我真想把手机上的task应用界面删掉，从十二月一号一直到十二月十五号的填满每一天的事务没有停息地敲打我的神经，
+    今天是鸡饭做的很香的一天，可是由始至终短视频都和烦躁的念头一直夺走了味蕾的知觉，直到最后一块鸡胸肉入口，才意识到，对不起了师傅
+  </p>
+  <p>
+    明天早上要去练鼓，还要去帮学活装台。。。不过这两项任务是为数不多能够让我觉得忙碌中的放松的
+  </p>
+  <p>
+    还是先把英语课的视频跟马原论文写了再说
+  </p>
 
-
-
-
-
-
-
-
-
-
+  <h2>
+    喝9
+  </h2>
+  <p>
+    昨天跟swim的人排练完，马上跑着去见了老大还有wwy，后面来的还有清璇。
+  </p>
+  <p>
+    路上q0提起，25级小登们的培养方案上，并没有写明他们是什么时候要搬到本部。这意味着，sawa他们或许需要一直本部沙河两边跑才能够玩得爽乐队。
+    但是自私的我想到的下一个想法却是，还好24级不是未定搬到本部还是一直留在沙河，因为我的乐队家人们基本都是24级以及其往前的老登中登，
+  </p>
+  <p>
+    和我同届的卡通q0清璇他们要是没法明年搬到本部，我或许会很烦恼。
+  </p>
+  <p>
+    不得不说犟骨头的饭真好吃，冷的要死的我握住塑料勺子，一口一口往嘴里送饭，酸白菜跟卤肉恰到好处的浓度令人十分满意。
+    北京的冬天真是冷的要死，我决定买一条更厚的保暖连裤袜，而不是穿秋裤
+  </p>
+  <p>
+    玖耀里东区，还是第一次来，这边的人气，或许是更加靠近居民区的原因，要比西区多很多。
+    我的第一杯酒由wwy妈咪买单，虽然说最后我把钱转给了他，嘿嘿。第二杯酒是类似橙汁一样的东西，酸味和甜味让我不认为这是酒精饮料。
+    这杯酒由q0买单，她和妈咪还是正在痊愈中的病号，所以她只是守着阿萨姆，不过我还是觉得太贵了，感谢老大！下次请回去。
+  </p>
   
 </body>
 </file>
@@ -712,6 +751,233 @@ This section contains the contents of the repository's files.
 
   <p>喝完之后他们去了小虎队，我被飞白和马哥送到了宿舍</p>
 
+</body>
+</file>
+
+<file path="content/sector-01/摇滚夜周.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="演奏的我们未知的我们喝酒的我们摇滚的我们独立的我们无力的我们活着的我们死去的我们笑着爱着的我们所有的我们">
+    <meta name="blog-date" content="2025-12-7">
+    <meta name="blog-summary" content="I love the band and evryone about it">
+</head>
+
+<body>
+  
+  <h2>累与爱</h2>
+  <p>
+    排练间隙，我常陷入一种无解的演算：玩乐队、社交、消耗时间，究竟是为了什么？
+    是为了遇见更多人，还是仅仅为了填补空白？ 
+    这看起来像是一场标准的“大学生社会化”实验。但最终，那狗操的利己主义彻底向我投降，
+    它向另一种逻辑让步了——我对这群人的爱。
+  </p>
+  <p>
+    当然我只是倦于我讨厌的，
+    这些思考完全在与终电呆在一起的时候，或者说与这些人，雾雾雨q0大小王pu老师卡通还有无数的人们呆在一起时消失掉，
+    不然我为什么说自己是tribalist
+  </p>
+
+  <h2>day1</h2>
+  <p>妈咪来看表演，给我在侧面台下拍照，这是开心的</p>
+  <p>18+1演，演完之后都说咱们演得好，这是开心的</p>
+  <p>演完之后跟妈咪还有西萌去喝酒，这是开心的</p>
+  <p>头发没戏和胡子没剃，至少观众看不到，无所谓，我珍视的人们，明天才与我聚在一起</p>
+  
+  <h2>我喝多了，但没喝醉</h2>
+  <img src="../static/images/article_img/Image_1765048692109.jpg" alt="Image" width="300" height="200">
+  <p>
+    之前曾经说过，演出只是为了和乐队家人聚在一起这碟醋而包的饺子而已，事实的确如此
+  </p>
+  <p>
+    我喜欢幻现还有秋北的曲子，后朋和情绪，我真以为自己在livehouse里面。
+    于是我们瞎几把演了仅仅花了一周速通的曲子，虽然群里一直说着对不起老大，但我没法原谅自己只是因为踩槌跑走就慌张得进错段落的自己，
+    我把网申和q0都弄傻了，前额叶直到现在才清楚地告诉我发生了什么。
+  </p>
+  <p>
+    我真傻逼
+  </p>
+  <p>
+    如果有人说live社社歌是电动少女，如果让这首曲子替代8films，我想，最没有意见的人大概是我
+  </p>
+  <p>
+    我爱着我的乐队家人们。
+  </p>
+
+  <h2>
+    依旧酒神
+  </h2>
+  <p>
+    小虎队真的很冷，中关村的夜色依然覆盖着狂风，老大围巾围着我，小王蘑菇到处走，我也就这样被街对面橱窗没有生命的人形吓了一跳。双腿发抖不停，
+    妈咪靠在我身旁。我发誓以后一定要穿秋裤，至少在背包里装着一条秋裤。
+  </p>
+  <p>
+    网申问我：“你现在还觉得小虎队好玩吗”
+  </p>
+  <p>
+    “好玩啊”
+  </p>
+  <p>
+    我从来没有像这样认为过，但至少这个时候我认为只要和这群人呆在一起，我的生活就是幸福的
+  </p>
+  <p>
+    百威不好喝，那啥好喝，只要是老大请的就好喝。
+    ktv很热，醉的人只有我和老大，大家唱了很多摇滚夜的时候没让上的鬼子歌，我们就这样像不倒翁一样靠来靠去
+  </p>
+    
+</body>
+</html>
+</file>
+
+<file path="content/sector-02/累得要死.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="非放松性人际">
+    <meta name="blog-date" content="2025-12-3">
+    <meta name="blog-summary" content="exhausted">
+</head>
+<body>
+  <h2>
+    非精神性疲惫
+  </h2>
+  <p>
+    今天早上起床就非常难受，心脏一直处于高bpm状态，跪坐在床，一边回忆今天要做的事情：AI课实验答辩，排练一下午，晚上试音，晚上回到宿舍还得写必须要交的工数作业，
+    现在是晚上22:50分，我以一种及其扭曲的瘫坐姿势让双手保持在键盘上，攥写着博博空间的html文本
+  </p>
+  <p>
+    首先感谢雪凌即王义凡老师，今天排练的是swim or sink，据说是胡姐今天临时叫他来给我们弹胡姐的原创曲目，至于为什么是“临时”，
+    因为另一位吉他手竟然在临近摇滚夜的时候突然说自己从周二到周五必须回家有事一趟。。。
+  </p>
+  <p>
+    氛围很奇怪。
+  </p>
+  <p>
+    合了几次原创曲目之后，不出所料地，仍然没有合好。“曲是好曲，歌是好歌，但乐手是好乐手吗？”
+    连带周日的排练一起，我总有奇怪的别扭感
+  </p>
+  <p>
+    17小节开始之后的吉他与鼓的段落结束后，无鼓的两个小节成了大问题，这是个非常奇妙而且奇异搞笑的情况，真的。。。我并没有给这个地方写鼓，
+    这是我的问题，没有在前几天把源工程内的音频再打一遍，修订鼓谱。。。之后就是一直排不好这个地。呃，我没太在意当时是谁，或者说是从什么地方，
+    说是这首原创要不然不上了，打算上炒冷饭的曲目。然后大家显然的氛围跟着拉跨的合奏冷了下来。此时马哥和西萌走进来挑了几个镲片，他们出去时，
+    胡姐————非常明显的————不顾周围似的把琴背带脱掉，琴体在离地10cm的地方，让琴头做了一个重重的自由落地运动
+  </p>
+  <p>
+    要坏事了。我真的很烦
+  </p>
+  <p>
+    非常感谢小饼干老师的建议，发自内心的，和雪凌老师同等。不过还是请容许我说明，那两个神秘无鼓小节，吉他的律动不及其不明显，单音重复八分音符，
+    再加上这里的吉他音色音高不突出，如果加上一个过鼓或者buildup类似的节奏，整个段落就完蛋了。小饼干老师建议，我干脆重复前几个小节的吉他riff的律动就好，
+    实在完美。。。实际排下来
+  </p>
+  <p>
+    还没完，胡姐回来之后，大家还是低着头坐着，胡姐发着不着边际的牢骚，伟大的雪凌老师一边练习吉他，让我跟他合了那几个神秘17小节的吉他鼓riff段，
+    看到了么？这才是认真玩乐队而且性格伟大的人！！！看到完美之后，胡姐还有小饼干加入，于是排好了。
+  </p>
+  <p>
+   七点钟，去学活准备试音，胡姐直接去了校车，不试音了。等了半个小时，一时半会试不上，小饼干也走了。 
+  </p>
+  <p>
+    呃呃。。。。
+  </p>
+
+  <h2>
+    非友好性开喷
+  </h2>
+  <p>
+    他妈了个逼的凭什么你就能他妈的发脾气摔琴走？？？你的原创曲目你投入了很多心血我们都理解，而且大家都他妈的在认真排练，我草了，
+    前一个月的10月底的的百团结束之后，作为负责人的你一次都没有组织排练就算了
+    （别看我，这些事情不该我来提醒，我只对终电负责），
+    他妈的你有空了出去旅游，说这段时间排不了。对，你是练琴了，但是你有没有想过这他妈是个乐队，
+    有没有一种可能，乐队需要每周至少排练一次才能保持演奏不熟悉歌曲多几次就能拿下的状态？？？小饼干和烜哥缺席排练确实不太应该，但是你tm就没有想过，
+    咱们到底排了几次？？排了几次？？？？？？上次百团演得烂的跟腐烂了五百多年的大便一样你自己心里没点数吗？一天到晚就在朋友圈发你那到处玩的空间和
+    你那神秘吉他小段子，我真操了。。。
+  </p>
+  <p>
+    而且我早就想黑屁了，他妈的演了演没几次，你们老在pyq发一些有的没的，哗众取宠的朋友圈到底要干嘛？
+    真是闹麻了，乐队排练排练不上心，”差生文具多“的事情做了倒不少。我真的日了狗了。
+  </p>
+  <p>
+    这个乐队爱怎么样怎么样，我当时接下这个摊子，答应我的emo呢？答应我的盯鞋呢？天天排你那瞎几把国摇和流行干嘛呢？
+    噢噢噢，“我们真是太emo了”，“你们快想个抽象的介绍”，我真的想吐你们知道吗？？
+    用我的话来说，你们都是现实生活如意到令人作呕的程度的超级大现充，线虫。
+    我跟你们对乐队的看法根本不一样，你们仅仅是朋友和同事，我永远不会把你们写到我的乐队家人户口本里面
+  </p>
+  <p>
+    我他妈的有几天跟你们呆在一起排练看到微信群里面你们在聊的消息，我就有几天觉得终电的大家对我有多重要多可贵。
+  </p>
+  <p>
+    感谢终电，我爱终电和相关的所有人
+  </p>
+
+  <h2>
+    非情绪化宣泄
+  </h2>
+  <p>
+    我不喜欢让自己变得情绪化，所以我在日常中也很少流露愤怒和恐惧，但是我真的忍不住了。我没法冷静思考，对不起，我的大脑，我的肝
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    今天我真的很疲惫
+  </p>
+  <p>
+    这些文字写于身心俱疲之时，愿我的精神能在时间的流逝中恢复如初，能在睡梦中遇到我最爱的事物，看到温暖的回忆
+  </p>
+
+  <h2>//:</h2>
+  <p>写于2025.12.3 23:40</p>
+</body>
+</file>
+
+<file path="content/sector-02/忙的要死.html">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="blog-title" content="忙的要死">
+    <meta name="blog-date" content="2025-12-1">
+    <meta name="blog-summary" content="busy busy busy">
+</head>
+<body>
+  <p>
+    我草拟吗的我真的吐了，我当时为什么要接这个队的委托啊，也不是说他们不好，他们都是很好的人，但是现在这几天我自己都顾不过来了，
+    学校和英方的破事又多，自己还有每周要交的canopen协议项目要推进和交报告。。。。后天还要进行那个傻得要死的整蛊AI课程的答辩，
+    靠他妈的，他们能指望一个全部作业和lab都是用AI辅助完成的学生能够说出什么好东西来，我真的吐了，nmd。
+    而且现在摇滚夜越来越近了，swim和18+1的排练还有试音的时间也都非常紧张，那我肯定是首先顾着终电的啊，终电的家人是我永远的家人一样的存在。
+    忙的要死，英语作业的视频还得我一点点做，他妈的英语课就是工科大学里面最傻逼的一门课程，没有营养还占用时间，想要学英语的人自然会在平时学，
+    为什么非要开一门英语课。写到这我又想起来我的六级还没有备考，草。
+  </p>
+  <p>
+    如果没有乐队家人和好朋友们，我不知道该怎么缓解焦虑，和他们坐在一起就感到安心。
+  </p> 
+  <p>
+    我从来就没有适应过“悬而未决”的状态
+  </p>
 </body>
 </file>
 
@@ -1810,58 +2076,6 @@ body {
 }
 </file>
 
-<file path="templates/article.template">
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>$title$</title>
-    <link rel="stylesheet" href="../static/css/main.css">
-    <link rel="stylesheet" href="../static/css/article.css">
-
-    <!-- 
-    ============================================================
-    == V V V V      添加网站图标代码 (Favicon)      V V V V ==
-    ============================================================
-    -->
-    <link rel="icon" type="image/png" href="../static/icons/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="../static/icons/favicon.svg" />
-    <link rel="shortcut icon" href="../static/icons/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="../static/icons/apple-touch-icon.png" />
-    <link rel="manifest" href="../static/icons/site.webmanifest" />
-    <!-- 
-    ============================================================
-    == ^ ^ ^ ^          网站图标代码结束          ^ ^ ^ ^ ==
-    ============================================================
-    -->    
-</head>
-<body>
-
-    <div class="article-container">
-        <header class="article-header">
-            <!-- 
-              核心修改：
-              1. 添加 onclick 事件处理器。
-              2. `if (history.length > 1)` 检查是否存在可以返回的页面历史。
-                 这可以处理用户在新标签页直接打开文章的边缘情况。
-              3. `event.preventDefault()` 阻止链接的默认跳转行为。
-              4. `history.back()` 执行浏览器的“后退”操作，这会保留主页的滚动位置。
-              5. `href="../index.html"` 仍然保留，作为后备方案（例如JS被禁用，或没有历史记录时）。
-            -->
-            <a href="../index.html" class="back-link" onclick="if (history.length > 1) { event.preventDefault(); history.back(); }">返回基地</a>
-            <h1 class="article-title">$title$</h1>
-            <p class="article-meta">记录于：$date$</p>
-        </header>
-
-        <main class="article-content">
-            $body$
-        </main>
-    </div>
-
-</body>
-</html>
-</file>
-
 <file path="builder/main.py">
 import os
 import shutil
@@ -2014,6 +2228,53 @@ if __name__ == '__main__':
             </div>
             </main>
     </div>
+</body>
+</html>
+</file>
+
+<file path="templates/article.template">
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>$title$</title>
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/article.css">
+
+    <!-- 
+    ============================================================
+    == V V V V      添加网站图标代码 (Favicon)      V V V V ==
+    ============================================================
+    -->
+    <link rel="icon" type="image/png" href="../static/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../static/icons/favicon.svg" />
+    <link rel="shortcut icon" href="../static/icons/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="../static/icons/site.webmanifest" />
+    <!-- 
+    ============================================================
+    == ^ ^ ^ ^          网站图标代码结束          ^ ^ ^ ^ ==
+    ============================================================
+    -->    
+</head>
+<body>
+
+    <div class="article-container">
+        <header class="article-header">
+            <!-- 
+            纯粹的 href 跳转，保证一定回到 index.html。
+            位置记忆功能将由 index.html 自己的 JS 来处理。
+            -->
+            <a href="../index.html" class="back-link">返回基地</a>
+            <h1 class="article-title">$title$</h1>
+            <p class="article-meta">记录于：$date$</p>
+        </header>
+
+        <main class="article-content">
+            $body$
+        </main>
+    </div>
+
 </body>
 </html>
 </file>
@@ -3089,8 +3350,8 @@ body.elevator-active .elevator-door-right {
     <main class="main-content-grid">
         <div class="left-column">
             <div class="page-cards-container">
-                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-92m]</h2><h2>入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
-                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 [-348m]</h2><h2>突如其来的想法</h2><p>碎碎念...</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-1-line"><div class="card-content"><h2>扇区-01 [-116m]</h2><h2>"日常"入库地址</h2><p>近期的东西都会先放到这里</p></div></a>
+                <a href="#" class="page-card" data-target-id="sector-2-line"><div class="card-content"><h2>扇区-02 [-395m]</h2><h2>突如其来的情绪化言论</h2><p>对不起我的肝脏</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-3-line"><div class="card-content"><h2>扇区-03 未写入 [-550m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-4-line"><div class="card-content"><h2>扇区-04 未写入 [-600m]</h2><p>Undefined</p></div></a>
                 <a href="#" class="page-card" data-target-id="sector-5-line"><div class="card-content"><h2>扇区-05 [-650m]</h2><h2>拙劣之作</h2><p>一些胡思乱想的小构思</p></div></a>
@@ -3101,9 +3362,18 @@ body.elevator-active .elevator-door-right {
             
             <div class="announcement-panel">
                 <h3>//: ANNOUNCEMENT</h3>
-                <p> 2025-11-22.23  </p>
-                <p>1122专场</p>
-                <p>写的东西就跟日记似的，看个乐呵得了</p>
+                <p>2025-12-1</p>
+                <p>我想要在扇区2放一些碎碎念</p>
+                <p>2025-12-3</p>
+                <p>扇区2放的东西都是他妈的情绪化碎片，神经病的发言，（不）想看就（不）看</p>
+                <p>非理性化推送，所以我使用了git force push</p>
+                <p>2025-12-8</p>
+                <p>
+                    为什么我写不出文字了
+                </p>
+                <p>
+                    我还是爱大家
+                </p>
             </div>
         </div>
 
@@ -3318,6 +3588,39 @@ body.elevator-active .elevator-door-right {
                 });
             });
         }
+
+        // ============================================================
+        // == V V V V      新增：基地滚动位置记忆系统      V V V V ==
+        // ============================================================
+        
+        // 1. 定义存储键名
+        const SCROLL_KEY = 'jio_base_scroll_position';
+
+        // 2. 页面加载时：检查是否有保存的位置，如果有，尝试恢复
+        // 注意：这里不在 DOMContentLoaded 里执行，而是直接执行，能稍微减少闪烁
+        if (sessionStorage.getItem(SCROLL_KEY)) {
+            const savedPosition = parseInt(sessionStorage.getItem(SCROLL_KEY), 10);
+            
+            // 只有当位置大于 0 时才恢复
+            if (savedPosition > 0) {
+                // 告诉浏览器：我要手动恢复，你别插手（防止浏览器自带的恢复机制冲突）
+                if ('scrollRestoration' in history) {
+                    history.scrollRestoration = 'manual';
+                }
+                
+                // 立即滚动到该位置
+                window.scrollTo(0, savedPosition);
+            }
+        }
+
+        // 3. 页面离开前：保存当前的滚动位置
+        window.addEventListener('beforeunload', () => {
+            sessionStorage.setItem(SCROLL_KEY, window.scrollY);
+        });
+
+        // ============================================================
+        // == ^ ^ ^ ^          记忆系统结束              ^ ^ ^ ^ ==
+        // ============================================================
 
         document.addEventListener('DOMContentLoaded', function() {
             // --- V V V V  新功能：电梯转场逻辑 (替换了原有的平滑滚动)  V V V V ---
