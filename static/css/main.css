@@ -790,3 +790,33 @@ body.elevator-active .elevator-door-right {
     */
     transform: translate(-50%, -50%);
 }
+
+
+/* --- 雪花特效样式 --- */
+#snow-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 900; /* 高于背景，但在电梯门(9999)和面板(1001)之下 */
+    pointer-events: none; /* 关键：允许鼠标点击穿透 Canvas */
+    opacity: 0;
+    transition: opacity 1s ease; /* 开关时的淡入淡出效果 */
+}
+
+/* 当雪花激活时的状态类 */
+body.snow-active #snow-canvas {
+    opacity: 1;
+}
+
+/* 按钮激活状态样式（可选） */
+body.snow-active #snow-toggle {
+    border-color: #fff;
+    text-shadow: 0 0 5px #fff;
+    color: #fff;
+} 
+
+
+
+
