@@ -236,6 +236,10 @@
 </head>
 
 <body class="homepage-effect">
+
+    <!-- V V V V  新增：雪花  V V V V -->
+    <canvas id="snow-canvas"></canvas>
+    
     <!-- V V V V  新增：电梯门结构  V V V V -->
     <div id="elevator-overlay">
         <div class="elevator-door elevator-door-left"></div>
@@ -608,6 +612,10 @@
         <div class="panel-status-display"><h3>//:Welcome to JioooBasement</h3><p>深度导航系统已激活</p><p>节点通道链接稳定</p><p>等待指令...</p></div>
         <nav class="elevator-buttons">
             <ul>
+                <!-- 新增：雪花开关按钮 -->
+                <li><a href="#" class="elevator-button" id="snow-toggle">Toggle Snow: OFF</a></li>
+
+
                 <li><a href="#" class="elevator-button" data-target-id="hero-section">Return to surface</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-1-line">To 01</a></li>
                 <li><a href="#" class="elevator-button" data-target-id="sector-2-line">To 02</a></li>
@@ -762,6 +770,141 @@
             }
             setInterval(updateClock, 1000);
             updateClock();
+
+            // ============================================================
+            // == V V V V      新增：雪花特效系统 (Snow System)      V V V V ==
+            // ============================================================
+            
+            const snowCanvas = document.getElementById('snow-canvas');
+            const snowToggleBtn = document.getElementById('snow-toggle');
+            const ctx = snowCanvas.getContext('2d');
+            
+            let width, height;
+            let particles = [];
+            let animationId;
+            let isSnowing = false;
+            
+            // 粒子配置
+            const particleCount = 150; // 雪花数量
+            const mouse = { x: 0, y: 0 };
+
+            // 初始化 Canvas 尺寸
+            function resizeCanvas() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                snowCanvas.width = width;
+                snowCanvas.height = height;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            // 监听鼠标位置（制造微风效果）
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            class Particle {
+                constructor() {
+                    this.reset(true);
+                }
+
+                reset(initial = false) {
+                    this.x = Math.random() * width;
+                    // 如果是初始化，随机分布在屏幕上；如果是重置，从顶部落下
+                    this.y = initial ? Math.random() * height : -10;
+                    this.vx = (Math.random() - 0.5) * 0.5; // 水平飘动速度
+                    this.vy = Math.random() * 1.5 + 0.5;   // 下落速度
+                    this.size = Math.random() * 2 + 0.5;   // 雪花大小
+                    this.opacity = Math.random() * 0.5 + 0.1; // 透明度
+                    this.meltSpeed = Math.random() * 0.01 + 0.005;
+                }
+
+                update() {
+                    this.y += this.vy;
+                    this.x += this.vx;
+
+                    // 鼠标交互：轻微的风力
+                    const dx = this.x - mouse.x;
+                    const dy = this.y - mouse.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        const forceDirectionX = dx / dist;
+                        const force = (150 - dist) / 150;
+                        this.vx += forceDirectionX * force * 0.05;
+                    }
+
+                    // 边界检查
+                    if (this.y > height || this.x < -50 || this.x > width + 50) {
+                        this.reset();
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function animateSnow() {
+                if (!isSnowing) return; // 停止循环
+
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                animationId = requestAnimationFrame(animateSnow);
+            }
+
+            function startSnow() {
+                if (!isSnowing) {
+                    isSnowing = true;
+                    document.body.classList.add('snow-active');
+                    snowToggleBtn.textContent = "Toggle Snow: ON";
+                    initParticles();
+                    animateSnow();
+                    localStorage.setItem('jio_snow_enabled', 'true');
+                }
+            }
+
+            function stopSnow() {
+                if (isSnowing) {
+                    isSnowing = false;
+                    document.body.classList.remove('snow-active');
+                    snowToggleBtn.textContent = "Toggle Snow: OFF";
+                    cancelAnimationFrame(animationId);
+                    ctx.clearRect(0, 0, width, height); // 清空画布
+                    localStorage.setItem('jio_snow_enabled', 'false');
+                }
+            }
+
+            // 按钮点击事件
+            snowToggleBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (isSnowing) stopSnow();
+                else startSnow();
+            });
+
+            // 初始化：检查本地存储
+            if (localStorage.getItem('jio_snow_enabled') === 'true') {
+                startSnow();
+            }
+
+            // ============================================================
+            // == ^ ^ ^ ^          雪花特效系统结束          ^ ^ ^ ^ ==
+            // ============================================================
+
+            
 
             // --- 动态更新扇区深度线位置 ---
             function updateSectorDepths() {
