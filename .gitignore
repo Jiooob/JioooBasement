@@ -5,3 +5,8 @@ output/
 # 忽略 Python 缓存
 __pycache__/
 *.pyc
+
+# 忽略repomix产生的废料
+repomix-output.xml
+repomix-output.txt
+repomix-output.json
