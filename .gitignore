@@ -10,3 +10,7 @@ __pycache__/
 repomix-output.xml
 repomix-output.txt
 repomix-output.json
+
+# 计划书
+CODE_OPTIMIZATION_PLAN.md
+majestic-forging-oasis.md
