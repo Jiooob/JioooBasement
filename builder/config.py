@@ -12,7 +12,7 @@ TEMPLATES_DIR = BASE_DIR / "templates"
 OUTPUT_DIR = BASE_DIR / "output"
 
 # 需要处理的内容分类
-CATEGORIES = ["articles", "weekly", "notes"]
+CATEGORIES = []
 
 # 网站基本信息 (用于RSS等)
 SITE_URL = "https://your-domain.com"
