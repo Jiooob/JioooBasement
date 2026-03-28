@@ -1,0 +1,181 @@
+import os
+import shutil
+from pathlib import Path
+
+from bs4 import BeautifulSoup
+
+
+BASE_DIR = Path(__file__).parent
+CONTENT_DIR = BASE_DIR / "content"
+STATIC_DIR = BASE_DIR / "static"
+TEMPLATES_DIR = BASE_DIR / "templates"
+OUTPUT_DIR = BASE_DIR / "output"
+PAGES_DIR = BASE_DIR / "pages"
+CNAME_FILE = BASE_DIR / "CNAME"
+INDEX_TEMPLATE_FILE = BASE_DIR / "index.html"
+ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
+
+
+class Page:
+    def __init__(self, file_path):
+        self.path = file_path
+        self.title = ""
+        self.date = ""
+        self.summary = ""
+        self.body = ""
+        self.metadata = {}
+        self.size_in_bits = 0
+        self.parse()
+
+    def parse(self):
+        with open(self.path, 'r', encoding='utf-8') as f:
+            soup = BeautifulSoup(f.read(), 'html.parser')
+
+        for tag in soup.find_all('meta'):
+            if tag.get('name', '').startswith('blog-'):
+                key = tag['name'].replace('blog-', '')
+                self.metadata[key] = tag['content']
+
+        self.title = self.metadata.get('title', '无标题')
+        self.date = self.metadata.get('date', '')
+        self.summary = self.metadata.get('summary', '')
+
+        if soup.body:
+            self.body = ''.join(str(child) for child in soup.body.children)
+        else:
+            self.body = str(soup)
+
+    def render(self, template_content):
+        content = template_content.replace('$title$', self.title)
+        content = content.replace('$date$', self.date)
+        content = content.replace('$body$', self.body)
+        return content
+
+
+def prepare_output_dir():
+    if OUTPUT_DIR.exists():
+        shutil.rmtree(OUTPUT_DIR)
+
+    os.makedirs(OUTPUT_DIR)
+    shutil.copytree(STATIC_DIR, OUTPUT_DIR / 'static')
+
+    if PAGES_DIR.exists():
+        shutil.copytree(PAGES_DIR, OUTPUT_DIR / 'pages')
+
+    if CNAME_FILE.exists():
+        shutil.copy(CNAME_FILE, OUTPUT_DIR / 'CNAME')
+
+    print('静态文件和目录已复制。')
+
+
+def load_templates():
+    with open(ARTICLE_TEMPLATE_FILE, 'r', encoding='utf-8') as f:
+        article_template = f.read()
+
+    with open(INDEX_TEMPLATE_FILE, 'r', encoding='utf-8') as f:
+        index_template = f.read()
+
+    print('模板已加载。')
+    return article_template, index_template
+
+
+def iter_sector_dirs():
+    return sorted(
+        [path for path in CONTENT_DIR.iterdir() if path.is_dir() and path.name.startswith('sector-')],
+        key=lambda path: path.name,
+    )
+
+
+def iter_article_files(sector_dir):
+    return sorted(
+        [path for path in sector_dir.glob('*.html') if path.name != 'index.html'],
+        key=lambda path: path.name,
+    )
+
+
+def build_article_page(file_path, article_template, output_sector_dir):
+    page = Page(file_path)
+    rendered_html = page.render(article_template)
+    output_file_path = output_sector_dir / file_path.name
+
+    with open(output_file_path, 'w', encoding='utf-8') as f:
+        f.write(rendered_html)
+
+    try:
+        size_in_bytes = os.path.getsize(output_file_path)
+        page.size_in_bits = size_in_bytes * 8
+    except FileNotFoundError:
+        pass
+
+    return page
+
+
+def render_article_card(page, sector_name, file_name):
+    relative_path = f'{sector_name}/{file_name}'
+    return f"""
+                <a href="{relative_path}" class="article-card-item">
+                    <div class="card-content">
+                        <h2>{page.title}</h2>
+                        <p class="date">记录于：{page.date}</p>
+                        <p class="summary">{page.summary}</p>
+                        <p class="size">Size: {page.size_in_bits:,} bits</p>
+                    </div>
+                </a>
+                """
+
+
+def inject_sector_cards(index_template, sector_name, cards_html):
+    placeholder = f"<!-- {sector_name.upper().replace('-', '_')}_CARDS_HERE -->"
+    return index_template.replace(placeholder, cards_html)
+
+
+def finalize_index(index_template):
+    cleaned_template = index_template.replace('<!-- ARTICLE_CARDS_HERE -->', '')
+
+    with open(OUTPUT_DIR / 'index.html', 'w', encoding='utf-8') as f:
+        f.write(cleaned_template)
+
+    print('主索引页已根据所有扇区内容生成。')
+
+
+def build():
+    print('演算开始：开始构建站点...')
+
+    prepare_output_dir()
+
+    try:
+        article_template, index_template = load_templates()
+    except FileNotFoundError as e:
+        print(f'错误: 模板文件未找到: {e}。构建中止。')
+        return
+
+    print('开始处理所有扇区的内容...')
+
+    for content_dir in iter_sector_dirs():
+        sector_name = content_dir.name
+        print(f'  - 正在处理 {sector_name}...')
+
+        output_sector_dir = OUTPUT_DIR / sector_name
+        os.makedirs(output_sector_dir, exist_ok=True)
+
+        sector_cards_html = []
+
+        for file_path in iter_article_files(content_dir):
+            print(f'      - 发现文件: {file_path.name}')
+            page = build_article_page(file_path, article_template, output_sector_dir)
+            card_html = render_article_card(page, sector_name, file_path.name)
+            sector_cards_html.append((page.date, card_html))
+
+        sector_cards_html.sort(key=lambda item: item[0], reverse=True)
+        final_cards_html = ''.join(item[1] for item in sector_cards_html)
+        if final_cards_html:
+            final_cards_html = f'<div class="article-cards-container">{final_cards_html}</div>'
+
+        index_template = inject_sector_cards(index_template, sector_name, final_cards_html)
+
+    finalize_index(index_template)
+    print('构建流程完毕。系统功能完整。')
+
+
+if __name__ == '__main__':
+    build()
