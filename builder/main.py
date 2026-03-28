@@ -3,7 +3,6 @@ import shutil
 from pathlib import Path
 from . import config
 from .page_parser import Page
-from . import index_updater
 
 def build():
     print("演算开始：开始构建站点...")
