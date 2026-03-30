@@ -153,37 +153,48 @@
 }
 
 /* --- V V V V  友链卡片样式  V V V V --- */
+.friend-links-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: stretch;
+}
 .friend-link-card {
     display: flex;
-    align-items: center;
-    padding: 20px;
-    gap: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 220px;
+    min-height: 180px;
+    padding: 14px 14px 16px 14px;
+    gap: 12px;
 }
 .friend-link-card:hover {
     box-shadow: 0 18px 36px rgba(var(--primary-accent-rgb), 0.12);
 }
 .friend-avatar {
-    width: 60px;
-    height: 60px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    border: 2px solid var(--border-secondary); /* <--- MODIFIED */
+    border: 1px solid var(--border-secondary); /* <--- MODIFIED */
     object-fit: cover;
     flex-shrink: 0;
 }
 .friend-info {
     display: flex;
     flex-direction: column;
+    gap: 4px;
 }
 .friend-name {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: var(--text-bright); /* <--- MODIFIED */
-    margin: 0 0 5px 0;
+    margin: 0;
 }
 .friend-description {
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     color: var(--text-muted); /* <--- MODIFIED */
     margin: 0;
-    line-height: 1.6;
+    line-height: 1.45;
 }
 
 /* --- V V V V  “关于我”卡片样式  V V V V --- */
