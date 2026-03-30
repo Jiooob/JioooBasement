@@ -105,39 +105,51 @@
 }
 
 .article-card-item .card-content {
-    padding: 12px 0 16px 14px;
-    position: relative;
-    padding-bottom: 28px;
+    padding: 12px 0 12px 14px;
     border-left: 2px solid rgba(var(--secondary-accent-rgb), 0.18);
     border-bottom: 1px solid rgba(136, 146, 176, 0.28);
+    display: flex;
+    align-items: center;
+    gap: 10px 18px;
+    flex-wrap: wrap;
+}
+
+.article-card-item .card-content > * {
+    min-width: 0;
 }
 
 .article-card-item h2 {
+    order: 2;
+    flex: 1 1 240px;
     font-size: 1.3rem;
     color: var(--text-bright); /* <--- MODIFIED */
-    margin: 0 0 6px 0;
+    margin: 0;
 }
 
 .article-card-item .date {
+    order: 1;
+    flex: 0 0 110px;
     font-size: 0.8rem;
     color: var(--text-secondary); /* <--- MODIFIED */
-    margin: 0 0 6px 0;
+    margin: 0;
+    font-family: 'Courier New', monospace;
 }
 
 .article-card-item .summary {
+    order: 3;
+    flex: 1 1 280px;
     font-size: 0.9rem;
     color: var(--text-muted); /* <--- MODIFIED */
     margin: 0;
 }
 
 .article-card-item .size {
-    position: absolute;
-    bottom: 8px;
-    right: 12px;
+    order: 4;
+    flex: 0 0 auto;
+    margin: 0 12px 0 auto;
     font-size: 0.8rem;
     font-family: 'Courier New', monospace;
     color: var(--text-dark-muted); /* <--- MODIFIED */
-    margin: 0;
 }
 
 /* --- V V V V  友链卡片样式  V V V V --- */
