@@ -1,3 +1,4 @@
+import json
 import os
 import shutil
 from pathlib import Path
@@ -9,11 +10,14 @@ BASE_DIR = Path(__file__).parent
 CONTENT_DIR = BASE_DIR / "content"
 STATIC_DIR = BASE_DIR / "static"
 TEMPLATES_DIR = BASE_DIR / "templates"
+PARTIALS_DIR = TEMPLATES_DIR / "partials"
+DATA_DIR = BASE_DIR / "data"
 OUTPUT_DIR = BASE_DIR / "output"
 PAGES_DIR = BASE_DIR / "pages"
 CNAME_FILE = BASE_DIR / "CNAME"
-INDEX_TEMPLATE_FILE = BASE_DIR / "index.html"
+INDEX_TEMPLATE_FILE = TEMPLATES_DIR / "index.template"
 ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
+HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
 
 
 class Page:
@@ -68,12 +72,90 @@ def prepare_output_dir():
     print('静态文件和目录已复制。')
 
 
-def load_templates():
-    with open(ARTICLE_TEMPLATE_FILE, 'r', encoding='utf-8') as f:
-        article_template = f.read()
+def read_text_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return f.read()
 
-    with open(INDEX_TEMPLATE_FILE, 'r', encoding='utf-8') as f:
-        index_template = f.read()
+
+def replace_placeholder(template_content, placeholder, replacement):
+    return template_content.replace(placeholder, replacement)
+
+
+def make_sector_placeholder(sector_name, suffix):
+    return f"<!-- {sector_name.upper().replace('-', '_')}_{suffix} -->"
+
+
+def assemble_index_template():
+    index_template = read_text_file(INDEX_TEMPLATE_FILE)
+    partial_map = {
+        '<!-- HOMEPAGE_HEAD_HERE -->': PARTIALS_DIR / 'homepage_head.partial.html',
+        '<!-- HOMEPAGE_HERO_HERE -->': PARTIALS_DIR / 'homepage_hero.partial.html',
+        '<!-- HOMEPAGE_SECTOR_LINES_HERE -->': PARTIALS_DIR / 'homepage_sector_lines.partial.html',
+        '<!-- HOMEPAGE_MAIN_GRID_HERE -->': PARTIALS_DIR / 'homepage_main_grid.partial.html',
+        '<!-- HOMEPAGE_FOOTER_HERE -->': PARTIALS_DIR / 'homepage_footer.partial.html',
+        '<!-- HOMEPAGE_SECTOR_ANCHORS_HERE -->': PARTIALS_DIR / 'homepage_sector_anchors.partial.html',
+        '<!-- HOMEPAGE_ELEVATOR_PANEL_HERE -->': PARTIALS_DIR / 'homepage_elevator_panel.partial.html',
+    }
+
+    for placeholder, partial_path in partial_map.items():
+        index_template = replace_placeholder(index_template, placeholder, read_text_file(partial_path))
+
+    return index_template
+
+
+def load_homepage_data():
+    with open(HOMEPAGE_DATA_FILE, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+
+def render_sector_navigation(homepage_data):
+    cards = []
+    for sector in homepage_data.get('sector_navigation', []):
+        description_html = ''
+        if sector.get('description'):
+            description_html = f'<p>{sector["description"]}</p>'
+
+        cards.append(
+            (
+                f'<a href="#" class="page-card" data-target-id="{sector["target_id"]}">'
+                f'<div class="card-content">'
+                f'<h2>{sector["title_primary"]}</h2>         '
+                f'<h2>{sector["title_secondary"]}</h2>'
+                f'{description_html}'
+                f'</div>'
+                f'</a>'
+            )
+        )
+    return ''.join(cards)
+
+
+def render_announcements(homepage_data):
+    announcement_lines = []
+    for item in homepage_data.get('announcements', []):
+        announcement_lines.append(f'<p>{item["date"]}</p>')
+        announcement_lines.append(
+            f'<p>\n                    {item["text"]}\n                </p>'
+        )
+    return ''.join(announcement_lines)
+
+
+def inject_homepage_data(index_template, homepage_data):
+    homepage_replacements = {
+        '<!-- SECTOR_NAV_CARDS_HERE -->': render_sector_navigation(homepage_data),
+        '<!-- ANNOUNCEMENTS_HERE -->': render_announcements(homepage_data),
+    }
+
+    for placeholder, replacement in homepage_replacements.items():
+        index_template = replace_placeholder(index_template, placeholder, replacement)
+
+    return index_template
+
+
+def load_templates():
+    article_template = read_text_file(ARTICLE_TEMPLATE_FILE)
+    index_template = assemble_index_template()
+    homepage_data = load_homepage_data()
+    index_template = inject_homepage_data(index_template, homepage_data)
 
     print('模板已加载。')
     return article_template, index_template
@@ -88,9 +170,16 @@ def iter_sector_dirs():
 
 def iter_article_files(sector_dir):
     return sorted(
-        [path for path in sector_dir.glob('*.html') if path.name != 'index.html'],
+        [path for path in sector_dir.glob('*.html') if path.name not in {'index.html', 'section.html'}],
         key=lambda path: path.name,
     )
+
+
+def load_sector_custom_content(sector_dir):
+    section_file = sector_dir / 'section.html'
+    if section_file.exists():
+        return read_text_file(section_file)
+    return ''
 
 
 def build_article_page(file_path, article_template, output_sector_dir):
@@ -125,15 +214,16 @@ def render_article_card(page, sector_name, file_name):
 
 
 def inject_sector_cards(index_template, sector_name, cards_html):
-    placeholder = f"<!-- {sector_name.upper().replace('-', '_')}_CARDS_HERE -->"
-    return index_template.replace(placeholder, cards_html)
+    return replace_placeholder(index_template, make_sector_placeholder(sector_name, 'CARDS_HERE'), cards_html)
+
+
+def inject_sector_custom_content(index_template, sector_name, custom_html):
+    return replace_placeholder(index_template, make_sector_placeholder(sector_name, 'CUSTOM_HERE'), custom_html)
 
 
 def finalize_index(index_template):
-    cleaned_template = index_template.replace('<!-- ARTICLE_CARDS_HERE -->', '')
-
     with open(OUTPUT_DIR / 'index.html', 'w', encoding='utf-8') as f:
-        f.write(cleaned_template)
+        f.write(index_template)
 
     print('主索引页已根据所有扇区内容生成。')
 
@@ -171,7 +261,10 @@ def build():
         if final_cards_html:
             final_cards_html = f'<div class="article-cards-container">{final_cards_html}</div>'
 
+        custom_content_html = load_sector_custom_content(content_dir)
+
         index_template = inject_sector_cards(index_template, sector_name, final_cards_html)
+        index_template = inject_sector_custom_content(index_template, sector_name, custom_content_html)
 
     finalize_index(index_template)
     print('构建流程完毕。系统功能完整。')
