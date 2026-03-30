@@ -1,0 +1,208 @@
+/* --- 扇区深度线定位 --- */
+.sector-depth-line {
+    position: absolute;
+    bottom: auto;
+    left: 0;
+    right: 0;
+}
+
+/* --- 悬浮电梯控制面板样式 --- */
+#elevator-panel {
+    position: absolute;
+    z-index: 1001;
+    background-color: rgba(var(--bg-card-rgb), 0.9); /* <--- MODIFIED */
+    border: 1px solid var(--border-primary); /* <--- MODIFIED */
+    border-radius: 4px;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    box-sizing: border-box;
+}
+.panel-header {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--text-secondary); /* <--- MODIFIED */
+    border-bottom: 1px solid var(--border-primary); /* <--- MODIFIED */
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+}
+#clock-display {
+    text-align: center;
+    color: var(--primary-accent); /* <--- MODIFIED */
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+#clock-display #time-display {
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.panel-status-display {
+    border-top: 1px solid var(--border-primary); /* <--- MODIFIED */
+    border-bottom: 1px solid var(--border-primary); /* <--- MODIFIED */
+    padding: 10px 0;
+    margin: 15px 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary); /* <--- MODIFIED */
+}
+.panel-status-display h3 {
+    margin: 0 0 5px 0;
+    color: var(--text-muted); /* <--- MODIFIED */
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+.panel-status-display p {
+    margin: 3px 0;
+}
+.elevator-buttons ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.elevator-buttons li {
+    margin-bottom: 5px;
+}
+.elevator-button {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    background-color: var(--bg-code); /* <--- MODIFIED */
+    color: var(--text-primary); /* <--- MODIFIED */
+    text-decoration: none;
+    border: 1px solid var(--border-secondary); /* <--- MODIFIED */
+    border-radius: 2px;
+    font-size: 0.8rem;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+.elevator-button:hover {
+    background-color: var(--primary-accent); /* <--- MODIFIED */
+    color: var(--text-on-accent); /* <--- MODIFIED */
+    border-color: var(--primary-accent); /* <--- MODIFIED */
+    box-shadow: 0 0 8px rgba(var(--primary-accent-rgb), 0.5); /* <--- MODIFIED */
+}
+.page-cards-container {
+    align-self: flex-start;
+}
+
+/* --- 单个文章卡片的样式 --- */
+.article-card-item {
+    background-color: var(--bg-article-card); /* <--- MODIFIED */
+    border: 1px solid var(--border-secondary); /* <--- MODIFIED */
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--text-primary); /* <--- MODIFIED */
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.article-card-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--secondary-accent); /* <--- MODIFIED */
+    box-shadow: 0 5px 15px rgba(0, 170, 255, 0.2);
+}
+
+.article-card-item .card-content {
+    padding: 20px;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.article-card-item h2 {
+    font-size: 1.3rem;
+    color: var(--text-bright); /* <--- MODIFIED */
+    margin: 0 0 10px 0;
+}
+
+.article-card-item .date {
+    font-size: 0.8rem;
+    color: var(--text-secondary); /* <--- MODIFIED */
+    margin: 0 0 10px 0;
+}
+
+.article-card-item .summary {
+    font-size: 0.9rem;
+    color: var(--text-muted); /* <--- MODIFIED */
+    margin: 0;
+}
+
+.article-card-item .size {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-size: 0.8rem;
+    font-family: 'Courier New', monospace;
+    color: var(--text-dark-muted); /* <--- MODIFIED */
+    margin: 0;
+}
+
+/* --- V V V V  友链卡片样式  V V V V --- */
+.friend-link-card {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+}
+.friend-link-card:hover {
+    border-color: var(--primary-accent); /* <--- MODIFIED */
+    box-shadow: 0 5px 15px rgba(var(--primary-accent-rgb), 0.2); /* <--- MODIFIED */
+}
+.friend-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--border-secondary); /* <--- MODIFIED */
+    object-fit: cover;
+    flex-shrink: 0;
+}
+.friend-info {
+    display: flex;
+    flex-direction: column;
+}
+.friend-name {
+    font-size: 1.2rem;
+    color: var(--text-bright); /* <--- MODIFIED */
+    margin: 0 0 5px 0;
+}
+.friend-description {
+    font-size: 0.9rem;
+    color: var(--text-muted); /* <--- MODIFIED */
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* --- V V V V  “关于我”卡片样式  V V V V --- */
+.about-me-card {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+    gap: 25px;
+}
+.about-me-info {
+    display: flex;
+    flex-direction: column;
+    padding: 80px 0;
+}
+.about-me-title {
+    font-family: 'Courier New', monospace;
+    font-size: 1.4rem;
+    color: var(--text-bright); /* <--- MODIFIED */
+    margin: 0 0 5px 0;
+}
+.about-me-subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary); /* <--- MODIFIED */
+    margin-bottom: 20px;
+    font-style: italic;
+}
+.about-me-description {
+    font-size: 1rem;
+    color: var(--text-muted); /* <--- MODIFIED */
+    margin: 0 0 1em 0;
+    line-height: 1.7;
+}
+.about-me-description:last-child {
+    margin-bottom: 0;
+}
