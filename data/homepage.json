@@ -2,49 +2,57 @@
   "sector_navigation": [
     {
       "target_id": "sector-1-line",
-      "title_primary": "扇区-01 [-142m]",
+      "depth_meters": 142,
+      "title_primary": "扇区-01",
       "title_secondary": "日々",
       "description": "近期的东西都会先放到这里"
     },
     {
       "target_id": "sector-2-line",
-      "title_primary": "扇区-02 [-337m]",
+      "depth_meters": 337,
+      "title_primary": "扇区-02",
       "title_secondary": "突如其来的情绪化言论",
       "description": "对不起我的肝脏"
     },
     {
       "target_id": "sector-3-line",
-      "title_primary": "扇区-03 [-397m]",
+      "depth_meters": 397,
+      "title_primary": "扇区-03",
       "title_secondary": "胡思乱想",
       "description": "你凑合着看吧"
     },
     {
       "target_id": "sector-4-line",
-      "title_primary": "扇区-04 [-414m]",
+      "depth_meters": 414,
+      "title_primary": "扇区-04",
       "title_secondary": "建筑垃圾",
       "description": "副产物"
     },
     {
       "target_id": "sector-5-line",
-      "title_primary": "扇区-05 [-495m]",
+      "depth_meters": 495,
+      "title_primary": "扇区-05",
       "title_secondary": "拙劣之作",
       "description": "小巧思？小勾式！"
     },
     {
       "target_id": "sector-6-line",
-      "title_primary": "扇区-06 [-514m]",
+      "depth_meters": 514,
+      "title_primary": "扇区-06",
       "title_secondary": "友達だ！",
       "description": "Tomodachi"
     },
     {
       "target_id": "sector-7-line",
-      "title_primary": "扇区-07 [-566m]",
+      "depth_meters": 566,
+      "title_primary": "扇区-07",
       "title_secondary": "点不了",
       "description": ""
     },
     {
       "target_id": "sector-8-line",
-      "title_primary": "扇区-08 [-637m]",
+      "depth_meters": 637,
+      "title_primary": "扇区-08",
       "title_secondary": "基座",
       "description": ""
     }
