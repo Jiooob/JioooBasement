@@ -119,7 +119,6 @@ def assemble_index_template():
         '<!-- HOMEPAGE_MAIN_GRID_HERE -->': PARTIALS_DIR / 'homepage_main_grid.partial.html',
         '<!-- HOMEPAGE_FOOTER_HERE -->': PARTIALS_DIR / 'homepage_footer.partial.html',
         '<!-- HOMEPAGE_SECTOR_ANCHORS_HERE -->': PARTIALS_DIR / 'homepage_sector_anchors.partial.html',
-        '<!-- HOMEPAGE_ELEVATOR_PANEL_HERE -->': PARTIALS_DIR / 'homepage_elevator_panel.partial.html',
     }
 
     for placeholder, partial_path in partial_map.items():

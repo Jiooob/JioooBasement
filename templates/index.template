@@ -8,6 +8,7 @@
 <!-- HOMEPAGE_MAIN_GRID_HERE -->
 <!-- HOMEPAGE_FOOTER_HERE -->
 <!-- HOMEPAGE_SECTOR_ANCHORS_HERE -->
-<!-- HOMEPAGE_ELEVATOR_PANEL_HERE -->
+<div class="depth-indicator-left"><div class="depth-text-left">0m</div><div class="depth-line-left"></div></div>
+<script src="static/js/homepage.js"></script>
 </body>
 </html>

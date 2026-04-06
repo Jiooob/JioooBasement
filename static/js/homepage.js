@@ -72,18 +72,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const LINE_TO_CONTENT_GAP = 60;
     const CONTENT_TO_NEXT_LINE_GAP = 120;
     const MAIN_GRID_BOTTOM_PADDING = 80;
-    const ELEVATOR_HORIZONTAL_OFFSET = 32;
 
     const scrollTriggers = document.querySelectorAll('[data-target-id]');
-    const dateElement = document.getElementById('date-display');
-    const timeElement = document.getElementById('time-display');
     const snowCanvas = document.getElementById('snow-canvas');
     const snowToggleBtn = document.getElementById('snow-toggle');
     const mainGrid = document.querySelector('.main-content-grid');
-    const rightPanel = document.querySelector('.right-panel');
-    const elevatorPanel = document.getElementById('elevator-panel');
     const lastLine = document.getElementById('sector-8-line');
-    const zeroDepthLine = document.querySelector('.hero .border-line');
 
     const layoutState = {
         lastBottom: 0,
@@ -176,30 +170,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function performUpdates() {
         updateMainGridHeight();
-
-        if (rightPanel && elevatorPanel) {
-            const rightPanelContent = document.querySelector('.right-panel .panel-content');
-
-            if (rightPanelContent) {
-                const rect = rightPanelContent.getBoundingClientRect();
-                elevatorPanel.style.width = rect.width + 'px';
-                elevatorPanel.style.left = (rect.left + ELEVATOR_HORIZONTAL_OFFSET) + 'px';
-            }
-        }
-
-        if (elevatorPanel && zeroDepthLine) {
-            const panelHeight = elevatorPanel.offsetHeight;
-            const fixedTopPosition = (window.innerHeight - panelHeight) / 2;
-            const scrollThreshold = zeroDepthLine.offsetTop - fixedTopPosition;
-
-            if (window.scrollY > scrollThreshold) {
-                elevatorPanel.style.position = 'fixed';
-                elevatorPanel.style.top = fixedTopPosition + 'px';
-            } else {
-                elevatorPanel.style.position = 'absolute';
-                elevatorPanel.style.top = (zeroDepthLine.offsetTop + 20) + 'px';
-            }
-        }
     }
 
     function restoreSavedScrollPosition() {
@@ -256,24 +226,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    function updateClock() {
-        if (!dateElement || !timeElement) {
-            return;
-        }
-
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        dateElement.textContent = `${year}-${month}-${day}`;
-        timeElement.textContent = `${hours}:${minutes}:${seconds}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
 
     if (snowCanvas && snowToggleBtn) {
         const ctx = snowCanvas.getContext('2d');
