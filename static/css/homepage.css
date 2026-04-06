@@ -10,6 +10,32 @@
     align-self: flex-start;
 }
 
+.sector-side-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    white-space: nowrap;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 8rem;
+    line-height: 0.88;
+    letter-spacing: 0.08em;
+    color: rgba(230, 241, 255, 0.16);
+    text-shadow: 0 0 24px rgba(var(--primary-accent-rgb), 0.08);
+    pointer-events: none;
+    user-select: none;
+}
+
+.sector-side-label:empty {
+    min-height: 0;
+}
+
 /* --- 单个文章卡片的样式 --- */
 .article-card-item {
     background: transparent; /* <--- MODIFIED */

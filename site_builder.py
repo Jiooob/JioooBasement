@@ -167,10 +167,22 @@ def render_announcements(homepage_data):
     return ''.join(announcement_lines)
 
 
+def render_right_panel_labels(homepage_data):
+    labels = []
+    for index, sector in enumerate(homepage_data.get('sector_navigation', []), start=1):
+        right_panel = sector.get('right_panel', {}) or {}
+        display_text = right_panel.get('display_text', '')
+        labels.append(
+            f'<div class="sector-side-label" data-sector-index="{index}" aria-hidden="true">{display_text}</div>'
+        )
+    return ''.join(labels)
+
+
 def inject_homepage_data(index_template, homepage_data):
     homepage_replacements = {
         '<!-- SECTOR_NAV_CARDS_HERE -->': render_sector_navigation(homepage_data),
         '<!-- ANNOUNCEMENTS_HERE -->': render_announcements(homepage_data),
+        '<!-- RIGHT_PANEL_LABELS_HERE -->': render_right_panel_labels(homepage_data),
     }
 
     for placeholder, replacement in homepage_replacements.items():

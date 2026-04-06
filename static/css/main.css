@@ -635,11 +635,12 @@ body.homepage-effect::after {
 }
 
 .right-panel {
-    flex: 1; 
+    flex: 1;
     padding-left: 50px;
 }
 
 .right-panel .panel-content {
+    position: relative;
     border-left: 2px solid var(--border-primary);
     padding-left: 30px;
     height: 100%;

@@ -78,6 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const snowToggleBtn = document.getElementById('snow-toggle');
     const mainGrid = document.querySelector('.main-content-grid');
     const lastLine = document.getElementById('sector-8-line');
+    const rightPanelContent = document.querySelector('.right-panel .panel-content');
+    const sectorSideLabels = [...document.querySelectorAll('.sector-side-label')];
 
     const layoutState = {
         lastBottom: 0,
@@ -168,8 +170,51 @@ document.addEventListener('DOMContentLoaded', function() {
         mainGrid.style.minHeight = `${requiredHeight}px`;
     }
 
+    function updateSectorSideLabels() {
+        if (!rightPanelContent || sectorSideLabels.length === 0) {
+            return;
+        }
+
+        const sourceContainer = document.querySelector('.left-column');
+        if (!sourceContainer) {
+            return;
+        }
+
+        const cardsRect = sourceContainer.getBoundingClientRect();
+        const panelRect = rightPanelContent.getBoundingClientRect();
+        const dividerX = panelRect.left;
+        const targetLeft = dividerX + (dividerX - cardsRect.right);
+        const targetRight = window.innerWidth - cardsRect.left;
+        const availableWidth = Math.max(0, targetRight - targetLeft);
+        const relativeLeft = targetLeft - panelRect.left;
+
+        sectorSideLabels.forEach((label, index) => {
+            const currentLine = document.getElementById(`sector-${index + 1}-line`);
+            const nextLine = document.getElementById(`sector-${index + 2}-line`);
+
+            if (!currentLine || !nextLine) {
+                label.style.display = 'none';
+                return;
+            }
+
+            const currentMidpoint = currentLine.offsetTop + (currentLine.offsetHeight / 2);
+            const nextMidpoint = nextLine.offsetTop + (nextLine.offsetHeight / 2);
+            const intervalHeight = Math.max(0, nextMidpoint - currentMidpoint);
+            const midpoint = (currentMidpoint + nextMidpoint) / 2;
+            const relativeTop = midpoint - rightPanelContent.offsetTop;
+            const fontSize = Math.max(48, Math.min(availableWidth, intervalHeight / 1.9));
+
+            label.style.display = '';
+            label.style.top = `${relativeTop}px`;
+            label.style.left = `${relativeLeft}px`;
+            label.style.width = `${availableWidth}px`;
+            label.style.fontSize = `${fontSize}px`;
+        });
+    }
+
     function performUpdates() {
         updateMainGridHeight();
+        updateSectorSideLabels();
     }
 
     function restoreSavedScrollPosition() {
