@@ -15,6 +15,7 @@ repomix-output.json
 # 计划书
 index模块化改动方案.md
 文件结构方案.md
+LLM交接-首页扇区深度自适应改造.md
 
 # 忽略本地文章图片备份
 static/images/article_img/

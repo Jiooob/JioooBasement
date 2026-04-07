@@ -1,5 +1,7 @@
+import html
 import json
 import os
+import re
 import shutil
 from pathlib import Path
 
@@ -18,6 +20,30 @@ CNAME_FILE = BASE_DIR / "CNAME"
 INDEX_TEMPLATE_FILE = TEMPLATES_DIR / "index.template"
 ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
 HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
+DEPTH_PATTERN = re.compile(r'\[-?(\d+)m\]')
+
+
+def normalize_sector_depth(sector):
+    if 'depth_meters' in sector:
+        return int(sector.get('depth_meters') or 0)
+
+    title_primary = sector.get('title_primary', '')
+    match = DEPTH_PATTERN.search(title_primary)
+    if match:
+        return int(match.group(1))
+
+    return 0
+
+
+def build_sector_primary_title(sector):
+    base_title = sector.get('title_primary', '')
+    depth_meters = normalize_sector_depth(sector)
+    title_without_depth = DEPTH_PATTERN.sub('', base_title).strip()
+
+    if title_without_depth and depth_meters:
+        return f'{title_without_depth} [-{depth_meters}m]'
+
+    return title_without_depth or base_title
 
 
 class Page:
@@ -94,7 +120,6 @@ def assemble_index_template():
         '<!-- HOMEPAGE_MAIN_GRID_HERE -->': PARTIALS_DIR / 'homepage_main_grid.partial.html',
         '<!-- HOMEPAGE_FOOTER_HERE -->': PARTIALS_DIR / 'homepage_footer.partial.html',
         '<!-- HOMEPAGE_SECTOR_ANCHORS_HERE -->': PARTIALS_DIR / 'homepage_sector_anchors.partial.html',
-        '<!-- HOMEPAGE_ELEVATOR_PANEL_HERE -->': PARTIALS_DIR / 'homepage_elevator_panel.partial.html',
     }
 
     for placeholder, partial_path in partial_map.items():
@@ -115,12 +140,16 @@ def render_sector_navigation(homepage_data):
         if sector.get('description'):
             description_html = f'<p>{sector["description"]}</p>'
 
+        depth_meters = normalize_sector_depth(sector)
+        primary_title = build_sector_primary_title(sector)
+        secondary_title = sector.get('title_secondary', '')
+
         cards.append(
             (
-                f'<a href="#" class="page-card" data-target-id="{sector["target_id"]}">'
+                f'<a href="#" class="page-card" data-target-id="{sector["target_id"]}" data-depth-meters="{depth_meters}">'
                 f'<div class="card-content">'
-                f'<h2>{sector["title_primary"]}</h2>         '
-                f'<h2>{sector["title_secondary"]}</h2>'
+                f'<h2>{primary_title}</h2>         '
+                f'<h2>{secondary_title}</h2>'
                 f'{description_html}'
                 f'</div>'
                 f'</a>'
@@ -139,10 +168,22 @@ def render_announcements(homepage_data):
     return ''.join(announcement_lines)
 
 
+def render_right_panel_labels(homepage_data):
+    labels = []
+    for index, sector in enumerate(homepage_data.get('sector_navigation', []), start=1):
+        right_panel = sector.get('right_panel', {}) or {}
+        display_text = html.escape(right_panel.get('display_text', ''), quote=True)
+        labels.append(
+            f'<div class="sector-side-label" data-sector-index="{index}" data-display-text="{display_text}" aria-hidden="true"></div>'
+        )
+    return ''.join(labels)
+
+
 def inject_homepage_data(index_template, homepage_data):
     homepage_replacements = {
         '<!-- SECTOR_NAV_CARDS_HERE -->': render_sector_navigation(homepage_data),
         '<!-- ANNOUNCEMENTS_HERE -->': render_announcements(homepage_data),
+        '<!-- RIGHT_PANEL_LABELS_HERE -->': render_right_panel_labels(homepage_data),
     }
 
     for placeholder, replacement in homepage_replacements.items():
