@@ -1,3 +1,4 @@
+import html
 import json
 import os
 import re
@@ -171,9 +172,9 @@ def render_right_panel_labels(homepage_data):
     labels = []
     for index, sector in enumerate(homepage_data.get('sector_navigation', []), start=1):
         right_panel = sector.get('right_panel', {}) or {}
-        display_text = right_panel.get('display_text', '')
+        display_text = html.escape(right_panel.get('display_text', ''), quote=True)
         labels.append(
-            f'<div class="sector-side-label" data-sector-index="{index}" aria-hidden="true">{display_text}</div>'
+            f'<div class="sector-side-label" data-sector-index="{index}" data-display-text="{display_text}" aria-hidden="true"></div>'
         )
     return ''.join(labels)
 

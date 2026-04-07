@@ -187,28 +187,46 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetRight = window.innerWidth - cardsRect.left;
         const availableWidth = Math.max(0, targetRight - targetLeft);
         const relativeLeft = targetLeft - panelRect.left;
+        const baseFontSize = Math.max(42, Math.min(availableWidth * 0.72, 112));
+        const repeatGap = Math.max(12, Math.round(baseFontSize * 0.18));
 
         sectorSideLabels.forEach((label, index) => {
+            const displayText = (label.dataset.displayText || '').trim();
             const currentLine = document.getElementById(`sector-${index + 1}-line`);
             const nextLine = document.getElementById(`sector-${index + 2}-line`);
 
-            if (!currentLine || !nextLine) {
+            if (!currentLine || !nextLine || !displayText) {
                 label.style.display = 'none';
+                label.innerHTML = '';
                 return;
             }
 
             const currentMidpoint = currentLine.offsetTop + (currentLine.offsetHeight / 2);
             const nextMidpoint = nextLine.offsetTop + (nextLine.offsetHeight / 2);
-            const intervalHeight = Math.max(0, nextMidpoint - currentMidpoint);
-            const midpoint = (currentMidpoint + nextMidpoint) / 2;
-            const relativeTop = midpoint - rightPanelContent.offsetTop;
-            const fontSize = Math.max(48, Math.min(availableWidth, intervalHeight / 1.9));
+            const topBoundary = currentMidpoint;
+            const bottomBoundary = nextMidpoint;
+            const intervalHeight = Math.max(0, bottomBoundary - topBoundary);
+            const relativeTop = topBoundary - rightPanelContent.offsetTop;
+            const characters = [...displayText];
+            const unitHeight = Math.max(1, Math.round(characters.length * baseFontSize * 0.88));
+            const unitSpan = unitHeight + repeatGap;
+            const repeatCount = Math.max(1, Math.ceil((intervalHeight + repeatGap) / unitSpan));
 
-            label.style.display = '';
+            const repeatedUnits = Array.from({ length: repeatCount }, () => {
+                const charsHtml = characters
+                    .map((character) => `<span class="sector-side-label-char">${character}</span>`)
+                    .join('');
+                return `<div class="sector-side-label-unit">${charsHtml}</div>`;
+            }).join('');
+
+            label.innerHTML = `<div class="sector-side-label-track">${repeatedUnits}</div>`;
+            label.style.setProperty('--label-repeat-gap', `${repeatGap}px`);
+            label.style.display = 'flex';
             label.style.top = `${relativeTop}px`;
             label.style.left = `${relativeLeft}px`;
             label.style.width = `${availableWidth}px`;
-            label.style.fontSize = `${fontSize}px`;
+            label.style.height = `${intervalHeight}px`;
+            label.style.fontSize = `${baseFontSize}px`;
         });
     }
 
