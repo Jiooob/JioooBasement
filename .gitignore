@@ -19,3 +19,6 @@ LLM交接-首页扇区深度自适应改造.md
 
 # 忽略本地文章图片备份
 static/images/article_img/
+
+#
+/venv/
