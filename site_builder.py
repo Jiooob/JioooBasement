@@ -159,13 +159,17 @@ def render_sector_navigation(homepage_data):
 
 
 def render_announcements(homepage_data):
-    announcement_lines = []
+    announcement_items = []
     for item in homepage_data.get('announcements', []):
-        announcement_lines.append(f'<p>{item["date"]}</p>')
-        announcement_lines.append(
-            f'<p>\n                    {item["text"]}\n                </p>'
+        announcement_items.append(
+            (
+                '<article class="announcement-item">'
+                f'<p class="announcement-date">{html.escape(item["date"])}</p>'
+                f'<p class="announcement-text">{html.escape(item["text"])}</p>'
+                '</article>'
+            )
         )
-    return ''.join(announcement_lines)
+    return ''.join(announcement_items)
 
 
 def render_right_panel_labels(homepage_data):

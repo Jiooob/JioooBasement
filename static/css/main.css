@@ -542,33 +542,86 @@ body.homepage-effect::after {
 }
 
 .announcement-panel {
-    margin-top: 30px; 
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-primary);
-    border-radius: 4px;
-    padding: 25px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 36px;
+    padding: 0 0 22px 22px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
     color: var(--text-primary);
+    overflow: visible;
+}
+
+.announcement-panel::before,
+.announcement-panel::after {
+    content: none;
+}
+
+.announcement-panel-header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    text-align: right;
+    border-bottom: 1px solid rgba(136, 146, 176, 0.18);
+}
+
+.announcement-eyebrow {
+    margin: 0;
+    color: var(--text-dark-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
 }
 
 .announcement-panel h3 {
-    font-family: 'Courier New', monospace;
-    color: var(--text-secondary);
-    font-size: 1.2rem;
-    margin-top: 0;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-primary);
-    padding-bottom: 15px;
+    margin: 0;
+    color: var(--text-bright);
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    letter-spacing: 0.18em;
+    font-weight: 500;
 }
 
-.announcement-panel p {
-    font-size: 1rem;
+.announcement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.announcement-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 0;
+    border-top: 1px solid rgba(136, 146, 176, 0.12);
+}
+
+.announcement-item:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.announcement-date {
+    margin: 0;
+    color: var(--text-dark-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
     line-height: 1.7;
-    color: var(--text-muted);
-    margin: 0 0 1em 0;
+    text-align: left;
 }
 
-.announcement-panel p:last-child {
-    margin-bottom: 0;
+.announcement-text {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.96rem;
+    line-height: 1.8;
+    text-align: right;
 }
 
 .page-card {
@@ -641,6 +694,9 @@ body.homepage-effect::after {
 
 .right-panel .panel-content {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     border-left: 2px solid var(--border-primary);
     padding-left: 30px;
     height: 100%;
