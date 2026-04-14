@@ -82,15 +82,23 @@ class Page:
         return content
 
 
-def prepare_output_dir():
-    if OUTPUT_DIR.exists():
-        shutil.rmtree(OUTPUT_DIR)
+def clear_directory(directory):
+    directory.mkdir(exist_ok=True)
 
-    os.makedirs(OUTPUT_DIR)
-    shutil.copytree(STATIC_DIR, OUTPUT_DIR / 'static')
+    for child in directory.iterdir():
+        if child.is_dir():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
+
+
+def prepare_output_dir():
+    clear_directory(OUTPUT_DIR)
+
+    shutil.copytree(STATIC_DIR, OUTPUT_DIR / 'static', dirs_exist_ok=True)
 
     if PAGES_DIR.exists():
-        shutil.copytree(PAGES_DIR, OUTPUT_DIR / 'pages')
+        shutil.copytree(PAGES_DIR, OUTPUT_DIR / 'pages', dirs_exist_ok=True)
 
     if CNAME_FILE.exists():
         shutil.copy(CNAME_FILE, OUTPUT_DIR / 'CNAME')
@@ -159,13 +167,17 @@ def render_sector_navigation(homepage_data):
 
 
 def render_announcements(homepage_data):
-    announcement_lines = []
+    announcement_items = []
     for item in homepage_data.get('announcements', []):
-        announcement_lines.append(f'<p>{item["date"]}</p>')
-        announcement_lines.append(
-            f'<p>\n                    {item["text"]}\n                </p>'
+        announcement_items.append(
+            (
+                '<article class="announcement-item">'
+                f'<p class="announcement-date">{html.escape(item["date"])}</p>'
+                f'<p class="announcement-text">{html.escape(item["text"])}</p>'
+                '</article>'
+            )
         )
-    return ''.join(announcement_lines)
+    return ''.join(announcement_items)
 
 
 def render_right_panel_labels(homepage_data):
