@@ -273,7 +273,7 @@ body {
     text-shadow: 2px 2px 4px rgba(var(--primary-accent-rgb), 0.3);
 }
 
-/* --- 深度指示器 (核心修改区域) --- */
+/* --- 深度指示器 (挂轨电梯版) --- */
 .depth-indicator {
     position: fixed;
     right: 30px;
@@ -315,47 +315,125 @@ body {
     font-weight: bold;
 }
 
-/* --- 左侧深度指示器 --- */
+/* --- 挂在文章区 / 右侧栏分界线上的深度指示器 --- */
 .depth-indicator-left {
+    --indicator-accent: #5dd4c1;
+    --indicator-accent-rgb: 93, 212, 193;
     position: fixed;
-    left: 30px;
     top: 50%;
-    transform: translateY(-50%);
-    z-index: 1000;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    z-index: 1100;
     display: flex;
-    flex-direction: row;
     align-items: center;
+    justify-content: center;
+    gap: 0;
+    pointer-events: none;
 }
 
-.depth-line-left {
-    width: 60px;
-    height: 3px;
-    background: repeating-linear-gradient(
-        to left,
-        var(--border-tertiary) 0px,
-        var(--border-tertiary) 8px,
-        transparent 8px,
-        transparent 12px
-    );
-    border-top: 1px solid var(--border-tertiary);
-    border-bottom: 1px solid var(--border-tertiary);
-    margin-left: 10px;
-    opacity: 0.8;
-    transform: rotate(180deg);
+.depth-indicator-core {
+    position: relative;
+    z-index: 2;
+    width: 18px;
+    min-height: 84px;
+    padding: 10px 3px;
+    border: 1px solid rgba(var(--indicator-accent-rgb), 0.28);
+    background:
+        linear-gradient(180deg, rgba(17, 34, 64, 0.96), rgba(2, 12, 27, 0.98)),
+        repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.03) 0,
+            rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.24),
+        0 0 14px rgba(var(--indicator-accent-rgb), 0.08);
+}
+
+.depth-indicator-core::before {
+    content: "";
+    position: absolute;
+    inset: 4px 3px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    pointer-events: none;
+}
+
+.depth-indicator-readout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .depth-text-left {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    font-family: 'Times New Roman', 'Noto Sans SC', serif;
-    letter-spacing: 1px;
-    background-color: rgba(26, 26, 26, 0.9);
-    padding: 5px 10px;
-    border-radius: 3px;
-    border: 1px solid var(--border-tertiary);
-    min-width: 40px;
-    text-align: center;
-    font-weight: bold;
+    margin: 0;
+    color: var(--text-bright);
+    font-size: 0.82rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 10px rgba(var(--indicator-accent-rgb), 0.16);
+}
+
+.depth-state-text {
+    color: rgba(230, 241, 255, 0.52);
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.depth-line-left,
+.depth-indicator-kicker,
+.depth-indicator-carriage,
+.depth-indicator-clamp,
+.depth-indicator-pad {
+    display: none;
+}
+
+.depth-indicator-left[data-state="safe"] {
+    --indicator-accent: #5dd4c1;
+    --indicator-accent-rgb: 93, 212, 193;
+}
+
+.depth-indicator-left[data-state="warning"] {
+    --indicator-accent: #f7b267;
+    --indicator-accent-rgb: 247, 178, 103;
+}
+
+.depth-indicator-left[data-state="danger"] {
+    --indicator-accent: #ef4444;
+    --indicator-accent-rgb: 239, 68, 68;
+}
+
+@media (max-width: 900px) {
+    .depth-indicator-left {
+        left: auto;
+        right: 12px;
+        top: auto;
+        bottom: 22px;
+        transform: none;
+    }
+
+    .depth-indicator-core {
+        width: 16px;
+        min-height: 72px;
+        padding: 8px 3px;
+    }
+
+    .depth-text-left {
+        font-size: 0.72rem;
+    }
+
+    .depth-state-text {
+        font-size: 0.46rem;
+    }
 }
 
 /* 子页面链接样式 - 以边境线为参照 */

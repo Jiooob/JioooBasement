@@ -1,9 +1,10 @@
 function updateDepthIndicator() {
     const heroElement = document.querySelector('.hero');
+    const depthIndicator = document.querySelector('.depth-indicator-left');
     const depthTextLeft = document.querySelector('.depth-text-left');
-    const depthLineLeft = document.querySelector('.depth-line-left');
+    const depthStateText = document.querySelector('.depth-state-text');
 
-    if (!heroElement || !depthTextLeft || !depthLineLeft) {
+    if (!heroElement || !depthIndicator || !depthTextLeft || !depthStateText) {
         return;
     }
 
@@ -17,17 +18,14 @@ function updateDepthIndicator() {
     depthTextLeft.textContent = depthInMeters + 'm';
 
     if (depthInMeters < -10) {
-        const dangerColor = '#ff6b6b';
-        depthLineLeft.style.background = `repeating-linear-gradient(to right, ${dangerColor} 0px, ${dangerColor} 8px, transparent 8px, transparent 12px)`;
-        depthTextLeft.style.color = dangerColor;
+        depthIndicator.dataset.state = 'danger';
+        depthStateText.textContent = 'D';
     } else if (depthInMeters < -5) {
-        const warningColor = '#ffaa44';
-        depthLineLeft.style.background = `repeating-linear-gradient(to right, ${warningColor} 0px, ${warningColor} 8px, transparent 8px, transparent 12px)`;
-        depthTextLeft.style.color = warningColor;
+        depthIndicator.dataset.state = 'warning';
+        depthStateText.textContent = 'W';
     } else {
-        const safeColor = '#4ecdc4';
-        depthLineLeft.style.background = `repeating-linear-gradient(to right, ${safeColor} 0px, ${safeColor} 8px, transparent 8px, transparent 12px)`;
-        depthTextLeft.style.color = safeColor;
+        depthIndicator.dataset.state = 'safe';
+        depthStateText.textContent = 'S';
     }
 }
 
@@ -79,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainGrid = document.querySelector('.main-content-grid');
     const lastLine = document.getElementById('sector-8-line');
     const rightPanelContent = document.querySelector('.right-panel .panel-content');
+    const depthIndicator = document.querySelector('.depth-indicator-left');
     const sectorSideLabels = [...document.querySelectorAll('.sector-side-label')];
 
     const layoutState = {
@@ -230,9 +229,23 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function updateDepthIndicatorRailPosition() {
+        if (!rightPanelContent || !depthIndicator || window.innerWidth <= 900) {
+            if (depthIndicator) {
+                depthIndicator.style.left = '';
+            }
+            return;
+        }
+
+        const panelRect = rightPanelContent.getBoundingClientRect();
+        const dividerX = panelRect.left;
+        depthIndicator.style.left = `${dividerX}px`;
+    }
+
     function performUpdates() {
         updateMainGridHeight();
         updateSectorSideLabels();
+        updateDepthIndicatorRailPosition();
     }
 
     function restoreSavedScrollPosition() {
@@ -292,6 +305,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (snowCanvas && snowToggleBtn) {
         const ctx = snowCanvas.getContext('2d');
+
+        updateDepthIndicatorRailPosition();
 
         let width;
         let height;
