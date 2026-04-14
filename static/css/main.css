@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6,
 .border-text,
 .nav-link,
 .back-link,
-.footer-card {
+.footer-paper {
     font-family: var(--font-mono) !important;
     letter-spacing: -0.02em; /* 等宽字体通常比较宽，稍微收紧一点 */
 }
@@ -747,42 +747,42 @@ body.homepage-effect::after {
     }
 }
 
-.footer-container {
+.footer-paper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
     width: 100%;
-    padding: 100px 50px 50px 50px;
+    max-width: 1600px;
+    margin: 1px auto 0;
+    padding: 0 50px 50px;
     box-sizing: border-box;
-}
-
-.footer-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-primary);
-    border-radius: 4px;
-    padding: 30px;
-    text-align: center;
-    font-family: 'Courier New', monospace;
     color: var(--text-dark-muted);
-    font-size: 0.9rem;
+    font-size: 1.41rem;
+    line-height: 1.6;
+    text-transform: uppercase;
 }
 
-.footer-card p {
-    margin: 10px 0;
-    letter-spacing: 1px;
+.footer-paper-left,
+.footer-paper-right {
+    margin: 0;
+    flex: 1 1 0;
 }
 
-.footer-card .tech-credits {
-    color: var(--text-secondary);
+.footer-paper-right {
+    text-align: right;
 }
 
-.footer-card .motto {
-    color: var(--text-muted);
-    font-style: italic;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
+@media (max-width: 900px) {
+    .footer-paper {
+        flex-direction: column;
+        gap: 8px;
+        padding: 0 24px 40px;
+    }
 
-.footer-card .build-info {
-    color: var(--border-secondary);
-    font-size: 0.8rem;
+    .footer-paper-right {
+        text-align: left;
+    }
 }
 
 /* --- V V V V  新增：电梯门动画样式  V V V V --- */

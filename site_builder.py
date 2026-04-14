@@ -82,15 +82,23 @@ class Page:
         return content
 
 
-def prepare_output_dir():
-    if OUTPUT_DIR.exists():
-        shutil.rmtree(OUTPUT_DIR)
+def clear_directory(directory):
+    directory.mkdir(exist_ok=True)
 
-    os.makedirs(OUTPUT_DIR)
-    shutil.copytree(STATIC_DIR, OUTPUT_DIR / 'static')
+    for child in directory.iterdir():
+        if child.is_dir():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
+
+
+def prepare_output_dir():
+    clear_directory(OUTPUT_DIR)
+
+    shutil.copytree(STATIC_DIR, OUTPUT_DIR / 'static', dirs_exist_ok=True)
 
     if PAGES_DIR.exists():
-        shutil.copytree(PAGES_DIR, OUTPUT_DIR / 'pages')
+        shutil.copytree(PAGES_DIR, OUTPUT_DIR / 'pages', dirs_exist_ok=True)
 
     if CNAME_FILE.exists():
         shutil.copy(CNAME_FILE, OUTPUT_DIR / 'CNAME')
