@@ -8,7 +8,7 @@
 <!-- HOMEPAGE_MAIN_GRID_HERE -->
 <!-- HOMEPAGE_FOOTER_HERE -->
 <!-- HOMEPAGE_SECTOR_ANCHORS_HERE -->
-<div class="depth-indicator-left" data-state="safe">
+<div class="depth-indicator-left">
     <div class="depth-indicator-core">
         <div class="depth-indicator-readout">
             <span class="depth-text-left">0m</span>

@@ -1,3 +1,11 @@
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+function mixChannel(start, end, amount) {
+    return Math.round(start + ((end - start) * amount));
+}
+
 function updateDepthIndicator() {
     const heroElement = document.querySelector('.hero');
     const depthIndicator = document.querySelector('.depth-indicator-left');
@@ -10,6 +18,7 @@ function updateDepthIndicator() {
     }
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let railGradientProgress = null;
 
     if (!rightPanelContent || window.innerWidth <= 900) {
         depthIndicator.style.left = '';
@@ -25,8 +34,10 @@ function updateDepthIndicator() {
         let clampedCenterY;
         if (maxCenterY < minCenterY) {
             clampedCenterY = panelRect.top + (panelRect.height / 2);
+            railGradientProgress = 0.5;
         } else {
             clampedCenterY = Math.min(Math.max(viewportCenterY, minCenterY), maxCenterY);
+            railGradientProgress = clamp((clampedCenterY - minCenterY) / (maxCenterY - minCenterY), 0, 1);
         }
 
         depthIndicator.style.left = `${dividerX}px`;
@@ -42,19 +53,33 @@ function updateDepthIndicator() {
 
     depthTextLeft.textContent = depthInMeters + 'm';
 
+    const safeColor = [93, 212, 193];
+    const warningColor = [247, 178, 103];
+    const dangerColor = [239, 68, 68];
+    const normalizedDepth = railGradientProgress === null
+        ? clamp((-depthInMeters) / 24, 0, 1)
+        : railGradientProgress;
+
+    let interpolatedColor;
+    if (normalizedDepth <= 0.5) {
+        const segmentProgress = normalizedDepth / 0.5;
+        interpolatedColor = safeColor.map((channel, index) => mixChannel(channel, warningColor[index], segmentProgress));
+    } else {
+        const segmentProgress = (normalizedDepth - 0.5) / 0.5;
+        interpolatedColor = warningColor.map((channel, index) => mixChannel(channel, dangerColor[index], segmentProgress));
+    }
+
+    depthIndicator.style.setProperty('--indicator-accent-rgb', interpolatedColor.join(', '));
+
     if (depthInMeters < -10) {
-        depthIndicator.dataset.state = 'danger';
         depthStateText.textContent = 'D';
     } else if (depthInMeters < -5) {
-        depthIndicator.dataset.state = 'warning';
         depthStateText.textContent = 'W';
     } else {
-        depthIndicator.dataset.state = 'safe';
         depthStateText.textContent = 'S';
     }
 }
 
-window.addEventListener('scroll', updateDepthIndicator);
 updateDepthIndicator();
 
 const supportsHover = window.matchMedia('(hover: hover)').matches;

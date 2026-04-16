@@ -317,7 +317,6 @@ body {
 
 /* --- 挂在文章区 / 右侧栏分界线上的深度指示器 --- */
 .depth-indicator-left {
-    --indicator-accent: #5dd4c1;
     --indicator-accent-rgb: 93, 212, 193;
     position: fixed;
     top: 50%;
@@ -395,21 +394,6 @@ body {
 .depth-indicator-clamp,
 .depth-indicator-pad {
     display: none;
-}
-
-.depth-indicator-left[data-state="safe"] {
-    --indicator-accent: #5dd4c1;
-    --indicator-accent-rgb: 93, 212, 193;
-}
-
-.depth-indicator-left[data-state="warning"] {
-    --indicator-accent: #f7b267;
-    --indicator-accent-rgb: 247, 178, 103;
-}
-
-.depth-indicator-left[data-state="danger"] {
-    --indicator-accent: #ef4444;
-    --indicator-accent-rgb: 239, 68, 68;
 }
 
 @media (max-width: 900px) {
