@@ -3,16 +3,41 @@ function updateDepthIndicator() {
     const depthIndicator = document.querySelector('.depth-indicator-left');
     const depthTextLeft = document.querySelector('.depth-text-left');
     const depthStateText = document.querySelector('.depth-state-text');
+    const rightPanelContent = document.querySelector('.right-panel .panel-content');
 
     if (!heroElement || !depthIndicator || !depthTextLeft || !depthStateText) {
         return;
     }
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (!rightPanelContent || window.innerWidth <= 900) {
+        depthIndicator.style.left = '';
+        depthIndicator.style.top = '';
+    } else {
+        const panelRect = rightPanelContent.getBoundingClientRect();
+        const dividerX = panelRect.left;
+        const halfIndicatorHeight = depthIndicator.offsetHeight / 2;
+        const minCenterY = panelRect.top + halfIndicatorHeight;
+        const maxCenterY = panelRect.bottom - halfIndicatorHeight;
+        const viewportCenterY = window.innerHeight / 2;
+
+        let clampedCenterY;
+        if (maxCenterY < minCenterY) {
+            clampedCenterY = panelRect.top + (panelRect.height / 2);
+        } else {
+            clampedCenterY = Math.min(Math.max(viewportCenterY, minCenterY), maxCenterY);
+        }
+
+        depthIndicator.style.left = `${dividerX}px`;
+        depthIndicator.style.top = `${clampedCenterY}px`;
+    }
+
+    const indicatorRect = depthIndicator.getBoundingClientRect();
+    const indicatorCenter = scrollTop + indicatorRect.top + (indicatorRect.height / 2);
     const heroHeight = heroElement.offsetHeight;
-    const viewCenter = scrollTop + (window.innerHeight / 2);
     const zeroPoint = heroHeight - 5;
-    const depthInPixels = zeroPoint - viewCenter;
+    const depthInPixels = zeroPoint - indicatorCenter;
     const depthInMeters = Math.round(depthInPixels / 10);
 
     depthTextLeft.textContent = depthInMeters + 'm';
@@ -230,16 +255,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateDepthIndicatorRailPosition() {
-        if (!rightPanelContent || !depthIndicator || window.innerWidth <= 900) {
-            if (depthIndicator) {
-                depthIndicator.style.left = '';
-            }
+        if (!depthIndicator) {
+            return;
+        }
+
+        if (!rightPanelContent || window.innerWidth <= 900) {
+            depthIndicator.style.left = '';
+            depthIndicator.style.top = '';
             return;
         }
 
         const panelRect = rightPanelContent.getBoundingClientRect();
         const dividerX = panelRect.left;
+        const halfIndicatorHeight = depthIndicator.offsetHeight / 2;
+        const minCenterY = panelRect.top + halfIndicatorHeight;
+        const maxCenterY = panelRect.bottom - halfIndicatorHeight;
+        const viewportCenterY = window.innerHeight / 2;
+
+        let clampedCenterY;
+        if (maxCenterY < minCenterY) {
+            clampedCenterY = panelRect.top + (panelRect.height / 2);
+        } else {
+            clampedCenterY = Math.min(Math.max(viewportCenterY, minCenterY), maxCenterY);
+        }
+
         depthIndicator.style.left = `${dividerX}px`;
+        depthIndicator.style.top = `${clampedCenterY}px`;
     }
 
     function performUpdates() {
