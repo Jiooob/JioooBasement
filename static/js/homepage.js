@@ -1,37 +1,85 @@
+function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+}
+
+function mixChannel(start, end, amount) {
+    return Math.round(start + ((end - start) * amount));
+}
+
 function updateDepthIndicator() {
     const heroElement = document.querySelector('.hero');
+    const depthIndicator = document.querySelector('.depth-indicator-left');
     const depthTextLeft = document.querySelector('.depth-text-left');
-    const depthLineLeft = document.querySelector('.depth-line-left');
+    const depthStateText = document.querySelector('.depth-state-text');
+    const rightPanelContent = document.querySelector('.right-panel .panel-content');
 
-    if (!heroElement || !depthTextLeft || !depthLineLeft) {
+    if (!heroElement || !depthIndicator || !depthTextLeft || !depthStateText) {
         return;
     }
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let railGradientProgress = null;
+
+    if (!rightPanelContent || window.innerWidth <= 900) {
+        depthIndicator.style.left = '';
+        depthIndicator.style.top = '';
+    } else {
+        const panelRect = rightPanelContent.getBoundingClientRect();
+        const dividerX = panelRect.left;
+        const halfIndicatorHeight = depthIndicator.offsetHeight / 2;
+        const minCenterY = panelRect.top + halfIndicatorHeight;
+        const maxCenterY = panelRect.bottom - halfIndicatorHeight;
+        const viewportCenterY = window.innerHeight / 2;
+
+        let clampedCenterY;
+        if (maxCenterY < minCenterY) {
+            clampedCenterY = panelRect.top + (panelRect.height / 2);
+            railGradientProgress = 0.5;
+        } else {
+            clampedCenterY = Math.min(Math.max(viewportCenterY, minCenterY), maxCenterY);
+            railGradientProgress = clamp((clampedCenterY - minCenterY) / (maxCenterY - minCenterY), 0, 1);
+        }
+
+        depthIndicator.style.left = `${dividerX}px`;
+        depthIndicator.style.top = `${clampedCenterY}px`;
+    }
+
+    const indicatorRect = depthIndicator.getBoundingClientRect();
+    const indicatorCenter = scrollTop + indicatorRect.top + (indicatorRect.height / 2);
     const heroHeight = heroElement.offsetHeight;
-    const viewCenter = scrollTop + (window.innerHeight / 2);
     const zeroPoint = heroHeight - 5;
-    const depthInPixels = zeroPoint - viewCenter;
+    const depthInPixels = zeroPoint - indicatorCenter;
     const depthInMeters = Math.round(depthInPixels / 10);
 
     depthTextLeft.textContent = depthInMeters + 'm';
 
-    if (depthInMeters < -10) {
-        const dangerColor = '#ff6b6b';
-        depthLineLeft.style.background = `repeating-linear-gradient(to right, ${dangerColor} 0px, ${dangerColor} 8px, transparent 8px, transparent 12px)`;
-        depthTextLeft.style.color = dangerColor;
-    } else if (depthInMeters < -5) {
-        const warningColor = '#ffaa44';
-        depthLineLeft.style.background = `repeating-linear-gradient(to right, ${warningColor} 0px, ${warningColor} 8px, transparent 8px, transparent 12px)`;
-        depthTextLeft.style.color = warningColor;
+    const safeColor = [93, 212, 193];
+    const warningColor = [247, 178, 103];
+    const dangerColor = [239, 68, 68];
+    const normalizedDepth = railGradientProgress === null
+        ? clamp((-depthInMeters) / 24, 0, 1)
+        : railGradientProgress;
+
+    let interpolatedColor;
+    if (normalizedDepth <= 0.5) {
+        const segmentProgress = normalizedDepth / 0.5;
+        interpolatedColor = safeColor.map((channel, index) => mixChannel(channel, warningColor[index], segmentProgress));
     } else {
-        const safeColor = '#4ecdc4';
-        depthLineLeft.style.background = `repeating-linear-gradient(to right, ${safeColor} 0px, ${safeColor} 8px, transparent 8px, transparent 12px)`;
-        depthTextLeft.style.color = safeColor;
+        const segmentProgress = (normalizedDepth - 0.5) / 0.5;
+        interpolatedColor = warningColor.map((channel, index) => mixChannel(channel, dangerColor[index], segmentProgress));
+    }
+
+    depthIndicator.style.setProperty('--indicator-accent-rgb', interpolatedColor.join(', '));
+
+    if (depthInMeters < -10) {
+        depthStateText.textContent = 'D';
+    } else if (depthInMeters < -5) {
+        depthStateText.textContent = 'W';
+    } else {
+        depthStateText.textContent = 'S';
     }
 }
 
-window.addEventListener('scroll', updateDepthIndicator);
 updateDepthIndicator();
 
 const supportsHover = window.matchMedia('(hover: hover)').matches;
@@ -79,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainGrid = document.querySelector('.main-content-grid');
     const lastLine = document.getElementById('sector-8-line');
     const rightPanelContent = document.querySelector('.right-panel .panel-content');
+    const depthIndicator = document.querySelector('.depth-indicator-left');
     const sectorSideLabels = [...document.querySelectorAll('.sector-side-label')];
 
     const layoutState = {
@@ -230,9 +279,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function updateDepthIndicatorRailPosition() {
+        if (!depthIndicator) {
+            return;
+        }
+
+        if (!rightPanelContent || window.innerWidth <= 900) {
+            depthIndicator.style.left = '';
+            depthIndicator.style.top = '';
+            return;
+        }
+
+        const panelRect = rightPanelContent.getBoundingClientRect();
+        const dividerX = panelRect.left;
+        const halfIndicatorHeight = depthIndicator.offsetHeight / 2;
+        const minCenterY = panelRect.top + halfIndicatorHeight;
+        const maxCenterY = panelRect.bottom - halfIndicatorHeight;
+        const viewportCenterY = window.innerHeight / 2;
+
+        let clampedCenterY;
+        if (maxCenterY < minCenterY) {
+            clampedCenterY = panelRect.top + (panelRect.height / 2);
+        } else {
+            clampedCenterY = Math.min(Math.max(viewportCenterY, minCenterY), maxCenterY);
+        }
+
+        depthIndicator.style.left = `${dividerX}px`;
+        depthIndicator.style.top = `${clampedCenterY}px`;
+    }
+
     function performUpdates() {
         updateMainGridHeight();
         updateSectorSideLabels();
+        updateDepthIndicatorRailPosition();
     }
 
     function restoreSavedScrollPosition() {
@@ -292,6 +371,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (snowCanvas && snowToggleBtn) {
         const ctx = snowCanvas.getContext('2d');
+
+        updateDepthIndicatorRailPosition();
 
         let width;
         let height;
