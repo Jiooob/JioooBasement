@@ -115,6 +115,13 @@ window.addEventListener('scroll', () => {
     }
 });
 
+const DRAG_SCROLL_CONFIG = {
+    deadZone: 10,
+    maxOffset: 200,
+    maxSpeed: 600,
+    easingExponent: 2,
+};
+
 document.addEventListener('DOMContentLoaded', function() {
     const DEPTH_SCALE = 10;
     const LINE_TO_CONTENT_GAP = 60;
@@ -128,11 +135,113 @@ document.addEventListener('DOMContentLoaded', function() {
     const lastLine = document.getElementById('sector-8-line');
     const rightPanelContent = document.querySelector('.right-panel .panel-content');
     const depthIndicator = document.querySelector('.depth-indicator-left');
+    const depthIndicatorCore = document.querySelector('.depth-indicator-core');
     const sectorSideLabels = [...document.querySelectorAll('.sector-side-label')];
 
     const layoutState = {
         lastBottom: 0,
     };
+
+    const dragScrollState = {
+        active: false,
+        pointerId: null,
+        pressClientY: 0,
+        currentClientY: 0,
+        rafId: 0,
+    };
+
+    function isDesktopDragScrollEnabled() {
+        return supportsHover && window.innerWidth > 900 && !!depthIndicatorCore;
+    }
+
+    function getDragScrollVelocity() {
+        const deltaY = dragScrollState.currentClientY - dragScrollState.pressClientY;
+        const absOffset = Math.abs(deltaY);
+        const { deadZone, maxOffset, maxSpeed, easingExponent } = DRAG_SCROLL_CONFIG;
+
+        if (absOffset <= deadZone) {
+            return 0;
+        }
+
+        const normalizedOffset = clamp(
+            (absOffset - deadZone) / (maxOffset - deadZone),
+            0,
+            1,
+        );
+        const easedVelocity = Math.pow(normalizedOffset, easingExponent);
+        return Math.sign(deltaY) * easedVelocity * maxSpeed;
+    }
+
+    function stopDepthIndicatorDragScroll() {
+        if (dragScrollState.rafId) {
+            cancelAnimationFrame(dragScrollState.rafId);
+            dragScrollState.rafId = 0;
+        }
+
+        dragScrollState.active = false;
+        dragScrollState.pointerId = null;
+
+        if (depthIndicatorCore) {
+            depthIndicatorCore.classList.remove('is-drag-scrolling');
+        }
+    }
+
+    function runDepthIndicatorDragScroll() {
+        if (!dragScrollState.active) {
+            dragScrollState.rafId = 0;
+            return;
+        }
+
+        const velocity = getDragScrollVelocity();
+        if (velocity !== 0) {
+            const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+            const nextScrollY = clamp(window.scrollY + velocity, 0, maxScrollY);
+
+            if (nextScrollY !== window.scrollY) {
+                window.scrollTo(0, nextScrollY);
+            }
+        }
+
+        dragScrollState.rafId = requestAnimationFrame(runDepthIndicatorDragScroll);
+    }
+
+    function startDepthIndicatorDragScroll(event) {
+        if (!isDesktopDragScrollEnabled() || event.button !== 0 || !depthIndicatorCore) {
+            return;
+        }
+
+        event.preventDefault();
+        dragScrollState.active = true;
+        dragScrollState.pointerId = event.pointerId;
+        dragScrollState.pressClientY = event.clientY;
+        dragScrollState.currentClientY = event.clientY;
+        depthIndicatorCore.classList.add('is-drag-scrolling');
+        depthIndicatorCore.setPointerCapture(event.pointerId);
+
+        if (!dragScrollState.rafId) {
+            dragScrollState.rafId = requestAnimationFrame(runDepthIndicatorDragScroll);
+        }
+    }
+
+    function updateDepthIndicatorDragScroll(event) {
+        if (!dragScrollState.active || event.pointerId !== dragScrollState.pointerId) {
+            return;
+        }
+
+        dragScrollState.currentClientY = event.clientY;
+    }
+
+    function handleDepthIndicatorPointerRelease(event) {
+        if (!dragScrollState.active || event.pointerId !== dragScrollState.pointerId || !depthIndicatorCore) {
+            return;
+        }
+
+        if (depthIndicatorCore.hasPointerCapture(event.pointerId)) {
+            depthIndicatorCore.releasePointerCapture(event.pointerId);
+        }
+
+        stopDepthIndicatorDragScroll();
+    }
 
     function getSectorLabel(targetId, index) {
         const match = targetId.match(/sector-(\d+)-line/);
@@ -368,6 +477,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    if (depthIndicatorCore) {
+        depthIndicatorCore.addEventListener('pointerdown', startDepthIndicatorDragScroll);
+        depthIndicatorCore.addEventListener('pointermove', updateDepthIndicatorDragScroll);
+        depthIndicatorCore.addEventListener('pointerup', handleDepthIndicatorPointerRelease);
+        depthIndicatorCore.addEventListener('pointercancel', handleDepthIndicatorPointerRelease);
+        depthIndicatorCore.addEventListener('lostpointercapture', stopDepthIndicatorDragScroll);
+        window.addEventListener('blur', stopDepthIndicatorDragScroll);
+    }
 
     if (snowCanvas && snowToggleBtn) {
         const ctx = snowCanvas.getContext('2d');
