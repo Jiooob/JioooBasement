@@ -349,6 +349,22 @@ body {
     box-shadow:
         0 8px 20px rgba(0, 0, 0, 0.24),
         0 0 14px rgba(var(--indicator-accent-rgb), 0.08);
+    pointer-events: auto;
+    user-select: none;
+    touch-action: none;
+}
+
+.depth-indicator-core:hover {
+    box-shadow:
+        0 10px 24px rgba(0, 0, 0, 0.28),
+        0 0 18px rgba(var(--indicator-accent-rgb), 0.16);
+}
+
+.depth-indicator-core.is-drag-scrolling {
+    border-color: rgba(var(--indicator-accent-rgb), 0.52);
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.3),
+        0 0 22px rgba(var(--indicator-accent-rgb), 0.24);
 }
 
 .depth-indicator-core::before {
@@ -394,6 +410,16 @@ body {
 .depth-indicator-clamp,
 .depth-indicator-pad {
     display: none;
+}
+
+@media (hover: hover) {
+    .depth-indicator-core {
+        cursor: ns-resize;
+    }
+
+    .depth-indicator-core.is-drag-scrolling {
+        cursor: ns-resize;
+    }
 }
 
 @media (max-width: 900px) {
