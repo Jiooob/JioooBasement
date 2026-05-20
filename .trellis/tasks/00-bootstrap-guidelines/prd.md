@@ -21,9 +21,79 @@ the rest conversationally.
 
 ## Status (update the checkboxes as you complete each item)
 
-- [ ] Fill backend guidelines
-- [ ] Fill frontend guidelines
-- [ ] Add code examples
+- [x] Fill backend guidelines
+- [x] Fill frontend guidelines
+- [x] Add code examples
+
+## Current Repository Understanding
+
+This bootstrap task is being reused to document the real development workflow
+for `JioooBasement`.
+
+Confirmed facts from repository inspection:
+
+- The project is a single-repo personal static site, not a web application with
+  a live backend server.
+- `run_build.py` is the build entry point and delegates to `site_builder.build()`.
+- `site_builder.py` is the Python static site generator. It reads HTML content
+  from `content/sector-*`, parses `blog-*` metadata with BeautifulSoup, renders
+  article pages through `templates/article.template`, and assembles the homepage
+  through `templates/index.template`, `templates/partials/*`, and
+  `data/homepage.json`.
+- `output/` is generated build output and is ignored by Git.
+- The deployed site is built in GitHub Actions by installing Python
+  dependencies and running `python run_build.py`, then publishing `output/` to
+  the `gh-pages` branch.
+- Local verification should use the repository virtualenv:
+  `./venv/bin/python run_build.py`. The system Python on this machine currently
+  lacks `bs4`.
+- There is no database, ORM, API server, React app, TypeScript setup, package
+  manager manifest, lint config, or test suite in the current repository.
+- Frontend behavior is implemented as plain JavaScript in `static/js/homepage.js`.
+  It controls depth indicator layout, scroll restoration, section positioning,
+  side labels, drag-scroll behavior, and the snow canvas effect.
+- Styling is plain CSS under `static/css/`, with shared variables and layout
+  rules in `main.css`, homepage-specific additions in `homepage.css`, and article
+  typography in `article.css`.
+- Content articles are complete HTML documents containing `meta name="blog-*"`
+  fields; section-level custom content lives in optional
+  `content/sector-*/section.html` files.
+
+Initial scope for this task:
+
+- Replace generic Trellis backend/frontend placeholders with conventions that
+  match this repository's static-site generator and plain frontend.
+- Mark non-applicable areas explicitly, especially database, API error handling,
+  React components, hooks, TypeScript, and global state management.
+- Document direct HTML article authoring as the continuing content workflow;
+  Markdown/frontmatter migration is not part of the current direction.
+- Include concrete file references and examples from the current repository.
+- Keep the documentation practical for future AI sessions that add content,
+  adjust homepage layout, or change the build pipeline.
+- Page design work must not be pre-classified as either "preserve the current
+  design" or "bold redesign". Each page-adjustment task should first follow the
+  user's current intent; small incremental edits and large redesigns are both
+  valid when requested.
+- Architecture modularization should primarily address: centralizing all
+  configurable site data, supporting multi-part builds, and controlling site
+  configuration from a single file.
+- Future configuration architecture should introduce a new top-level control
+  file, such as `data/site.json` or `site.config.json`, instead of continuing to
+  overload `data/homepage.json`.
+- "Multi-part builds" means modularizing the current `site_builder.py` build
+  logic into clearer build responsibilities, not introducing a broad plugin
+  system or independent deploy targets by default.
+- After page-adjustment or build-system changes, browser verification is
+  required in addition to running the static site build.
+
+Open product/workflow decisions:
+
+- Future changes should optimize for three primary workflows: adjusting pages,
+  writing articles, and modularizing the data/code architecture.
+- Project-specific Trellis specs should be written in Chinese while preserving
+  necessary English technical terms.
+- Trellis / Codex project workflow files should be committed to GitHub after
+  bootstrap so work process can stay synchronized across machines.
 
 ---
 
