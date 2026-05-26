@@ -132,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const snowCanvas = document.getElementById('snow-canvas');
     const snowToggleBtn = document.getElementById('snow-toggle');
     const mainGrid = document.querySelector('.main-content-grid');
-    const lastLine = document.getElementById('sector-8-line');
     const rightPanelContent = document.querySelector('.right-panel .panel-content');
     const depthIndicator = document.querySelector('.depth-indicator-left');
     const depthIndicatorCore = document.querySelector('.depth-indicator-core');
@@ -319,9 +318,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const gridTop = mainGrid.offsetTop;
-        const lastLineBottom = lastLine
-            ? lastLine.offsetTop + lastLine.offsetHeight
-            : 0;
+        const sectorLineBottoms = [...document.querySelectorAll('.sector-depth-line')]
+            .map((line) => line.offsetTop + line.offsetHeight);
+        const lastLineBottom = Math.max(0, ...sectorLineBottoms);
         const requiredBottom = Math.max(layoutState.lastBottom, lastLineBottom);
         const requiredHeight = Math.max(window.innerHeight, requiredBottom - gridTop + MAIN_GRID_BOTTOM_PADDING);
 
@@ -350,8 +349,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         sectorSideLabels.forEach((label, index) => {
             const displayText = (label.dataset.displayText || '').trim();
-            const currentLine = document.getElementById(`sector-${index + 1}-line`);
-            const nextLine = document.getElementById(`sector-${index + 2}-line`);
+            const currentLine = document.getElementById(label.dataset.currentTargetId || '');
+            const nextLine = document.getElementById(label.dataset.nextTargetId || '');
 
             if (!currentLine || !nextLine || !displayText) {
                 label.style.display = 'none';

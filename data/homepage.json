@@ -21,6 +21,16 @@
       }
     },
     {
+      "target_id": "sector-9-line",
+      "depth_meters": 367,
+      "title_primary": "扇区-09",
+      "title_secondary": "sector-09",
+      "description": "",
+      "right_panel": {
+        "display_text": ""
+      }
+    },
+    {
       "target_id": "sector-3-line",
       "depth_meters": 397,
       "title_primary": "扇区-03",

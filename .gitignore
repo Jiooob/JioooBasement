@@ -1,23 +1,23 @@
 # 忽略所有 output 目录下的内容
 output/
-.claude
+
+# 忽略本地 Claude 配置
 .claude/
 
 # 忽略 Python 缓存
 __pycache__/
 *.pyc
 
-# 忽略repomix产生的废料
+# 忽略 repomix 生成物
 repomix-output.xml
 repomix-output.txt
 repomix-output.json
 
-# Doc
+# 忽略本地文档草稿
 /Doc/
-CLAUDE.md
 
-# 忽略本地文章图片备份
+# 忽略本地文章图片备份，图片已迁移到图床
 static/images/article_img/
 
-#
+# 忽略虚拟环境
 /venv/

@@ -21,6 +21,7 @@ INDEX_TEMPLATE_FILE = TEMPLATES_DIR / "index.template"
 ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
 HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
 DEPTH_PATTERN = re.compile(r'\[-?(\d+)m\]')
+SECTOR_TARGET_PATTERN = re.compile(r'^sector-(\d+)-line$')
 
 
 def normalize_sector_depth(sector):
@@ -44,6 +45,27 @@ def build_sector_primary_title(sector):
         return f'{title_without_depth} [-{depth_meters}m]'
 
     return title_without_depth or base_title
+
+
+def get_sector_number(sector):
+    target_id = sector.get('target_id', '')
+    match = SECTOR_TARGET_PATTERN.match(target_id)
+    if not match:
+        raise ValueError(f'Invalid sector target_id: {target_id}')
+
+    return int(match.group(1))
+
+
+def get_sector_label(sector):
+    return f'Sector-{get_sector_number(sector):02d}'
+
+
+def get_sector_name(sector):
+    return f'sector-{get_sector_number(sector):02d}'
+
+
+def get_sector_content_anchor_id(sector):
+    return sector['target_id'].replace('-line', '-content-anchor')
 
 
 class Page:
@@ -166,6 +188,40 @@ def render_sector_navigation(homepage_data):
     return ''.join(cards)
 
 
+def render_sector_depth_lines(homepage_data):
+    lines = []
+    for sector in homepage_data.get('sector_navigation', []):
+        target_id = html.escape(sector['target_id'], quote=True)
+        depth_meters = normalize_sector_depth(sector)
+        sector_label = get_sector_label(sector)
+        lines.append(
+            (
+                f'<div id="{target_id}" class="border-line sector-depth-line">'
+                f'<div class="border-text">{sector_label} Depth: {depth_meters}m</div>'
+                f'</div>'
+            )
+        )
+    return '\n    '.join(lines)
+
+
+def render_sector_content_anchors(homepage_data):
+    anchors = []
+    for sector in homepage_data.get('sector_navigation', []):
+        anchor_id = html.escape(get_sector_content_anchor_id(sector), quote=True)
+        sector_name = get_sector_name(sector)
+        cards_placeholder = make_sector_placeholder(sector_name, 'CARDS_HERE')
+        custom_placeholder = make_sector_placeholder(sector_name, 'CUSTOM_HERE')
+        anchors.append(
+            (
+                f'<div id="{anchor_id}" class="sector-content-anchor">\n'
+                f'        {cards_placeholder}\n'
+                f'        {custom_placeholder}\n'
+                f'    </div>'
+            )
+        )
+    return '\n\n    '.join(anchors)
+
+
 def render_announcements(homepage_data):
     announcement_items = []
     for item in homepage_data.get('announcements', []):
@@ -182,20 +238,32 @@ def render_announcements(homepage_data):
 
 def render_right_panel_labels(homepage_data):
     labels = []
-    for index, sector in enumerate(homepage_data.get('sector_navigation', []), start=1):
+    sector_navigation = homepage_data.get('sector_navigation', [])
+    for index, sector in enumerate(sector_navigation):
         right_panel = sector.get('right_panel', {}) or {}
         display_text = html.escape(right_panel.get('display_text', ''), quote=True)
+        current_target_id = html.escape(sector['target_id'], quote=True)
+        next_sector = sector_navigation[index + 1] if index + 1 < len(sector_navigation) else {}
+        next_target_id = html.escape(next_sector.get('target_id', ''), quote=True)
         labels.append(
-            f'<div class="sector-side-label" data-sector-index="{index}" data-display-text="{display_text}" aria-hidden="true"></div>'
+            (
+                '<div class="sector-side-label" '
+                f'data-current-target-id="{current_target_id}" '
+                f'data-next-target-id="{next_target_id}" '
+                f'data-display-text="{display_text}" '
+                'aria-hidden="true"></div>'
+            )
         )
     return ''.join(labels)
 
 
 def inject_homepage_data(index_template, homepage_data):
     homepage_replacements = {
+        '<!-- SECTOR_DEPTH_LINES_HERE -->': render_sector_depth_lines(homepage_data),
         '<!-- SECTOR_NAV_CARDS_HERE -->': render_sector_navigation(homepage_data),
         '<!-- ANNOUNCEMENTS_HERE -->': render_announcements(homepage_data),
         '<!-- RIGHT_PANEL_LABELS_HERE -->': render_right_panel_labels(homepage_data),
+        '<!-- SECTOR_CONTENT_ANCHORS_HERE -->': render_sector_content_anchors(homepage_data),
     }
 
     for placeholder, replacement in homepage_replacements.items():
