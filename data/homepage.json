@@ -24,10 +24,10 @@
       "target_id": "sector-9-line",
       "depth_meters": 367,
       "title_primary": "扇区-09",
-      "title_secondary": "sector-09",
+      "title_secondary": "这里也许可以拿来放爱听的音乐收藏架",
       "description": "",
       "right_panel": {
-        "display_text": ""
+        "display_text": "音"
       }
     },
     {
@@ -107,6 +107,10 @@
     {
       "date": "2026-03-22",
       "text": "恢复更新"
+    },
+    {
+      "date": "2026-06-24",
+      "text": "很快就进入夏天的肚子了哦"
     }
   ]
 }
