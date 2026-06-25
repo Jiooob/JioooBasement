@@ -22,6 +22,7 @@ ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
 HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
 DEPTH_PATTERN = re.compile(r'\[-?(\d+)m\]')
 SECTOR_TARGET_PATTERN = re.compile(r'^sector-(\d+)-line$')
+ARTICLE_DOCK_SECTOR_NAME = 'sector-04'
 
 
 def normalize_sector_depth(sector):
@@ -334,12 +335,34 @@ def render_article_card(page, sector_name, file_name):
                 """
 
 
+def render_article_dock_template(page, sector_name, file_name):
+    relative_path = html.escape(f'{sector_name}/{file_name}', quote=True)
+    title = html.escape(page.title, quote=True)
+    meta = html.escape(f'记录于：{page.date}', quote=True)
+    return f"""
+        <template class="article-dock-template" data-article-path="{relative_path}" data-title="{title}" data-meta="{meta}">
+            {page.body}
+        </template>
+        """
+
+
 def inject_sector_cards(index_template, sector_name, cards_html):
     return replace_placeholder(index_template, make_sector_placeholder(sector_name, 'CARDS_HERE'), cards_html)
 
 
 def inject_sector_custom_content(index_template, sector_name, custom_html):
     return replace_placeholder(index_template, make_sector_placeholder(sector_name, 'CUSTOM_HERE'), custom_html)
+
+
+def inject_article_dock_templates(index_template, template_items):
+    if not template_items:
+        return index_template
+
+    templates_html = '<div class="article-dock-templates" hidden>\n'
+    templates_html += ''.join(template_items)
+    templates_html += '\n</div>'
+
+    return index_template.replace('</body>', f'{templates_html}\n</body>')
 
 
 def finalize_index(index_template):
@@ -361,6 +384,7 @@ def build():
         return
 
     print('开始处理所有扇区的内容...')
+    article_dock_templates = []
 
     for content_dir in iter_sector_dirs():
         sector_name = content_dir.name
@@ -376,6 +400,8 @@ def build():
             page = build_article_page(file_path, article_template, output_sector_dir)
             card_html = render_article_card(page, sector_name, file_path.name)
             sector_cards_html.append((page.date, card_html))
+            if sector_name == ARTICLE_DOCK_SECTOR_NAME:
+                article_dock_templates.append(render_article_dock_template(page, sector_name, file_path.name))
 
         sector_cards_html.sort(key=lambda item: item[0], reverse=True)
         final_cards_html = ''.join(item[1] for item in sector_cards_html)
@@ -387,6 +413,7 @@ def build():
         index_template = inject_sector_cards(index_template, sector_name, final_cards_html)
         index_template = inject_sector_custom_content(index_template, sector_name, custom_content_html)
 
+    index_template = inject_article_dock_templates(index_template, article_dock_templates)
     finalize_index(index_template)
     print('构建流程完毕。系统功能完整。')
 

@@ -136,6 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const depthIndicator = document.querySelector('.depth-indicator-left');
     const depthIndicatorCore = document.querySelector('.depth-indicator-core');
     const sectorSideLabels = [...document.querySelectorAll('.sector-side-label')];
+    const ARTICLE_DOCK_PARAM = 'article';
+    const ARTICLE_DOCK_SECTOR_PREFIX = 'sector-04/';
+    const articleDock = createArticleDock();
 
     const layoutState = {
         lastBottom: 0,
@@ -148,6 +151,225 @@ document.addEventListener('DOMContentLoaded', function() {
         currentClientY: 0,
         rafId: 0,
     };
+
+    let activeArticlePath = '';
+    let articleDockRequestId = 0;
+
+    function createArticleDock() {
+        const root = document.createElement('div');
+        root.className = 'article-dock';
+        root.setAttribute('aria-hidden', 'true');
+        root.innerHTML = `
+            <button type="button" class="article-dock-scrim" aria-label="关闭阅读舱"></button>
+            <aside class="article-dock-panel" role="dialog" aria-modal="true" aria-labelledby="article-dock-title">
+                <div class="article-dock-toolbar">
+                    <p class="article-dock-kicker">Sector-04 / 建筑垃圾</p>
+                    <div class="article-dock-actions">
+                        <a class="article-dock-source" href="#" title="打开独立页" aria-label="打开独立页">OPEN</a>
+                        <button type="button" class="article-dock-close" aria-label="关闭阅读舱">×</button>
+                    </div>
+                </div>
+                <div class="article-dock-scroll">
+                    <header class="article-dock-header">
+                        <h1 id="article-dock-title" class="article-dock-title">Sector-04</h1>
+                        <p class="article-dock-meta"></p>
+                    </header>
+                    <main class="article-dock-content"></main>
+                </div>
+            </aside>
+        `;
+        document.body.appendChild(root);
+
+        return {
+            root,
+            scrim: root.querySelector('.article-dock-scrim'),
+            panel: root.querySelector('.article-dock-panel'),
+            closeButton: root.querySelector('.article-dock-close'),
+            sourceLink: root.querySelector('.article-dock-source'),
+            title: root.querySelector('.article-dock-title'),
+            meta: root.querySelector('.article-dock-meta'),
+            content: root.querySelector('.article-dock-content'),
+            scroll: root.querySelector('.article-dock-scroll'),
+        };
+    }
+
+    function isSector04ArticlePath(articlePath) {
+        return (
+            typeof articlePath === 'string'
+            && articlePath.startsWith(ARTICLE_DOCK_SECTOR_PREFIX)
+            && articlePath.endsWith('.html')
+            && !articlePath.includes('..')
+        );
+    }
+
+    function getArticlePathFromUrl() {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(ARTICLE_DOCK_PARAM) || '';
+    }
+
+    function getArticlePathFromLink(link) {
+        const rawHref = link.getAttribute('href') || '';
+        if (isSector04ArticlePath(rawHref)) {
+            return rawHref;
+        }
+
+        try {
+            const articleUrl = new URL(rawHref, window.location.href);
+            const baseUrl = new URL('.', window.location.href);
+            if (!articleUrl.href.startsWith(baseUrl.href)) {
+                return '';
+            }
+
+            const relativePath = decodeURIComponent(articleUrl.href.slice(baseUrl.href.length));
+            return isSector04ArticlePath(relativePath) ? relativePath : '';
+        } catch (error) {
+            return '';
+        }
+    }
+
+    function writeArticleState(articlePath, mode = 'push') {
+        const url = new URL(window.location.href);
+        if (articlePath) {
+            url.searchParams.set(ARTICLE_DOCK_PARAM, articlePath);
+        } else {
+            url.searchParams.delete(ARTICLE_DOCK_PARAM);
+        }
+
+        const method = mode === 'replace' ? 'replaceState' : 'pushState';
+        history[method]({ articlePath: articlePath || '' }, '', url.toString());
+    }
+
+    function resolveArticleContentUrls(container, articlePath) {
+        const articleUrl = new URL(articlePath, new URL('.', window.location.href));
+        const urlAttributes = ['href', 'src'];
+
+        urlAttributes.forEach((attribute) => {
+            container.querySelectorAll(`[${attribute}]`).forEach((element) => {
+                const value = element.getAttribute(attribute);
+                if (!value || value.startsWith('#') || value.startsWith('data:')) {
+                    return;
+                }
+
+                try {
+                    element.setAttribute(attribute, new URL(value, articleUrl).href);
+                } catch (error) {
+                    // Keep the original author-provided URL if it cannot be resolved.
+                }
+            });
+        });
+    }
+
+    function findEmbeddedArticleTemplate(articlePath) {
+        return [...document.querySelectorAll('.article-dock-template')]
+            .find((template) => template.dataset.articlePath === articlePath);
+    }
+
+    function renderEmbeddedArticle(articlePath) {
+        const template = findEmbeddedArticleTemplate(articlePath);
+        if (!template) {
+            return false;
+        }
+
+        articleDock.title.textContent = template.dataset.title || '无标题';
+        articleDock.meta.textContent = template.dataset.meta || '';
+        articleDock.content.innerHTML = template.innerHTML;
+        resolveArticleContentUrls(articleDock.content, articlePath);
+        articleDock.root.classList.remove('is-loading', 'has-error');
+        articleDock.sourceLink.href = articlePath;
+        articleDock.closeButton.focus({ preventScroll: true });
+        return true;
+    }
+
+    function setArticleDockLoading(articlePath) {
+        articleDock.title.textContent = 'LOADING SECTOR-04';
+        articleDock.meta.textContent = articlePath;
+        articleDock.content.innerHTML = '<p class="article-dock-status">READING DISK...</p>';
+        articleDock.sourceLink.href = articlePath;
+        articleDock.scroll.scrollTop = 0;
+        articleDock.root.classList.add('is-open', 'is-loading');
+        articleDock.root.classList.remove('has-error');
+        articleDock.root.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('article-dock-open');
+    }
+
+    function setArticleDockError(articlePath) {
+        articleDock.title.textContent = 'READ ERROR';
+        articleDock.meta.textContent = articlePath;
+        articleDock.content.innerHTML = '<p class="article-dock-status">文章舱载入失败。可以从右上角打开独立页。</p>';
+        articleDock.root.classList.remove('is-loading');
+        articleDock.root.classList.add('has-error');
+    }
+
+    async function openArticleDock(articlePath, options = {}) {
+        if (!isSector04ArticlePath(articlePath)) {
+            return false;
+        }
+
+        const shouldWriteHistory = options.writeHistory !== false;
+        const historyMode = options.historyMode || 'push';
+        const requestId = articleDockRequestId + 1;
+        articleDockRequestId = requestId;
+        activeArticlePath = articlePath;
+
+        setArticleDockLoading(articlePath);
+
+        if (shouldWriteHistory) {
+            writeArticleState(articlePath, historyMode);
+        }
+
+        if (renderEmbeddedArticle(articlePath)) {
+            return true;
+        }
+
+        try {
+            const response = await fetch(articlePath, { cache: 'no-cache' });
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const articleHtml = await response.text();
+            if (requestId !== articleDockRequestId) {
+                return true;
+            }
+
+            const articleDocument = new DOMParser().parseFromString(articleHtml, 'text/html');
+            const title = articleDocument.querySelector('.article-title')?.textContent?.trim()
+                || articleDocument.title
+                || '无标题';
+            const meta = articleDocument.querySelector('.article-meta')?.textContent?.trim() || '';
+            const contentElement = articleDocument.querySelector('.article-content');
+
+            articleDock.title.textContent = title;
+            articleDock.meta.textContent = meta;
+            articleDock.content.innerHTML = contentElement ? contentElement.innerHTML : '';
+            resolveArticleContentUrls(articleDock.content, articlePath);
+            articleDock.root.classList.remove('is-loading', 'has-error');
+            articleDock.sourceLink.href = articlePath;
+            articleDock.closeButton.focus({ preventScroll: true });
+        } catch (error) {
+            if (requestId === articleDockRequestId) {
+                setArticleDockError(articlePath);
+            }
+        }
+
+        return true;
+    }
+
+    function closeArticleDock(options = {}) {
+        if (!activeArticlePath && !articleDock.root.classList.contains('is-open')) {
+            return;
+        }
+
+        articleDockRequestId += 1;
+        activeArticlePath = '';
+        articleDock.root.classList.remove('is-open', 'is-loading', 'has-error');
+        articleDock.root.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('article-dock-open');
+
+        if (options.writeHistory !== false) {
+            writeArticleState('', options.historyMode || 'replace');
+        }
+    }
 
     function isDesktopDragScrollEnabled() {
         return supportsHover && window.innerWidth > 900 && !!depthIndicatorCore;
@@ -476,6 +698,55 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    document.addEventListener('click', (event) => {
+        const articleLink = event.target.closest('a.article-card-item');
+        if (
+            !articleLink
+            || event.defaultPrevented
+            || event.button !== 0
+            || event.metaKey
+            || event.ctrlKey
+            || event.shiftKey
+            || event.altKey
+        ) {
+            return;
+        }
+
+        const articlePath = getArticlePathFromLink(articleLink);
+        if (!articlePath) {
+            return;
+        }
+
+        event.preventDefault();
+        openArticleDock(articlePath);
+    });
+
+    articleDock.scrim.addEventListener('click', () => closeArticleDock());
+    articleDock.closeButton.addEventListener('click', () => closeArticleDock());
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && articleDock.root.classList.contains('is-open')) {
+            closeArticleDock();
+        }
+    });
+
+    window.addEventListener('popstate', () => {
+        const articlePath = getArticlePathFromUrl();
+        if (isSector04ArticlePath(articlePath)) {
+            openArticleDock(articlePath, { writeHistory: false });
+        } else {
+            closeArticleDock({ writeHistory: false });
+        }
+    });
+
+    const initialArticlePath = getArticlePathFromUrl();
+    if (isSector04ArticlePath(initialArticlePath)) {
+        history.replaceState({ articlePath: initialArticlePath }, '', window.location.href);
+        openArticleDock(initialArticlePath, { writeHistory: false });
+    } else {
+        history.replaceState({ articlePath: '' }, '', window.location.href);
+    }
 
     if (depthIndicatorCore) {
         depthIndicatorCore.addEventListener('pointerdown', startDepthIndicatorDragScroll);
