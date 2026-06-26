@@ -22,7 +22,7 @@ ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
 HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
 DEPTH_PATTERN = re.compile(r'\[-?(\d+)m\]')
 SECTOR_TARGET_PATTERN = re.compile(r'^sector-(\d+)-line$')
-ARTICLE_DOCK_SECTOR_NAME = 'sector-04'
+ARTICLE_DOCK_SECTOR_NAMES = {'sector-01', 'sector-02', 'sector-03', 'sector-04'}
 
 
 def normalize_sector_depth(sector):
@@ -400,7 +400,7 @@ def build():
             page = build_article_page(file_path, article_template, output_sector_dir)
             card_html = render_article_card(page, sector_name, file_path.name)
             sector_cards_html.append((page.date, card_html))
-            if sector_name == ARTICLE_DOCK_SECTOR_NAME:
+            if sector_name in ARTICLE_DOCK_SECTOR_NAMES:
                 article_dock_templates.append(render_article_dock_template(page, sector_name, file_path.name))
 
         sector_cards_html.sort(key=lambda item: item[0], reverse=True)

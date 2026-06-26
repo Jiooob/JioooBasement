@@ -137,7 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const depthIndicatorCore = document.querySelector('.depth-indicator-core');
     const sectorSideLabels = [...document.querySelectorAll('.sector-side-label')];
     const ARTICLE_DOCK_PARAM = 'article';
-    const ARTICLE_DOCK_SECTOR_PREFIX = 'sector-04/';
+    const ARTICLE_DOCK_SECTORS = [
+        { name: 'sector-01', label: 'Sector-01', title: '日。' },
+        { name: 'sector-02', label: 'Sector-02', title: '学也没学好玩也没玩好练也没练好' },
+        { name: 'sector-03', label: 'Sector-03', title: '胡思乱想' },
+        { name: 'sector-04', label: 'Sector-04', title: '建筑垃圾' },
+    ];
     const ARTICLE_DOCK_WIDTH_KEY = 'jio_article_dock_width';
     const ARTICLE_DOCK_MIN_WIDTH = 420;
     const ARTICLE_DOCK_MAX_WIDTH_RATIO = 0.88;
@@ -183,14 +188,14 @@ document.addEventListener('DOMContentLoaded', function() {
             <button type="button" class="article-dock-scrim" aria-label="关闭阅读舱"></button>
             <aside class="article-dock-panel" role="dialog" aria-modal="true" aria-labelledby="article-dock-title">
                 <div class="article-dock-toolbar">
-                    <p class="article-dock-kicker">Sector-04 / 建筑垃圾</p>
+                    <p class="article-dock-kicker">Article Archive</p>
                     <div class="article-dock-actions">
                         <button type="button" class="article-dock-close" aria-label="关闭阅读舱">×</button>
                     </div>
                 </div>
                 <div class="article-dock-scroll">
                     <header class="article-dock-header">
-                        <h1 id="article-dock-title" class="article-dock-title">Sector-04</h1>
+                        <h1 id="article-dock-title" class="article-dock-title">Article Dock</h1>
                         <p class="article-dock-meta"></p>
                     </header>
                     <main class="article-dock-content"></main>
@@ -204,6 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
             root,
             scrim: root.querySelector('.article-dock-scrim'),
             panel: root.querySelector('.article-dock-panel'),
+            kicker: root.querySelector('.article-dock-kicker'),
             closeButton: root.querySelector('.article-dock-close'),
             title: root.querySelector('.article-dock-title'),
             meta: root.querySelector('.article-dock-meta'),
@@ -706,13 +712,31 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function isSector04ArticlePath(articlePath) {
+    function getArticleDockSector(articlePath) {
+        if (typeof articlePath !== 'string') {
+            return null;
+        }
+
+        return ARTICLE_DOCK_SECTORS.find((sector) => articlePath.startsWith(`${sector.name}/`)) || null;
+    }
+
+    function isArticleDockPath(articlePath) {
         return (
             typeof articlePath === 'string'
-            && articlePath.startsWith(ARTICLE_DOCK_SECTOR_PREFIX)
+            && !!getArticleDockSector(articlePath)
             && articlePath.endsWith('.html')
             && !articlePath.includes('..')
         );
+    }
+
+    function getArticleDockKicker(articlePath) {
+        const sector = getArticleDockSector(articlePath);
+        return sector ? `${sector.label} / ${sector.title}` : 'Article Archive';
+    }
+
+    function getArticleDockLoadingTitle(articlePath) {
+        const sector = getArticleDockSector(articlePath);
+        return sector ? `LOADING ${sector.label}` : 'LOADING ARTICLE';
     }
 
     function getArticlePathFromUrl() {
@@ -722,7 +746,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getArticlePathFromLink(link) {
         const rawHref = link.getAttribute('href') || '';
-        if (isSector04ArticlePath(rawHref)) {
+        if (isArticleDockPath(rawHref)) {
             return rawHref;
         }
 
@@ -734,7 +758,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const relativePath = decodeURIComponent(articleUrl.href.slice(baseUrl.href.length));
-            return isSector04ArticlePath(relativePath) ? relativePath : '';
+            return isArticleDockPath(relativePath) ? relativePath : '';
         } catch (error) {
             return '';
         }
@@ -783,6 +807,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return false;
         }
 
+        articleDock.kicker.textContent = getArticleDockKicker(articlePath);
         articleDock.title.textContent = template.dataset.title || '无标题';
         articleDock.meta.textContent = template.dataset.meta || '';
         articleDock.content.innerHTML = template.innerHTML;
@@ -799,7 +824,8 @@ document.addEventListener('DOMContentLoaded', function() {
             clearArticleDockDepthReveal();
         }
 
-        articleDock.title.textContent = 'LOADING SECTOR-04';
+        articleDock.kicker.textContent = getArticleDockKicker(articlePath);
+        articleDock.title.textContent = getArticleDockLoadingTitle(articlePath);
         articleDock.meta.textContent = articlePath;
         articleDock.content.innerHTML = '<p class="article-dock-status">READING DISK...</p>';
         articleDock.scroll.scrollTop = 0;
@@ -818,7 +844,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function openArticleDock(articlePath, options = {}) {
-        if (!isSector04ArticlePath(articlePath)) {
+        if (!isArticleDockPath(articlePath)) {
             return false;
         }
 
@@ -858,6 +884,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const meta = articleDocument.querySelector('.article-meta')?.textContent?.trim() || '';
             const contentElement = articleDocument.querySelector('.article-content');
 
+            articleDock.kicker.textContent = getArticleDockKicker(articlePath);
             articleDock.title.textContent = title;
             articleDock.meta.textContent = meta;
             articleDock.content.innerHTML = contentElement ? contentElement.innerHTML : '';
@@ -1260,7 +1287,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('popstate', () => {
         const articlePath = getArticlePathFromUrl();
-        if (isSector04ArticlePath(articlePath)) {
+        if (isArticleDockPath(articlePath)) {
             openArticleDock(articlePath, { writeHistory: false });
         } else {
             closeArticleDock({ writeHistory: false });
@@ -1268,7 +1295,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     const initialArticlePath = getArticlePathFromUrl();
-    if (isSector04ArticlePath(initialArticlePath)) {
+    if (isArticleDockPath(initialArticlePath)) {
         history.replaceState({ articlePath: initialArticlePath }, '', window.location.href);
         openArticleDock(initialArticlePath, { writeHistory: false });
     } else {
