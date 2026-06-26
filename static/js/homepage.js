@@ -149,6 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const ARTICLE_ENTRY_ALIGN_COLLAPSE_DURATION = 200;
     const ARTICLE_ENTRY_INSERT_DURATION = 100;
     const ARTICLE_DOCK_DEPTH_REVEAL_DURATION = 720;
+    const ARTICLE_DOCK_PANEL_EXIT_DURATION = 520;
     const ARTICLE_ENTRY_CONDENSED_HEIGHT_RATIO = 0.72;
     const ARTICLE_ENTRY_AXIS_GUTTER = 24;
     const ARTICLE_ENTRY_LEFT_EXPAND_DELAY_RATIO = 0.34;
@@ -919,6 +920,34 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function animateArticleDockPanelExit() {
+        if (!articleDock.panel.animate || prefersReducedMotion.matches) {
+            return;
+        }
+
+        articleDock.panel.animate(
+            [
+                {
+                    opacity: 1,
+                    transform: 'translate3d(-50%, -50%, 0) scaleX(1) scaleY(1)',
+                },
+                {
+                    opacity: 0,
+                    transform: 'translate3d(-50%, -50%, 0) scaleX(0.86) scaleY(0.08)',
+                },
+            ],
+            {
+                duration: ARTICLE_DOCK_PANEL_EXIT_DURATION,
+                easing: 'cubic-bezier(0.2, 0.86, 0.2, 1)',
+            },
+        );
+    }
+
+    function closeArticleDockFromScrim() {
+        animateArticleDockPanelExit();
+        closeArticleDock();
+    }
+
     function isDesktopDragScrollEnabled() {
         return supportsHover && window.innerWidth > 900 && !!depthIndicatorCore;
     }
@@ -1270,7 +1299,7 @@ document.addEventListener('DOMContentLoaded', function() {
         openArticleDockFromCard(articleLink, articlePath);
     });
 
-    articleDock.scrim.addEventListener('click', () => closeArticleDock());
+    articleDock.scrim.addEventListener('click', closeArticleDockFromScrim);
     articleDock.closeButton.addEventListener('click', () => closeArticleDock());
     articleDock.resizeHandle.addEventListener('pointerdown', startArticleDockResize);
     articleDock.resizeHandle.addEventListener('pointermove', updateArticleDockResize);

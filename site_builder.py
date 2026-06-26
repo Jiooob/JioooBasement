@@ -3,6 +3,7 @@ import json
 import os
 import re
 import shutil
+from datetime import date
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -224,11 +225,39 @@ def render_sector_content_anchors(homepage_data):
 
 
 def render_announcements(homepage_data):
+    announcements = homepage_data.get('announcements', [])
+    uses_explicit_highlight = any('highlight' in item for item in announcements)
+    latest_date = None
+    latest_index = None
+
+    for index, item in enumerate(announcements):
+        try:
+            item_date = date.fromisoformat(item.get('date', ''))
+        except ValueError:
+            continue
+
+        if latest_date is None or item_date > latest_date:
+            latest_date = item_date
+            latest_index = index
+
     announcement_items = []
-    for item in homepage_data.get('announcements', []):
+    for index, item in enumerate(announcements):
+        is_highlighted = bool(item.get('highlight')) if uses_explicit_highlight else index == latest_index
+        item_class = 'announcement-item is-highlighted' if is_highlighted else 'announcement-item'
+        style_attr = ''
+
+        if is_highlighted:
+            try:
+                highlight_opacity = float(item.get('highlight_opacity', 1))
+            except (TypeError, ValueError):
+                highlight_opacity = 1
+
+            highlight_opacity = min(max(highlight_opacity, 0), 1)
+            style_attr = f' style="--announcement-highlight-opacity: {highlight_opacity:g};"'
+
         announcement_items.append(
             (
-                '<article class="announcement-item">'
+                f'<article class="{item_class}"{style_attr}>'
                 f'<p class="announcement-date">{html.escape(item["date"])}</p>'
                 f'<p class="announcement-text">{html.escape(item["text"])}</p>'
                 '</article>'

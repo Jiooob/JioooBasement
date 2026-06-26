@@ -110,11 +110,15 @@
     },
     {
       "date": "2026-06-24",
-      "text": "很快就进入夏天的肚子了哦"
+      "text": "很快就进入夏天的肚子了哦",
+      "highlight": true,
+      "highlight_opacity": 1
     },
     {
       "date": "2026-06-26",
-      "text": "做了酷炫阅读面板"
+      "text": "做了酷炫阅读面板",
+      "highlight": true,
+      "highlight_opacity": 1
     }
   ]
 }
