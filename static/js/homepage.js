@@ -155,6 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const ARTICLE_ENTRY_LEFT_EXPAND_DELAY_RATIO = 0.34;
     const ARTICLE_ENTRY_RIGHT_PROGRESS_AT_LEFT_EXPAND = 0.42;
     const ARTICLE_ENTRY_INSERT_EASING = 'cubic-bezier(0.18, 0.86, 0.2, 1)';
+    const SECTOR_SIDE_LABEL_SCROLL_SPEED = 67;
+    const sectorSideLabelAnimationStartedAt = performance.now();
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const articleDock = createArticleDock();
 
@@ -1047,6 +1049,57 @@ document.addEventListener('DOMContentLoaded', function() {
         return `Sector-${String(sectorNumber).padStart(2, '0')}`;
     }
 
+    function escapeHtml(value) {
+        const text = String(value);
+        const entities = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+        };
+
+        return text.replace(/[&<>"']/g, (character) => entities[character]);
+    }
+
+    function getSideLabelColumnText(label, key, fallback) {
+        if (Object.prototype.hasOwnProperty.call(label.dataset, key)) {
+            return (label.dataset[key] || '').trim();
+        }
+
+        return fallback;
+    }
+
+    function renderSideLabelTrack(displayText, isOpposite, intervalHeight, repeatGap, baseFontSize) {
+        if (!displayText) {
+            return '';
+        }
+
+        const characters = [...displayText];
+        const unitHeight = Math.max(1, Math.round(characters.length * baseFontSize * 0.88));
+        const unitSpan = unitHeight + repeatGap;
+        const repeatCount = Math.max(2, Math.ceil((intervalHeight + repeatGap) / unitSpan) + 2);
+        const scrollDuration = unitSpan / SECTOR_SIDE_LABEL_SCROLL_SPEED;
+        const charsHtml = characters
+            .map((character) => `<span class="sector-side-label-char">${escapeHtml(character)}</span>`)
+            .join('');
+        const repeatedUnits = Array.from({ length: repeatCount }, () => (
+            `<div class="sector-side-label-unit">${charsHtml}</div>`
+        )).join('');
+        const className = isOpposite
+            ? 'sector-side-label-track sector-side-label-track-opposite'
+            : 'sector-side-label-track';
+        const elapsedSeconds = Math.max(0, (performance.now() - sectorSideLabelAnimationStartedAt) / 1000);
+        const phaseDelay = scrollDuration > 0 ? -(elapsedSeconds % scrollDuration) : 0;
+        const style = [
+            `--label-scroll-distance: ${unitSpan}px`,
+            `--label-scroll-duration: ${scrollDuration.toFixed(2)}s`,
+            `--label-scroll-delay: ${phaseDelay.toFixed(3)}s`,
+        ].join('; ');
+
+        return `<div class="${className}" style="${style}">${repeatedUnits}</div>`;
+    }
+
     function alignArticleContainers() {
         const sourceContainer = document.querySelector('.left-column');
         const articleAnchors = document.querySelectorAll('[id$="-content-anchor"]');
@@ -1148,10 +1201,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         sectorSideLabels.forEach((label, index) => {
             const displayText = (label.dataset.displayText || '').trim();
+            const columnTexts = [
+                getSideLabelColumnText(label, 'displayTextLeft', displayText),
+                getSideLabelColumnText(label, 'displayTextCenter', displayText),
+                getSideLabelColumnText(label, 'displayTextRight', displayText),
+            ];
             const currentLine = document.getElementById(label.dataset.currentTargetId || '');
             const nextLine = document.getElementById(label.dataset.nextTargetId || '');
 
-            if (!currentLine || !nextLine || !displayText) {
+            if (!currentLine || !nextLine || columnTexts.every((text) => !text)) {
                 label.style.display = 'none';
                 label.innerHTML = '';
                 return;
@@ -1163,20 +1221,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const bottomBoundary = nextMidpoint;
             const intervalHeight = Math.max(0, bottomBoundary - topBoundary);
             const relativeTop = topBoundary - rightPanelContent.offsetTop;
-            const characters = [...displayText];
-            const unitHeight = Math.max(1, Math.round(characters.length * baseFontSize * 0.88));
-            const unitSpan = unitHeight + repeatGap;
-            const repeatCount = Math.max(1, Math.ceil((intervalHeight + repeatGap) / unitSpan));
-
-            const repeatedUnits = Array.from({ length: repeatCount }, () => {
-                const charsHtml = characters
-                    .map((character) => `<span class="sector-side-label-char">${character}</span>`)
-                    .join('');
-                return `<div class="sector-side-label-unit">${charsHtml}</div>`;
-            }).join('');
-
-            label.innerHTML = `<div class="sector-side-label-track">${repeatedUnits}</div>`;
+            label.innerHTML = `
+                ${renderSideLabelTrack(columnTexts[0], true, intervalHeight, repeatGap, baseFontSize)}
+                ${renderSideLabelTrack(columnTexts[1], false, intervalHeight, repeatGap, baseFontSize)}
+                ${renderSideLabelTrack(columnTexts[2], true, intervalHeight, repeatGap, baseFontSize)}
+            `.trim();
             label.style.setProperty('--label-repeat-gap', `${repeatGap}px`);
+            label.style.setProperty('--label-column-gap', `${Math.max(10, Math.round(baseFontSize * 0.14))}px`);
             label.style.display = 'flex';
             label.style.top = `${relativeTop}px`;
             label.style.left = `${relativeLeft}px`;
@@ -1215,9 +1266,12 @@ document.addEventListener('DOMContentLoaded', function() {
         depthIndicator.style.top = `${clampedCenterY}px`;
     }
 
-    function performUpdates() {
+    function performUpdates(options = {}) {
+        const { updateSideLabels = true } = options;
         updateMainGridHeight();
-        updateSectorSideLabels();
+        if (updateSideLabels) {
+            updateSectorSideLabels();
+        }
         updateDepthIndicatorRailPosition();
     }
 
@@ -1486,7 +1540,7 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
-                performUpdates();
+                performUpdates({ updateSideLabels: false });
                 ticking = false;
             });
             ticking = true;

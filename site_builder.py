@@ -271,7 +271,26 @@ def render_right_panel_labels(homepage_data):
     sector_navigation = homepage_data.get('sector_navigation', [])
     for index, sector in enumerate(sector_navigation):
         right_panel = sector.get('right_panel', {}) or {}
-        display_text = html.escape(right_panel.get('display_text', ''), quote=True)
+        display_text = right_panel.get('display_text', '') or ''
+        display_columns = right_panel.get('display_columns')
+
+        if isinstance(display_columns, dict):
+            left_text = display_columns.get('left', display_text) or ''
+            center_text = display_columns.get('center', display_text) or ''
+            right_text = display_columns.get('right', display_text) or ''
+        elif isinstance(display_columns, list):
+            left_text = display_columns[0] if len(display_columns) > 0 else display_text
+            center_text = display_columns[1] if len(display_columns) > 1 else display_text
+            right_text = display_columns[2] if len(display_columns) > 2 else display_text
+        else:
+            left_text = display_text
+            center_text = display_text
+            right_text = display_text
+
+        display_text = html.escape(display_text, quote=True)
+        left_text = html.escape(str(left_text), quote=True)
+        center_text = html.escape(str(center_text), quote=True)
+        right_text = html.escape(str(right_text), quote=True)
         current_target_id = html.escape(sector['target_id'], quote=True)
         next_sector = sector_navigation[index + 1] if index + 1 < len(sector_navigation) else {}
         next_target_id = html.escape(next_sector.get('target_id', ''), quote=True)
@@ -281,6 +300,9 @@ def render_right_panel_labels(homepage_data):
                 f'data-current-target-id="{current_target_id}" '
                 f'data-next-target-id="{next_target_id}" '
                 f'data-display-text="{display_text}" '
+                f'data-display-text-left="{left_text}" '
+                f'data-display-text-center="{center_text}" '
+                f'data-display-text-right="{right_text}" '
                 'aria-hidden="true"></div>'
             )
         )
