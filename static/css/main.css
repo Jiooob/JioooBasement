@@ -83,6 +83,13 @@ html, body {
     height: 100%;
     /* 启用平滑滚动行为 */
     scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
 }
 
 /* 模块一：Hero Section 布局 */
