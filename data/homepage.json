@@ -157,14 +157,21 @@
     {
       "date": "2026-06-26",
       "text": "做了 酷炫阅读面板 以及 雷霆大字滚动",
-      "highlight": true,
+      "highlight": false,
       "highlight_opacity": 1
     },
     {
       "date": "2026-07-03",
       "text": "如果足够仔细的话会发现sector09已经存在几周了，而今天终于迎来了它的第一个存储栏位文章。或许这里还能添加一个唱片墙？",
       "highlight": true,
+      "highlight_opacity": 0.5
+    },
+    {
+      "date": "2026-07-15",
+      "text": "由于脑雾和小学期，忘掉了许多事情，唉",
+      "highlight": true,
       "highlight_opacity": 1
     }
+    
   ]
 }
