@@ -20,14 +20,14 @@
       "target_id": "sector-2-line",
       "depth_meters": 337,
       "title_primary": "扇区-02",
-      "title_secondary": "学也没学好玩也没玩好练也没练好",
-      "description": "对不起我的肝脏",
+      "title_secondary": "未记录",
+      "description": "未记录",
       "right_panel": {
-        "display_text": "恼",
+        "display_text": "////",
         "display_columns": {
-          "left": "烦",
-          "center": "恼",
-          "right": "晕"
+          "left": "////",
+          "center": "////",
+          "right": "////"
         }
       }
     },
@@ -164,11 +164,17 @@
       "date": "2026-07-03",
       "text": "如果足够仔细的话会发现sector09已经存在几周了，而今天终于迎来了它的第一个存储栏位文章。或许这里还能添加一个唱片墙？",
       "highlight": true,
-      "highlight_opacity": 0.5
+      "highlight_opacity": 0.25
     },
     {
       "date": "2026-07-15",
       "text": "由于脑雾和小学期，忘掉了许多事情，唉",
+      "highlight": true,
+      "highlight_opacity": 0.5
+    },
+    {
+      "date": "2026-07-16",
+      "text": "我觉得扇区2不应该被那些情绪化的东西填满，清理了。拜拜啦",
       "highlight": true,
       "highlight_opacity": 1
     }
