@@ -138,14 +138,6 @@
       "text": "本基地内容不保证观点稳定。部分原则可能随时间、酒精、演出、ddl、乐队家人、坏掉的 SD 卡和北京天气发生漂移。"
     },
     {
-      "date": "2026-01-25",
-      "text": "其实博客的图片全部都没有挂到图床上，我服了"
-    },
-    {
-      "date": "2026-01-26",
-      "text": "修改了一下"
-    },
-    {
       "date": "2026-03-22",
       "text": "恢复更新"
     },
@@ -164,17 +156,23 @@
       "date": "2026-07-03",
       "text": "如果足够仔细的话会发现sector09已经存在几周了，而今天终于迎来了它的第一个存储栏位文章。或许这里还能添加一个唱片墙？",
       "highlight": true,
-      "highlight_opacity": 0.25
+      "highlight_opacity": 0.125
     },
     {
       "date": "2026-07-15",
       "text": "由于脑雾和小学期，忘掉了许多事情，唉",
       "highlight": true,
-      "highlight_opacity": 0.5
+      "highlight_opacity": 0.25
     },
     {
       "date": "2026-07-16",
       "text": "我觉得扇区2不应该被那些情绪化的东西填满，清理了。拜拜啦",
+      "highlight": true,
+      "highlight_opacity": 0.5
+    },
+    {
+      "date": "2026-07-28",
+      "text": "这里已经要从周报变成节气报了（指两周写一次（（（（（",
       "highlight": true,
       "highlight_opacity": 1
     }
