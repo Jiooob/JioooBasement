@@ -102,6 +102,7 @@ class Page:
     def render(self, template_content):
         content = template_content.replace('$title$', self.title)
         content = content.replace('$date$', self.date)
+        content = content.replace('$summary$', html.escape(self.summary))
         content = content.replace('$body$', self.body)
         return content
 
@@ -389,9 +390,10 @@ def render_article_card(page, sector_name, file_name):
 def render_article_dock_template(page, sector_name, file_name):
     relative_path = html.escape(f'{sector_name}/{file_name}', quote=True)
     title = html.escape(page.title, quote=True)
+    summary = html.escape(page.summary, quote=True)
     meta = html.escape(f'记录于：{page.date}', quote=True)
     return f"""
-        <template class="article-dock-template" data-article-path="{relative_path}" data-title="{title}" data-meta="{meta}">
+        <template class="article-dock-template" data-article-path="{relative_path}" data-title="{title}" data-summary="{summary}" data-meta="{meta}">
             {page.body}
         </template>
         """

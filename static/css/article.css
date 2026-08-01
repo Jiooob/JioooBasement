@@ -49,12 +49,44 @@ body {
     border-bottom: 1px solid var(--divider-color);
 }
 
+.article-heading-line {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    column-gap: 0.8rem;
+    row-gap: 0.25rem;
+    margin-bottom: 10px;
+}
+
 .article-title {
     font-family: var(--font-mono); /* 标题使用机械字体 */
     letter-spacing: -0.03em;
     font-size: 2.8rem;
     color: var(--text-bright);
-    margin: 0 0 10px 0;
+    margin: 0;
+}
+
+.article-summary {
+    flex: 1 1 16rem;
+    min-width: 0;
+    margin: 0 0 0 auto;
+    color: var(--text-secondary);
+    font-family: var(--font-serif);
+    font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+    font-style: italic;
+    line-height: 1.35;
+    text-align: right;
+}
+
+.article-summary:not(:empty)::before {
+    content: "—";
+    margin-right: 0.65rem;
+    color: var(--secondary-accent);
+    font-style: normal;
+}
+
+.article-summary:empty {
+    display: none;
 }
 
 .article-meta {
