@@ -198,7 +198,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="article-dock-scroll">
                     <header class="article-dock-header">
-                        <h1 id="article-dock-title" class="article-dock-title">Article Dock</h1>
+                        <div class="article-dock-heading-line">
+                            <h1 id="article-dock-title" class="article-dock-title">Article Dock</h1>
+                            <p class="article-dock-summary"></p>
+                        </div>
                         <p class="article-dock-meta"></p>
                     </header>
                     <main class="article-dock-content"></main>
@@ -215,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
             kicker: root.querySelector('.article-dock-kicker'),
             closeButton: root.querySelector('.article-dock-close'),
             title: root.querySelector('.article-dock-title'),
+            summary: root.querySelector('.article-dock-summary'),
             meta: root.querySelector('.article-dock-meta'),
             content: root.querySelector('.article-dock-content'),
             scroll: root.querySelector('.article-dock-scroll'),
@@ -812,6 +816,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         articleDock.kicker.textContent = getArticleDockKicker(articlePath);
         articleDock.title.textContent = template.dataset.title || '无标题';
+        articleDock.summary.textContent = template.dataset.summary || '';
         articleDock.meta.textContent = template.dataset.meta || '';
         articleDock.content.innerHTML = template.innerHTML;
         resolveArticleContentUrls(articleDock.content, articlePath);
@@ -829,6 +834,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         articleDock.kicker.textContent = getArticleDockKicker(articlePath);
         articleDock.title.textContent = getArticleDockLoadingTitle(articlePath);
+        articleDock.summary.textContent = '';
         articleDock.meta.textContent = articlePath;
         articleDock.content.innerHTML = '<p class="article-dock-status">READING DISK...</p>';
         articleDock.scroll.scrollTop = 0;
@@ -840,6 +846,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function setArticleDockError(articlePath) {
         articleDock.title.textContent = 'READ ERROR';
+        articleDock.summary.textContent = '';
         articleDock.meta.textContent = articlePath;
         articleDock.content.innerHTML = '<p class="article-dock-status">文章舱载入失败，请稍后重试。</p>';
         articleDock.root.classList.remove('is-loading');
@@ -884,11 +891,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const title = articleDocument.querySelector('.article-title')?.textContent?.trim()
                 || articleDocument.title
                 || '无标题';
+            const summary = articleDocument.querySelector('.article-summary')?.textContent?.trim() || '';
             const meta = articleDocument.querySelector('.article-meta')?.textContent?.trim() || '';
             const contentElement = articleDocument.querySelector('.article-content');
 
             articleDock.kicker.textContent = getArticleDockKicker(articlePath);
             articleDock.title.textContent = title;
+            articleDock.summary.textContent = summary;
             articleDock.meta.textContent = meta;
             articleDock.content.innerHTML = contentElement ? contentElement.innerHTML : '';
             resolveArticleContentUrls(articleDock.content, articlePath);
