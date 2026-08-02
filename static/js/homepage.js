@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function isArticleDockResizable() {
-        return supportsHover && window.innerWidth > 900;
+        return false;
     }
 
     function getArticleDockWidthBounds() {
@@ -941,11 +941,11 @@ document.addEventListener('DOMContentLoaded', function() {
             [
                 {
                     opacity: 1,
-                    transform: 'translate3d(-50%, -50%, 0) scaleX(1) scaleY(1)',
+                    transform: 'scaleX(1) scaleY(1)',
                 },
                 {
                     opacity: 0,
-                    transform: 'translate3d(-50%, -50%, 0) scaleX(0.86) scaleY(0.08)',
+                    transform: 'scaleX(0.94) scaleY(0.06)',
                 },
             ],
             {
