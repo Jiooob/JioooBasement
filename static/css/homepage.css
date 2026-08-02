@@ -687,7 +687,7 @@ body.article-dock-open .depth-indicator-left {
 .friend-links-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 18px;
+    gap: var(--sector-card-gap);
     align-items: stretch;
 }
 .friend-link-card {

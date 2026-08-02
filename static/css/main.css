@@ -41,6 +41,9 @@
   /* 备用无衬线 */
   --font-sans: 'Inter', 'Noto Sans SC', sans-serif;
 
+  /* -- Layout -- */
+  --sector-card-gap: 35px;
+
 }
 /* ============================================================ */
 /* == ^ ^ ^ ^        颜色变量定义结束          ^ ^ ^ ^ == */
@@ -851,7 +854,11 @@ body.homepage-effect::after {
 .article-cards-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 35px; /* Adjusted from 20px in previous turn */
+    gap: var(--sector-card-gap);
+}
+
+.sector-content-anchor > .article-cards-container + .article-cards-container {
+    margin-top: var(--sector-card-gap);
 }
 
 /* --- Shared image-gallery component for article pages and the article dock --- */
