@@ -23,7 +23,7 @@ ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
 HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
 DEPTH_PATTERN = re.compile(r'\[-?(\d+)m\]')
 SECTOR_TARGET_PATTERN = re.compile(r'^sector-(\d+)-line$')
-ARTICLE_DOCK_SECTOR_NAMES = {'sector-01', 'sector-02', 'sector-03', 'sector-04'}
+ARTICLE_DOCK_SECTOR_NAMES = {'sector-01', 'sector-02', 'sector-03', 'sector-04', 'sector-05'}
 
 
 def normalize_sector_depth(sector):

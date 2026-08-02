@@ -854,6 +854,76 @@ body.homepage-effect::after {
     gap: 35px; /* Adjusted from 20px in previous turn */
 }
 
+/* --- Shared image-gallery component for article pages and the article dock --- */
+.article-content .photo-gallery,
+.article-dock-content .photo-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 18px;
+    margin: 2rem 0;
+}
+
+.article-content .photo-gallery-item,
+.article-dock-content .photo-gallery-item {
+    min-width: 0;
+    margin: 0;
+    padding: 8px;
+    overflow: hidden;
+    background: rgba(var(--bg-card-rgb), 0.18);
+    border: 1px solid rgba(136, 146, 176, 0.24);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.article-content .photo-gallery-item:hover,
+.article-dock-content .photo-gallery-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(var(--secondary-accent-rgb), 0.6);
+}
+
+.article-content .photo-gallery-item > a,
+.article-dock-content .photo-gallery-item > a {
+    display: block;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+}
+
+.article-content .photo-gallery img,
+.article-dock-content .photo-gallery img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin: 0;
+    border: 0;
+    border-radius: 2px;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+}
+
+.article-content .photo-gallery-item:hover img,
+.article-dock-content .photo-gallery-item:hover img {
+    transform: scale(1.02);
+}
+
+.article-content .photo-gallery figcaption,
+.article-dock-content .photo-gallery figcaption {
+    margin-top: 9px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .article-content .photo-gallery-item,
+    .article-dock-content .photo-gallery-item,
+    .article-content .photo-gallery img,
+    .article-dock-content .photo-gallery img {
+        transition: none;
+    }
+}
+
 @media (hover: none) {
     body.homepage-effect {
         background: var(--bg-darker) !important;

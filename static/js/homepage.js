@@ -142,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: 'sector-02', label: 'Sector-02', title: '学也没学好玩也没玩好练也没练好' },
         { name: 'sector-03', label: 'Sector-03', title: '胡思乱想' },
         { name: 'sector-04', label: 'Sector-04', title: '建筑垃圾' },
+        { name: 'sector-05', label: 'Sector-05', title: '拙劣之作' },
     ];
     const ARTICLE_DOCK_WIDTH_KEY = 'jio_article_dock_width';
     const ARTICLE_DOCK_MIN_WIDTH = 420;
