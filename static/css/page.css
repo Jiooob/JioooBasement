@@ -43,15 +43,21 @@ body {
     padding: 10px 18px;
     border: 1px solid var(--primary-accent);
     border-radius: 4px;
+    background: var(--surface-1);
     transition: all 0.3s ease;
     font-family: 'Courier New', monospace;
     white-space: nowrap;
 }
 
 .back-home:hover {
-    background-color: rgba(var(--primary-accent-rgb), 0.1);
-    color: var(--text-white);
-    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.3);
+    background-color: var(--surface-2);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), var(--opacity-10));
+}
+
+.back-home:active {
+    background-color: var(--primary-accent);
+    color: var(--text-on-accent);
 }
 
 /* --- 页面正文内容 --- */
@@ -69,8 +75,15 @@ body {
 }
 
 .page-content a:hover {
-    background-color: rgba(var(--primary-accent-rgb), 0.1);
-    border-bottom: 1px solid var(--primary-accent);
+    background-color: var(--surface-2);
+    border-bottom: 1px solid var(--accent-warm);
+    color: var(--text-primary);
+}
+
+.page-content a:active {
+    background-color: var(--primary-container);
+    border-bottom-color: var(--primary-accent);
+    color: var(--primary-accent);
 }
 
 /* --- 新增：从 main.css 迁移的文章列表样式 --- */
@@ -97,11 +110,11 @@ body {
 }
 
 #post-list-container h2 a:hover {
-    color: var(--secondary-accent);
+    color: var(--primary-accent);
 }
 
 #post-list-container .date {
-    color: var(--text-secondary);
+    color: var(--accent-warm);
     font-size: 0.9rem;
     margin-top: 0;
 }
