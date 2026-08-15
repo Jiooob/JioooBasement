@@ -7,7 +7,7 @@
   "language": "zh-CN",
   "max_items": 30,
   "timezone": "+08:00",
-  "include_full_content": true,
+  "include_full_content": false,
   "autodiscovery_title": "JioooBasement RSS",
   "articles": {
     "default_enabled": true,
@@ -21,9 +21,9 @@
         "summary": "这段摘要完全来自 data/rss.json，用于演示文章级覆盖。",
         "published": "2026-08-15",
         "category": "Sector-04 / 建筑垃圾与试验场",
-        "include_full_content": true
+        "include_full_content": false
       }
-      
+
     }
 
 
