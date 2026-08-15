@@ -1,0 +1,38 @@
+{
+  "enabled": true,
+  "site_url": "https://jiooobasement.generaltechstudio.com",
+  "file_name": "feed.xml",
+  "title": "JioooBasement",
+  "description": "地址内容查看器",
+  "language": "zh-CN",
+  "max_items": 30,
+  "timezone": "+08:00",
+  "include_full_content": true,
+  "autodiscovery_title": "JioooBasement RSS",
+  "articles": {
+    "default_enabled": true,
+
+
+    "overrides": {
+
+      "sector-04/rss配置全字段试验件.html": {
+        "enabled": true,
+        "title": "RSS全字段样例：来自统一配置的标题",
+        "summary": "这段摘要完全来自 data/rss.json，用于演示文章级覆盖。",
+        "published": "2026-08-15",
+        "category": "Sector-04 / 建筑垃圾与试验场",
+        "include_full_content": true
+      }
+      
+    }
+
+
+  },
+  "external_cards": {
+    "yansk-city": {
+      "enabled": true,
+      "sector": "sector-05",
+      "published": "2026-08-03"
+    }
+  }
+}

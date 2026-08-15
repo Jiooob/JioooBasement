@@ -25,14 +25,10 @@ CNAME_FILE = BASE_DIR / "CNAME"
 INDEX_TEMPLATE_FILE = TEMPLATES_DIR / "index.template"
 ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
 HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
+RSS_CONFIG_FILE = DATA_DIR / "rss.json"
 DEPTH_PATTERN = re.compile(r'\[-?(\d+)m\]')
 SECTOR_TARGET_PATTERN = re.compile(r'^sector-(\d+)-line$')
 ARTICLE_DOCK_SECTOR_NAMES = {'sector-01', 'sector-02', 'sector-03', 'sector-04', 'sector-05'}
-RSS_FILE_NAME = 'feed.xml'
-RSS_TITLE = 'JioooBasement'
-RSS_DESCRIPTION = 'JioooBasement 的文章与私人创作更新'
-RSS_LANGUAGE = 'zh-CN'
-RSS_MAX_ITEMS = 30
 RSS_ATOM_NAMESPACE = 'http://www.w3.org/2005/Atom'
 RSS_CONTENT_NAMESPACE = 'http://purl.org/rss/1.0/modules/content/'
 
@@ -159,15 +155,68 @@ def read_text_file(file_path):
         return f.read()
 
 
-def get_site_url():
-    hostname = read_text_file(CNAME_FILE).strip()
-    if not hostname:
-        raise ValueError('CNAME 为空，无法生成 RSS 绝对链接。')
+def load_rss_config():
+    with open(RSS_CONFIG_FILE, 'r', encoding='utf-8') as f:
+        config = json.load(f)
 
-    if re.match(r'^https?://', hostname, flags=re.IGNORECASE):
-        return hostname.rstrip('/')
+    if not isinstance(config, dict):
+        raise ValueError('data/rss.json 的根节点必须是对象。')
 
-    return f'https://{hostname.rstrip("/")}'
+    if not is_feed_enabled(config.get('enabled'), default=True):
+        return config
+
+    required_text_fields = ('site_url', 'file_name', 'title', 'description', 'language')
+    for field in required_text_fields:
+        if not str(config.get(field, '')).strip():
+            raise ValueError(f'data/rss.json 缺少有效字段: {field}')
+
+    file_name = str(config['file_name']).strip()
+    if Path(file_name).name != file_name or not file_name.lower().endswith('.xml'):
+        raise ValueError('data/rss.json 的 file_name 必须是单个 .xml 文件名。')
+
+    try:
+        max_items = int(config.get('max_items', 30))
+    except (TypeError, ValueError):
+        raise ValueError('data/rss.json 的 max_items 必须是正整数。') from None
+    if max_items <= 0:
+        raise ValueError('data/rss.json 的 max_items 必须是正整数。')
+
+    parse_timezone_offset(config.get('timezone', '+08:00'))
+
+    articles = config.get('articles', {})
+    external_cards = config.get('external_cards', {})
+    if not isinstance(articles, dict) or not isinstance(articles.get('overrides', {}), dict):
+        raise ValueError('data/rss.json 的 articles 和 articles.overrides 必须是对象。')
+    if not isinstance(external_cards, dict):
+        raise ValueError('data/rss.json 的 external_cards 必须是对象。')
+
+    for article_path, overrides in articles.get('overrides', {}).items():
+        if not isinstance(article_path, str) or not isinstance(overrides, dict):
+            raise ValueError('data/rss.json 的每项文章覆盖必须使用“文章路径: 配置对象”。')
+
+    for card_id, card_config in external_cards.items():
+        if not isinstance(card_id, str) or not card_id.strip() or not isinstance(card_config, dict):
+            raise ValueError('data/rss.json 的每项外链卡必须使用“唯一 ID: 配置对象”。')
+        sector_name = str(card_config.get('sector', '')).strip()
+        if is_feed_enabled(card_config.get('enabled'), default=True) and not re.fullmatch(r'sector-\d+', sector_name):
+            raise ValueError(f'data/rss.json 的外链卡 {card_id} 缺少有效 sector。')
+
+    return config
+
+
+def get_site_url(rss_config):
+    site_url = str(rss_config.get('site_url', '')).strip()
+    if not site_url:
+        raise ValueError('data/rss.json 的 site_url 不能为空。')
+
+    if not re.match(r'^https?://', site_url, flags=re.IGNORECASE):
+        site_url = f'https://{site_url}'
+
+    parsed_url = urlsplit(site_url)
+    if parsed_url.scheme not in {'http', 'https'} or not parsed_url.netloc:
+        raise ValueError('data/rss.json 的 site_url 必须是有效的 HTTP(S) 地址。')
+
+    return site_url.rstrip('/')
 
 
 def encode_url_path(url):
@@ -181,15 +230,33 @@ def build_site_url(site_url, relative_path):
     return encode_url_path(urljoin(f'{site_url}/', normalized_path))
 
 
-def parse_feed_date(value, source_name):
+def get_feed_url(rss_config):
+    return build_site_url(get_site_url(rss_config), str(rss_config['file_name']).strip())
+
+
+def parse_timezone_offset(value):
+    match = re.fullmatch(r'([+-])(\d{2}):(\d{2})', str(value).strip())
+    if not match:
+        raise ValueError('data/rss.json 的 timezone 必须使用 +08:00 这样的格式。')
+
+    sign = 1 if match.group(1) == '+' else -1
+    hours = int(match.group(2))
+    minutes = int(match.group(3))
+    if hours > 23 or minutes > 59:
+        raise ValueError('data/rss.json 的 timezone 超出有效范围。')
+
+    return timezone(sign * timedelta(hours=hours, minutes=minutes))
+
+
+def parse_feed_date(value, source_name, rss_config):
     try:
         published_date = date.fromisoformat(str(value).strip())
     except (TypeError, ValueError):
         print(f'      - RSS 警告: {source_name} 缺少有效的 YYYY-MM-DD 日期，已跳过。')
         return None
 
-    china_timezone = timezone(timedelta(hours=8))
-    return datetime.combine(published_date, time(hour=12), tzinfo=china_timezone)
+    feed_timezone = parse_timezone_offset(rss_config.get('timezone', '+08:00'))
+    return datetime.combine(published_date, time(hour=12), tzinfo=feed_timezone)
 
 
 def is_feed_enabled(value, default=True):
@@ -217,62 +284,97 @@ def absolutize_html_urls(fragment, base_url):
     return ''.join(str(child) for child in soup.contents)
 
 
-def make_article_feed_entry(page, sector_name, file_name, site_url):
-    if not is_feed_enabled(page.metadata.get('rss'), default=True):
+def make_article_feed_entry(page, sector_name, file_name, site_url, rss_config):
+    relative_path = f'{sector_name}/{file_name}'
+    articles_config = rss_config.get('articles', {}) or {}
+    article_overrides = articles_config.get('overrides', {}) or {}
+    overrides = article_overrides.get(relative_path, {}) or {}
+    default_enabled = is_feed_enabled(articles_config.get('default_enabled'), default=True)
+    if not is_feed_enabled(overrides.get('enabled'), default=default_enabled):
         return None
 
-    published = parse_feed_date(page.date, str(page.path))
+    published_value = overrides.get('published', page.date)
+    published = parse_feed_date(published_value, str(page.path), rss_config)
     if published is None:
         return None
 
-    article_url = build_site_url(site_url, f'{sector_name}/{file_name}')
+    title = str(overrides.get('title', page.title) or page.title).strip()
+    summary = str(overrides.get('summary', page.summary) if overrides.get('summary') is not None else page.summary).strip()
+    category = str(overrides.get('category', sector_name) or sector_name).strip()
+    default_full_content = is_feed_enabled(rss_config.get('include_full_content'), default=True)
+    include_full_content = is_feed_enabled(
+        overrides.get('include_full_content'),
+        default=default_full_content,
+    )
+    article_url = build_site_url(site_url, relative_path)
     return FeedEntry(
-        title=page.title,
+        title=title,
         url=article_url,
         guid=article_url,
         published=published,
-        summary=page.summary,
-        content_html=absolutize_html_urls(page.body, article_url),
-        category=sector_name,
+        summary=summary,
+        content_html=absolutize_html_urls(page.body, article_url) if include_full_content else '',
+        category=category,
     )
 
 
-def load_sector_link_feed_entries(sector_dir, site_url):
-    section_file = sector_dir / 'section.html'
-    if not section_file.exists():
-        return []
-
-    soup = BeautifulSoup(read_text_file(section_file), 'html.parser')
+def load_external_card_feed_entries(rss_config, site_url):
+    external_cards = rss_config.get('external_cards', {}) or {}
     entries = []
 
-    for card in soup.select('a.article-card-item[data-rss]'):
-        if not is_feed_enabled(card.get('data-rss'), default=False):
+    for card_id, card_config in external_cards.items():
+        if not is_feed_enabled(card_config.get('enabled'), default=True):
             continue
 
-        feed_id = (card.get('data-rss-id') or '').strip()
-        href = (card.get('href') or '').strip()
+        sector_name = str(card_config.get('sector', '')).strip()
+        section_file = CONTENT_DIR / sector_name / 'section.html'
+        if not section_file.exists():
+            print(f'      - RSS 警告: 外链卡 {card_id} 的 section.html 不存在，已跳过。')
+            continue
+
+        soup = BeautifulSoup(read_text_file(section_file), 'html.parser')
+        card = next(
+            (
+                candidate
+                for candidate in soup.select('a.article-card-item[data-card-id]')
+                if candidate.get('data-card-id') == card_id
+            ),
+            None,
+        )
+        if card is None:
+            print(f'      - RSS 警告: {section_file} 中找不到 data-card-id="{card_id}"，已跳过。')
+            continue
+
+        href = str(card_config.get('url') or card.get('href') or '').strip()
         title_node = card.select_one('h1, h2, h3, .friend-name')
         summary_node = card.select_one('.summary, .friend-description, p')
-        title = (card.get('data-rss-title') or (title_node.get_text(' ', strip=True) if title_node else '')).strip()
-        summary = (card.get('data-rss-summary') or (summary_node.get_text(' ', strip=True) if summary_node else '')).strip()
-        source_name = f'{section_file} 中的链接卡 {feed_id or href or "(未命名)"}'
-        published = parse_feed_date(card.get('data-rss-date'), source_name)
+        fallback_title = title_node.get_text(' ', strip=True) if title_node else ''
+        fallback_summary = summary_node.get_text(' ', strip=True) if summary_node else ''
+        title = str(card_config.get('title') or fallback_title).strip()
+        summary = str(
+            card_config.get('summary')
+            if card_config.get('summary') is not None
+            else fallback_summary
+        ).strip()
+        source_name = f'{section_file} 中的链接卡 {card_id}'
+        published = parse_feed_date(card_config.get('published'), source_name, rss_config)
 
-        if not feed_id or not href or not title or published is None:
-            print(f'      - RSS 警告: {source_name} 缺少 id、链接、标题或日期，已跳过。')
+        if not href or not title or published is None:
+            print(f'      - RSS 警告: {source_name} 缺少链接、标题或日期，已跳过。')
             continue
 
         link_url = encode_url_path(urljoin(f'{site_url}/', href))
-        content_html = f'<p>{html.escape(summary)}</p>' if summary else ''
+        include_full_content = is_feed_enabled(rss_config.get('include_full_content'), default=True)
+        content_html = f'<p>{html.escape(summary)}</p>' if summary and include_full_content else ''
         entries.append(
             FeedEntry(
                 title=title,
                 url=link_url,
-                guid=f'urn:jiooobasement:link:{sector_dir.name}:{feed_id}',
+                guid=f'urn:jiooobasement:link:{sector_name}:{card_id}',
                 published=published,
                 summary=summary,
                 content_html=content_html,
-                category=sector_dir.name,
+                category=str(card_config.get('category') or sector_name).strip(),
                 guid_is_permalink=False,
             )
         )
@@ -280,17 +382,19 @@ def load_sector_link_feed_entries(sector_dir, site_url):
     return entries
 
 
-def write_rss_feed(entries, site_url):
+def write_rss_feed(entries, rss_config):
     ET.register_namespace('atom', RSS_ATOM_NAMESPACE)
     ET.register_namespace('content', RSS_CONTENT_NAMESPACE)
 
-    feed_url = f'{site_url}/{RSS_FILE_NAME}'
+    site_url = get_site_url(rss_config)
+    file_name = str(rss_config['file_name']).strip()
+    feed_url = get_feed_url(rss_config)
     rss = ET.Element('rss', {'version': '2.0'})
     channel = ET.SubElement(rss, 'channel')
-    ET.SubElement(channel, 'title').text = RSS_TITLE
+    ET.SubElement(channel, 'title').text = str(rss_config['title']).strip()
     ET.SubElement(channel, 'link').text = f'{site_url}/'
-    ET.SubElement(channel, 'description').text = RSS_DESCRIPTION
-    ET.SubElement(channel, 'language').text = RSS_LANGUAGE
+    ET.SubElement(channel, 'description').text = str(rss_config['description']).strip()
+    ET.SubElement(channel, 'language').text = str(rss_config['language']).strip()
     ET.SubElement(channel, 'generator').text = 'JioooBasement site_builder.py'
     ET.SubElement(channel, 'lastBuildDate').text = format_datetime(datetime.now(timezone.utc), usegmt=True)
     ET.SubElement(
@@ -303,7 +407,7 @@ def write_rss_feed(entries, site_url):
         entries,
         key=lambda entry: (entry.published, entry.guid),
         reverse=True,
-    )[:RSS_MAX_ITEMS]
+    )[:int(rss_config.get('max_items', 30))]
 
     for entry in sorted_entries:
         item = ET.SubElement(channel, 'item')
@@ -313,13 +417,26 @@ def write_rss_feed(entries, site_url):
         guid.text = entry.guid
         ET.SubElement(item, 'pubDate').text = format_datetime(entry.published)
         ET.SubElement(item, 'description').text = entry.summary
-        ET.SubElement(item, f'{{{RSS_CONTENT_NAMESPACE}}}encoded').text = entry.content_html
+        if entry.content_html:
+            ET.SubElement(item, f'{{{RSS_CONTENT_NAMESPACE}}}encoded').text = entry.content_html
         ET.SubElement(item, 'category').text = entry.category
 
     tree = ET.ElementTree(rss)
     ET.indent(tree, space='  ')
-    tree.write(OUTPUT_DIR / RSS_FILE_NAME, encoding='utf-8', xml_declaration=True)
-    print(f'RSS 已生成：{RSS_FILE_NAME}（最近 {len(sorted_entries)} 条）。')
+    tree.write(OUTPUT_DIR / file_name, encoding='utf-8', xml_declaration=True)
+    print(f'RSS 已生成：{file_name}（最近 {len(sorted_entries)} 条）。')
+
+
+def render_rss_autodiscovery(rss_config):
+    if not is_feed_enabled(rss_config.get('enabled'), default=True):
+        return ''
+
+    title = html.escape(
+        str(rss_config.get('autodiscovery_title') or rss_config.get('title') or 'RSS'),
+        quote=True,
+    )
+    feed_url = html.escape(get_feed_url(rss_config), quote=True)
+    return f'<link rel="alternate" type="application/rss+xml" title="{title}" href="{feed_url}">'
 
 
 def replace_placeholder(template_content, placeholder, replacement):
@@ -511,11 +628,22 @@ def inject_homepage_data(index_template, homepage_data):
     return index_template
 
 
-def load_templates():
+def load_templates(rss_config):
     article_template = read_text_file(ARTICLE_TEMPLATE_FILE)
     index_template = assemble_index_template()
     homepage_data = load_homepage_data()
     index_template = inject_homepage_data(index_template, homepage_data)
+    rss_autodiscovery = render_rss_autodiscovery(rss_config)
+    article_template = replace_placeholder(
+        article_template,
+        '<!-- RSS_AUTODISCOVERY_HERE -->',
+        rss_autodiscovery,
+    )
+    index_template = replace_placeholder(
+        index_template,
+        '<!-- RSS_AUTODISCOVERY_HERE -->',
+        rss_autodiscovery,
+    )
 
     print('模板已加载。')
     return article_template, index_template
@@ -614,10 +742,16 @@ def finalize_index(index_template):
 def build():
     print('演算开始：开始构建站点...')
 
+    try:
+        rss_config = load_rss_config()
+    except (FileNotFoundError, ValueError) as e:
+        print(f'错误: RSS 配置无效: {e}。构建中止。')
+        return
+
     prepare_output_dir()
 
     try:
-        article_template, index_template = load_templates()
+        article_template, index_template = load_templates(rss_config)
     except FileNotFoundError as e:
         print(f'错误: 模板文件未找到: {e}。构建中止。')
         return
@@ -625,7 +759,8 @@ def build():
     print('开始处理所有扇区的内容...')
     article_dock_templates = []
     feed_entries = []
-    site_url = get_site_url()
+    rss_enabled = is_feed_enabled(rss_config.get('enabled'), default=True)
+    site_url = get_site_url(rss_config) if rss_enabled else ''
 
     for content_dir in iter_sector_dirs():
         sector_name = content_dir.name
@@ -641,9 +776,16 @@ def build():
             page = build_article_page(file_path, article_template, output_sector_dir)
             card_html = render_article_card(page, sector_name, file_path.name)
             sector_cards_html.append((page.date, card_html))
-            feed_entry = make_article_feed_entry(page, sector_name, file_path.name, site_url)
-            if feed_entry is not None:
-                feed_entries.append(feed_entry)
+            if rss_enabled:
+                feed_entry = make_article_feed_entry(
+                    page,
+                    sector_name,
+                    file_path.name,
+                    site_url,
+                    rss_config,
+                )
+                if feed_entry is not None:
+                    feed_entries.append(feed_entry)
             if sector_name in ARTICLE_DOCK_SECTOR_NAMES:
                 article_dock_templates.append(render_article_dock_template(page, sector_name, file_path.name))
 
@@ -653,13 +795,14 @@ def build():
             final_cards_html = f'<div class="article-cards-container">{final_cards_html}</div>'
 
         custom_content_html = load_sector_custom_content(content_dir)
-        feed_entries.extend(load_sector_link_feed_entries(content_dir, site_url))
 
         index_template = inject_sector_cards(index_template, sector_name, final_cards_html)
         index_template = inject_sector_custom_content(index_template, sector_name, custom_content_html)
 
     index_template = inject_article_dock_templates(index_template, article_dock_templates)
-    write_rss_feed(feed_entries, site_url)
+    if rss_enabled:
+        feed_entries.extend(load_external_card_feed_entries(rss_config, site_url))
+        write_rss_feed(feed_entries, rss_config)
     finalize_index(index_template)
     print('构建流程完毕。系统功能完整。')
 
