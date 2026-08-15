@@ -22,7 +22,7 @@ body {
     top: 20px;
     left: 20px;
     z-index: 1000;
-    background-color: var(--bg-article-card);
+    background-color: var(--surface-2);
     border: 1px solid var(--border-primary);
     border-radius: 2px;
     padding: 8px 15px;
@@ -37,9 +37,19 @@ body {
 }
 
 .back-link:hover {
-    color: var(--text-white);
+    color: var(--text-primary);
     border-color: var(--primary-accent);
-    box-shadow: 0 0 10px rgba(var(--primary-accent-rgb), 0.5);
+    background-color: var(--surface-2);
+    box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), 0.1);
+}
+
+.back-link:active {
+    color: var(--text-on-accent);
+    background-color: var(--primary-accent);
+}
+
+.back-link:focus-visible {
+    border-color: var(--primary-accent);
 }
 
 /* --- 页头与导航 --- */
@@ -91,7 +101,7 @@ body {
 
 .article-meta {
     font-size: 0.9rem;
-    color: var(--text-secondary);
+    color: var(--accent-warm);
     margin: 0;
     font-style: italic;
 }
@@ -103,7 +113,7 @@ body {
 
 .article-content h2,
 .article-content h3 {
-    color: var(--secondary-accent);
+    color: var(--primary-accent);
     border-bottom: 1px solid var(--border-primary);
     padding-bottom: 10px;
     margin-top: 40px;
@@ -121,8 +131,15 @@ body {
 }
 
 .article-content a:hover {
-    background-color: rgba(var(--primary-accent-rgb), 0.1);
-    border-bottom: 1px solid var(--primary-accent);
+    background-color: var(--surface-2);
+    border-bottom: 1px solid var(--accent-warm);
+    color: var(--text-primary);
+}
+
+.article-content a:active {
+    background-color: var(--primary-container);
+    border-bottom-color: var(--primary-accent);
+    color: var(--primary-accent);
 }
 
 .article-content ul,
@@ -134,8 +151,8 @@ body {
 .article-content blockquote {
     margin: 2em 0;
     padding: 1em 1.5em;
-    background-color: rgba(0, 0, 0, 0.1);
-    border-left: 4px solid var(--border-primary);
+    background-color: var(--surface-2);
+    border-left: 4px solid var(--accent-warm);
     color: var(--text-muted);
     font-style: italic;
 }
@@ -146,8 +163,9 @@ body {
 
 /* --- 代码块样式 --- */
 .article-content pre {
-    background-color: var(--bg-card);
-    border: 1px solid var(--divider-color);
+    background-color: var(--surface-2);
+    border: 1px solid var(--outline-variant);
+    color: var(--text-primary);
     padding: 1em;
     overflow-x: auto;
     font-size: 0.9em;
@@ -157,7 +175,8 @@ body {
 
 .article-content code {
     font-family: 'Courier New', 'Fira Code', monospace;
-    background-color: var(--bg-code);
+    background-color: var(--surface-2);
+    color: var(--secondary-accent);
     padding: 2px 5px;
     border-radius: 3px;
     font-size: 0.9em;
@@ -189,12 +208,12 @@ body {
 
 /* 滚动条的轨道（背景） */
 ::-webkit-scrollbar-track {
-    background: var(--bg-primary); 
+    background: var(--surface-1);
 }
 
 /* 滚动条的滑块 */
 ::-webkit-scrollbar-thumb {
-    background: var(--border-secondary); 
+    background: var(--surface-3);
     border-radius: 4px;
 }
 

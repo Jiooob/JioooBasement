@@ -53,9 +53,9 @@ function updateDepthIndicator() {
 
     depthTextLeft.textContent = depthInMeters + 'm';
 
-    const safeColor = [93, 212, 193];
-    const warningColor = [247, 178, 103];
-    const dangerColor = [239, 68, 68];
+    const safeColor = [190, 206, 127];
+    const warningColor = [196, 202, 168];
+    const dangerColor = [215, 162, 118];
     const normalizedDepth = railGradientProgress === null
         ? clamp((-depthInMeters) / 24, 0, 1)
         : railGradientProgress;
@@ -1469,7 +1469,7 @@ document.addEventListener('DOMContentLoaded', function() {
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fillStyle = `rgba(228, 227, 215, ${this.opacity})`;
                 ctx.fill();
             }
         }
