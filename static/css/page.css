@@ -52,7 +52,7 @@ body {
 .back-home:hover {
     background-color: var(--surface-2);
     color: var(--text-primary);
-    box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), 0.1);
+    box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), var(--opacity-10));
 }
 
 .back-home:active {

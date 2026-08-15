@@ -6,6 +6,36 @@ function mixChannel(start, end, amount) {
     return Math.round(start + ((end - start) * amount));
 }
 
+function readCssNumberProperty(propertyName) {
+    const rawValue = getComputedStyle(document.documentElement).getPropertyValue(propertyName).trim();
+    if (!rawValue) {
+        return null;
+    }
+
+    const parsedValue = Number.parseFloat(rawValue);
+    return Number.isFinite(parsedValue) ? parsedValue : null;
+}
+
+function readCssRgbProperty(propertyName) {
+    const rawValue = getComputedStyle(document.documentElement).getPropertyValue(propertyName).trim();
+    const channels = rawValue.split(',').map(channel => Number.parseInt(channel.trim(), 10));
+
+    if (channels.length !== 3 || channels.some(channel => !Number.isFinite(channel))) {
+        return null;
+    }
+
+    return channels;
+}
+
+const themeRuntime = Object.freeze({
+    depthSafe: readCssRgbProperty('--depth-safe-rgb'),
+    depthWarning: readCssRgbProperty('--depth-warning-rgb'),
+    depthDanger: readCssRgbProperty('--depth-danger-rgb'),
+    snowColor: readCssRgbProperty('--snow-color-rgb'),
+    snowOpacityMin: readCssNumberProperty('--snow-opacity-min'),
+    snowOpacityRange: readCssNumberProperty('--snow-opacity-range'),
+});
+
 function updateDepthIndicator() {
     const heroElement = document.querySelector('.hero');
     const depthIndicator = document.querySelector('.depth-indicator-left');
@@ -53,23 +83,26 @@ function updateDepthIndicator() {
 
     depthTextLeft.textContent = depthInMeters + 'm';
 
-    const safeColor = [190, 206, 127];
-    const warningColor = [196, 202, 168];
-    const dangerColor = [215, 162, 118];
-    const normalizedDepth = railGradientProgress === null
-        ? clamp((-depthInMeters) / 24, 0, 1)
-        : railGradientProgress;
+    if (themeRuntime.depthSafe && themeRuntime.depthWarning && themeRuntime.depthDanger) {
+        const normalizedDepth = railGradientProgress === null
+            ? clamp((-depthInMeters) / 24, 0, 1)
+            : railGradientProgress;
 
-    let interpolatedColor;
-    if (normalizedDepth <= 0.5) {
-        const segmentProgress = normalizedDepth / 0.5;
-        interpolatedColor = safeColor.map((channel, index) => mixChannel(channel, warningColor[index], segmentProgress));
-    } else {
-        const segmentProgress = (normalizedDepth - 0.5) / 0.5;
-        interpolatedColor = warningColor.map((channel, index) => mixChannel(channel, dangerColor[index], segmentProgress));
+        let interpolatedColor;
+        if (normalizedDepth <= 0.5) {
+            const segmentProgress = normalizedDepth / 0.5;
+            interpolatedColor = themeRuntime.depthSafe.map(
+                (channel, index) => mixChannel(channel, themeRuntime.depthWarning[index], segmentProgress)
+            );
+        } else {
+            const segmentProgress = (normalizedDepth - 0.5) / 0.5;
+            interpolatedColor = themeRuntime.depthWarning.map(
+                (channel, index) => mixChannel(channel, themeRuntime.depthDanger[index], segmentProgress)
+            );
+        }
+
+        depthIndicator.style.setProperty('--indicator-accent-rgb', interpolatedColor.join(', '));
     }
-
-    depthIndicator.style.setProperty('--indicator-accent-rgb', interpolatedColor.join(', '));
 
     if (depthInMeters < -10) {
         depthStateText.textContent = 'D';
@@ -1404,7 +1437,13 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('blur', stopDepthIndicatorDragScroll);
     }
 
-    if (snowCanvas && snowToggleBtn) {
+    if (
+        snowCanvas
+        && snowToggleBtn
+        && themeRuntime.snowColor
+        && themeRuntime.snowOpacityMin !== null
+        && themeRuntime.snowOpacityRange !== null
+    ) {
         const ctx = snowCanvas.getContext('2d');
 
         updateDepthIndicatorRailPosition();
@@ -1444,7 +1483,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.vx = (Math.random() - 0.5) * 0.5;
                 this.vy = Math.random() * 1.5 + 0.5;
                 this.size = Math.random() * 2 + 0.5;
-                this.opacity = Math.random() * 0.5 + 0.1;
+                this.opacity = (
+                    Math.random() * themeRuntime.snowOpacityRange
+                    + themeRuntime.snowOpacityMin
+                );
                 this.meltSpeed = Math.random() * 0.01 + 0.005;
             }
 
@@ -1469,7 +1511,7 @@ document.addEventListener('DOMContentLoaded', function() {
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(228, 227, 215, ${this.opacity})`;
+                ctx.fillStyle = `rgba(${themeRuntime.snowColor.join(', ')}, ${this.opacity})`;
                 ctx.fill();
             }
         }

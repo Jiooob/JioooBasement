@@ -40,7 +40,7 @@ body {
     color: var(--text-primary);
     border-color: var(--primary-accent);
     background-color: var(--surface-2);
-    box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), 0.1);
+    box-shadow: 0 0 0 3px rgba(var(--primary-accent-rgb), var(--opacity-10));
 }
 
 .back-link:active {

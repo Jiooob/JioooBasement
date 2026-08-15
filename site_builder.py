@@ -26,8 +26,14 @@ INDEX_TEMPLATE_FILE = TEMPLATES_DIR / "index.template"
 ARTICLE_TEMPLATE_FILE = TEMPLATES_DIR / "article.template"
 HOMEPAGE_DATA_FILE = DATA_DIR / "homepage.json"
 RSS_CONFIG_FILE = DATA_DIR / "rss.json"
+THEME_CONFIG_FILE = DATA_DIR / "theme.json"
+GENERATED_THEME_CSS_SOURCE_FILE = STATIC_DIR / "css" / "theme.generated.css"
+GENERATED_THEME_CSS_OUTPUT_FILE = OUTPUT_DIR / "static" / "css" / "theme.generated.css"
 DEPTH_PATTERN = re.compile(r'\[-?(\d+)m\]')
 SECTOR_TARGET_PATTERN = re.compile(r'^sector-(\d+)-line$')
+CSS_TOKEN_PATTERN = re.compile(r'^[a-z][a-z0-9-]*$')
+OPACITY_TOKEN_PATTERN = re.compile(r'^\d+(?:-\d+)?$')
+HEX_COLOR_PATTERN = re.compile(r'^#[0-9A-Fa-f]{6}$')
 ARTICLE_DOCK_SECTOR_NAMES = {'sector-01', 'sector-02', 'sector-03', 'sector-04', 'sector-05'}
 RSS_ATOM_NAMESPACE = 'http://www.w3.org/2005/Atom'
 RSS_CONTENT_NAMESPACE = 'http://purl.org/rss/1.0/modules/content/'
@@ -153,6 +159,233 @@ def prepare_output_dir():
 def read_text_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         return f.read()
+
+
+def write_text_file(file_path, content):
+    file_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(file_path, 'w', encoding='utf-8', newline='\n') as f:
+        f.write(content)
+
+
+def write_text_file_if_changed(file_path, content):
+    if file_path.exists() and read_text_file(file_path) == content:
+        return
+    write_text_file(file_path, content)
+
+
+def format_decimal(value):
+    return f'{float(value):g}'
+
+
+def hex_to_rgb(hex_color):
+    clean = hex_color.lstrip('#')
+    return tuple(int(clean[index:index + 2], 16) for index in (0, 2, 4))
+
+
+def resolve_theme_color_name(theme_config, color_name):
+    colors = theme_config['colors']
+    aliases = theme_config.get('aliases', {})
+    current_name = color_name
+    visited = set()
+
+    while current_name in aliases:
+        if current_name in visited:
+            raise ValueError(f'data/theme.json contains a cyclic color alias: {color_name}')
+        visited.add(current_name)
+        current_name = aliases[current_name]
+
+    if current_name not in colors:
+        raise ValueError(f'data/theme.json references an unknown color: {color_name}')
+
+    return current_name
+
+
+def resolve_theme_color(theme_config, color_name):
+    resolved_name = resolve_theme_color_name(theme_config, color_name)
+    return theme_config['colors'][resolved_name]
+
+
+def load_theme_config():
+    with open(THEME_CONFIG_FILE, 'r', encoding='utf-8') as f:
+        config = json.load(f)
+
+    if not isinstance(config, dict):
+        raise ValueError('data/theme.json root must be an object')
+
+    if config.get('color_scheme') not in {'dark', 'light'}:
+        raise ValueError('data/theme.json color_scheme must be dark or light')
+
+    colors = config.get('colors')
+    if not isinstance(colors, dict) or not colors:
+        raise ValueError('data/theme.json colors must be a non-empty object')
+
+    for name, value in colors.items():
+        if not CSS_TOKEN_PATTERN.fullmatch(name):
+            raise ValueError(f'data/theme.json has an invalid color token: {name}')
+        if not isinstance(value, str) or not HEX_COLOR_PATTERN.fullmatch(value):
+            raise ValueError(f'data/theme.json has an invalid hex color for {name}: {value}')
+        colors[name] = value.upper()
+
+    aliases = config.get('aliases', {})
+    if not isinstance(aliases, dict):
+        raise ValueError('data/theme.json aliases must be an object')
+    for name, target in aliases.items():
+        if not CSS_TOKEN_PATTERN.fullmatch(name) or not isinstance(target, str):
+            raise ValueError(f'data/theme.json has an invalid color alias: {name}')
+        resolve_theme_color_name(config, name)
+
+    opacity_scale = config.get('opacity_scale', {})
+    if not isinstance(opacity_scale, dict) or not opacity_scale:
+        raise ValueError('data/theme.json opacity_scale must be a non-empty object')
+    for name, value in opacity_scale.items():
+        if not OPACITY_TOKEN_PATTERN.fullmatch(name):
+            raise ValueError(f'data/theme.json has an invalid opacity token: {name}')
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not 0 <= value <= 1:
+            raise ValueError(f'data/theme.json opacity {name} must be between 0 and 1')
+
+    derived_colors = config.get('derived_colors', {})
+    if not isinstance(derived_colors, dict):
+        raise ValueError('data/theme.json derived_colors must be an object')
+    for name, recipe in derived_colors.items():
+        if not CSS_TOKEN_PATTERN.fullmatch(name) or not isinstance(recipe, dict):
+            raise ValueError(f'data/theme.json has an invalid derived color: {name}')
+        resolve_theme_color_name(config, recipe.get('source', ''))
+        if recipe.get('opacity') not in opacity_scale:
+            raise ValueError(f'data/theme.json derived color {name} uses an unknown opacity')
+
+    runtime = config.get('runtime', {})
+    depth_indicator = runtime.get('depth_indicator', {})
+    snow = runtime.get('snow', {})
+    for role in ('safe', 'warning', 'danger'):
+        resolve_theme_color_name(config, depth_indicator.get(role, ''))
+    resolve_theme_color_name(config, snow.get('color', ''))
+    for field in ('opacity_min', 'opacity_range'):
+        value = snow.get(field)
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not 0 <= value <= 1:
+            raise ValueError(f'data/theme.json runtime.snow.{field} must be between 0 and 1')
+
+    announcement = config.get('announcement_highlight', {})
+    levels = announcement.get('levels', {})
+    default_level = announcement.get('default_level')
+    if not isinstance(levels, dict) or default_level not in levels:
+        raise ValueError('data/theme.json announcement_highlight must define a valid default level')
+    for name, value in levels.items():
+        if not CSS_TOKEN_PATTERN.fullmatch(name):
+            raise ValueError(f'data/theme.json has an invalid announcement level: {name}')
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not 0 <= value <= 1:
+            raise ValueError(f'data/theme.json announcement level {name} must be between 0 and 1')
+
+    browser = config.get('browser', {})
+    resolve_theme_color_name(config, browser.get('theme_color', ''))
+    resolve_theme_color_name(config, browser.get('background_color', ''))
+
+    manifest = config.get('manifest', {})
+    manifest_file_name = str(manifest.get('file_name', ''))
+    if Path(manifest_file_name).name != manifest_file_name or not manifest_file_name.endswith('.webmanifest'):
+        raise ValueError('data/theme.json manifest.file_name must be a single .webmanifest file name')
+
+    return config
+
+
+def render_theme_css(theme_config):
+    lines = [
+        '/* Generated from data/theme.json. Do not edit this file directly. */',
+        ':root {',
+        f'  color-scheme: {theme_config["color_scheme"]};',
+    ]
+
+    for name, hex_color in theme_config['colors'].items():
+        red, green, blue = hex_to_rgb(hex_color)
+        lines.append(f'  --{name}: {hex_color};')
+        lines.append(f'  --{name}-rgb: {red}, {green}, {blue};')
+
+    for name, target in theme_config.get('aliases', {}).items():
+        lines.append(f'  --{name}: var(--{target});')
+        lines.append(f'  --{name}-rgb: var(--{target}-rgb);')
+
+    for name, value in theme_config['opacity_scale'].items():
+        lines.append(f'  --opacity-{name}: {format_decimal(value)};')
+
+    for name, recipe in theme_config.get('derived_colors', {}).items():
+        source = recipe['source']
+        opacity = recipe['opacity']
+        lines.append(f'  --{name}: rgba(var(--{source}-rgb), var(--opacity-{opacity}));')
+
+    depth_indicator = theme_config['runtime']['depth_indicator']
+    for role in ('safe', 'warning', 'danger'):
+        rgb = hex_to_rgb(resolve_theme_color(theme_config, depth_indicator[role]))
+        lines.append(f'  --depth-{role}-rgb: {rgb[0]}, {rgb[1]}, {rgb[2]};')
+
+    snow = theme_config['runtime']['snow']
+    snow_rgb = hex_to_rgb(resolve_theme_color(theme_config, snow['color']))
+    lines.append(f'  --snow-color-rgb: {snow_rgb[0]}, {snow_rgb[1]}, {snow_rgb[2]};')
+    lines.append(f'  --snow-opacity-min: {format_decimal(snow["opacity_min"])};')
+    lines.append(f'  --snow-opacity-range: {format_decimal(snow["opacity_range"])};')
+
+    announcement = theme_config['announcement_highlight']
+    default_opacity = announcement['levels'][announcement['default_level']]
+    lines.append(f'  --announcement-highlight-opacity: {format_decimal(default_opacity)};')
+    lines.append('}')
+    lines.append('')
+    return '\n'.join(lines)
+
+
+def render_webmanifest(theme_config):
+    browser = theme_config['browser']
+    manifest_config = theme_config['manifest']
+    manifest = {
+        'name': manifest_config['name'],
+        'short_name': manifest_config['short_name'],
+        'icons': manifest_config.get('icons', []),
+        'theme_color': resolve_theme_color(theme_config, browser['theme_color']),
+        'background_color': resolve_theme_color(theme_config, browser['background_color']),
+        'display': manifest_config.get('display', 'standalone'),
+    }
+    return json.dumps(manifest, ensure_ascii=False, indent=2) + '\n'
+
+
+def generate_theme_assets(theme_config):
+    theme_css = render_theme_css(theme_config)
+    manifest = render_webmanifest(theme_config)
+    manifest_file_name = theme_config['manifest']['file_name']
+
+    write_text_file_if_changed(GENERATED_THEME_CSS_SOURCE_FILE, theme_css)
+    write_text_file(GENERATED_THEME_CSS_OUTPUT_FILE, theme_css)
+    write_text_file_if_changed(STATIC_DIR / 'icons' / manifest_file_name, manifest)
+    write_text_file(OUTPUT_DIR / 'static' / 'icons' / manifest_file_name, manifest)
+
+
+def sync_root_index_theme(theme_config):
+    root_index_file = BASE_DIR / 'index.html'
+    if not root_index_file.exists():
+        return
+
+    index_content = read_text_file(root_index_file)
+    theme_color = resolve_theme_color(theme_config, theme_config['browser']['theme_color'])
+    manifest_file_name = theme_config['manifest']['file_name']
+    index_content = re.sub(
+        r'(<meta name="theme-color" content=")[^"]*(">)',
+        rf'\g<1>{theme_color}\g<2>',
+        index_content,
+        count=1,
+    )
+    index_content = re.sub(
+        r'static/icons/[^"/]+\.webmanifest',
+        f'static/icons/{manifest_file_name}',
+        index_content,
+        count=1,
+    )
+
+    theme_stylesheet = '    <link rel="stylesheet" href="static/css/theme.generated.css">'
+    main_stylesheet = '    <link rel="stylesheet" href="static/css/main.css">'
+    if theme_stylesheet not in index_content and main_stylesheet in index_content:
+        index_content = index_content.replace(
+            main_stylesheet,
+            f'{theme_stylesheet}\n{main_stylesheet}',
+            1,
+        )
+
+    write_text_file_if_changed(root_index_file, index_content)
 
 
 def load_rss_config():
@@ -528,9 +761,12 @@ def render_sector_content_anchors(homepage_data):
     return '\n\n    '.join(anchors)
 
 
-def render_announcements(homepage_data):
+def render_announcements(homepage_data, theme_config):
     announcements = homepage_data.get('announcements', [])
     uses_explicit_highlight = any('highlight' in item for item in announcements)
+    highlight_config = theme_config['announcement_highlight']
+    highlight_levels = highlight_config['levels']
+    default_highlight_level = highlight_config['default_level']
     latest_date = None
     latest_index = None
 
@@ -551,12 +787,12 @@ def render_announcements(homepage_data):
         style_attr = ''
 
         if is_highlighted:
-            try:
-                highlight_opacity = float(item.get('highlight_opacity', 1))
-            except (TypeError, ValueError):
-                highlight_opacity = 1
-
-            highlight_opacity = min(max(highlight_opacity, 0), 1)
+            highlight_level = item.get('highlight_level', default_highlight_level)
+            if highlight_level not in highlight_levels:
+                raise ValueError(
+                    f'data/homepage.json announcement uses an unknown highlight_level: {highlight_level}'
+                )
+            highlight_opacity = highlight_levels[highlight_level]
             style_attr = f' style="--announcement-highlight-opacity: {highlight_opacity:g};"'
 
         announcement_items.append(
@@ -613,11 +849,11 @@ def render_right_panel_labels(homepage_data):
     return ''.join(labels)
 
 
-def inject_homepage_data(index_template, homepage_data):
+def inject_homepage_data(index_template, homepage_data, theme_config):
     homepage_replacements = {
         '<!-- SECTOR_DEPTH_LINES_HERE -->': render_sector_depth_lines(homepage_data),
         '<!-- SECTOR_NAV_CARDS_HERE -->': render_sector_navigation(homepage_data),
-        '<!-- ANNOUNCEMENTS_HERE -->': render_announcements(homepage_data),
+        '<!-- ANNOUNCEMENTS_HERE -->': render_announcements(homepage_data, theme_config),
         '<!-- RIGHT_PANEL_LABELS_HERE -->': render_right_panel_labels(homepage_data),
         '<!-- SECTOR_CONTENT_ANCHORS_HERE -->': render_sector_content_anchors(homepage_data),
     }
@@ -628,12 +864,14 @@ def inject_homepage_data(index_template, homepage_data):
     return index_template
 
 
-def load_templates(rss_config):
+def load_templates(rss_config, theme_config):
     article_template = read_text_file(ARTICLE_TEMPLATE_FILE)
     index_template = assemble_index_template()
     homepage_data = load_homepage_data()
-    index_template = inject_homepage_data(index_template, homepage_data)
+    index_template = inject_homepage_data(index_template, homepage_data, theme_config)
     rss_autodiscovery = render_rss_autodiscovery(rss_config)
+    theme_color = resolve_theme_color(theme_config, theme_config['browser']['theme_color'])
+    manifest_file_name = theme_config['manifest']['file_name']
     article_template = replace_placeholder(
         article_template,
         '<!-- RSS_AUTODISCOVERY_HERE -->',
@@ -644,6 +882,10 @@ def load_templates(rss_config):
         '<!-- RSS_AUTODISCOVERY_HERE -->',
         rss_autodiscovery,
     )
+    article_template = replace_placeholder(article_template, '$theme_color$', theme_color)
+    index_template = replace_placeholder(index_template, '$theme_color$', theme_color)
+    article_template = replace_placeholder(article_template, '$manifest_file$', manifest_file_name)
+    index_template = replace_placeholder(index_template, '$manifest_file$', manifest_file_name)
 
     print('模板已加载。')
     return article_template, index_template
@@ -733,8 +975,7 @@ def inject_article_dock_templates(index_template, template_items):
 
 
 def finalize_index(index_template):
-    with open(OUTPUT_DIR / 'index.html', 'w', encoding='utf-8') as f:
-        f.write(index_template)
+    write_text_file(OUTPUT_DIR / 'index.html', index_template)
 
     print('主索引页已根据所有扇区内容生成。')
 
@@ -744,15 +985,18 @@ def build():
 
     try:
         rss_config = load_rss_config()
+        theme_config = load_theme_config()
     except (FileNotFoundError, ValueError) as e:
-        print(f'错误: RSS 配置无效: {e}。构建中止。')
+        print(f'错误: 站点配置无效: {e}。构建中止。')
         return
 
     prepare_output_dir()
+    generate_theme_assets(theme_config)
+    sync_root_index_theme(theme_config)
 
     try:
-        article_template, index_template = load_templates(rss_config)
-    except FileNotFoundError as e:
+        article_template, index_template = load_templates(rss_config, theme_config)
+    except (FileNotFoundError, ValueError) as e:
         print(f'错误: 模板文件未找到: {e}。构建中止。')
         return
 

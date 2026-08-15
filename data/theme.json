@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "color_scheme": "dark",
+  "colors": {
+    "primary-accent": "#BECE7F",
+    "secondary-accent": "#AFC6D9",
+    "accent-warm": "#D7A276",
+    "depth-warning-color": "#C4CAA8",
+    "on-primary": "#2A3400",
+    "primary-container": "#3F4C0A",
+    "on-primary-container": "#DAEB99",
+    "secondary-container": "#444930",
+    "on-secondary-container": "#E1E6C3",
+    "tertiary": "#A1D0C4",
+    "on-tertiary": "#04372F",
+    "tertiary-container": "#214E46",
+    "on-tertiary-container": "#BDECE0",
+    "error": "#FFB4AB",
+    "on-error": "#690005",
+    "error-container": "#93000A",
+    "on-error-container": "#FFDAD6",
+    "bg-primary": "#13140D",
+    "bg-darker": "#0E0F08",
+    "surface-low": "#1B1C15",
+    "surface-1": "#1F2019",
+    "surface-2": "#292B23",
+    "surface-3": "#34352D",
+    "surface-bright": "#393A31",
+    "surface-variant": "#46483C",
+    "text-primary": "#E4E3D7",
+    "text-muted": "#C7C8B8",
+    "text-dark-muted": "#919283",
+    "outline": "#919283",
+    "outline-variant": "#46483C",
+    "shadow": "#000000",
+    "scrim": "#000000"
+  },
+  "aliases": {
+    "danger-accent": "accent-warm",
+    "warning-accent": "accent-warm",
+    "bg-card": "surface-1",
+    "bg-article-card": "surface-2",
+    "bg-code": "surface-2",
+    "text-bright": "text-primary",
+    "text-secondary": "text-muted",
+    "text-white": "text-primary",
+    "text-on-accent": "on-primary",
+    "border-secondary": "outline-variant",
+    "divider-color": "outline-variant"
+  },
+  "derived_colors": {
+    "border-primary": {
+      "source": "outline",
+      "opacity": "62"
+    },
+    "border-tertiary": {
+      "source": "outline-variant",
+      "opacity": "66"
+    },
+    "shadow-color": {
+      "source": "shadow",
+      "opacity": "72"
+    }
+  },
+  "opacity_scale": {
+    "0": 0,
+    "1-8": 0.018,
+    "2": 0.02,
+    "2-5": 0.025,
+    "3": 0.03,
+    "3-5": 0.035,
+    "4": 0.04,
+    "4-5": 0.045,
+    "5": 0.05,
+    "5-5": 0.055,
+    "8": 0.08,
+    "9": 0.09,
+    "10": 0.1,
+    "12": 0.12,
+    "13": 0.13,
+    "14": 0.14,
+    "18": 0.18,
+    "20": 0.2,
+    "24": 0.24,
+    "28": 0.28,
+    "32": 0.32,
+    "34": 0.34,
+    "36": 0.36,
+    "40": 0.4,
+    "42": 0.42,
+    "46": 0.46,
+    "52": 0.52,
+    "58": 0.58,
+    "60": 0.6,
+    "62": 0.62,
+    "66": 0.66,
+    "70": 0.7,
+    "72": 0.72,
+    "74": 0.74,
+    "78": 0.78,
+    "82": 0.82,
+    "86": 0.86,
+    "94": 0.94,
+    "96": 0.96,
+    "98": 0.98
+  },
+  "runtime": {
+    "depth_indicator": {
+      "safe": "primary-accent",
+      "warning": "depth-warning-color",
+      "danger": "accent-warm"
+    },
+    "snow": {
+      "color": "text-primary",
+      "opacity_min": 0.1,
+      "opacity_range": 0.5
+    }
+  },
+  "announcement_highlight": {
+    "default_level": "full",
+    "levels": {
+      "off": 0,
+      "trace": 0.0625,
+      "subtle": 0.125,
+      "soft": 0.25,
+      "medium": 0.5,
+      "full": 1
+    }
+  },
+  "browser": {
+    "theme_color": "bg-primary",
+    "background_color": "bg-primary"
+  },
+  "manifest": {
+    "file_name": "site.generated.webmanifest",
+    "name": "MyWebSite",
+    "short_name": "MySite",
+    "display": "standalone",
+    "icons": [
+      {
+        "src": "web-app-manifest-192x192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "maskable"
+      },
+      {
+        "src": "web-app-manifest-512x512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable"
+      }
+    ]
+  }
+}
