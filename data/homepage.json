@@ -138,32 +138,32 @@
       "text": "本基地内容不保证观点稳定。部分原则可能随时间、酒精、演出、ddl、乐队家人、坏掉的 SD 卡和北京天气发生漂移。"
     },
     {
-      "date": "2026-07-15",
-      "text": "由于脑雾和小学期，忘掉了许多事情，唉",
-      "highlight": true,
-      "highlight_level": "trace"
-    },
-    {
       "date": "2026-07-16",
       "text": "我觉得扇区2不应该被那些情绪化的东西填满，清理了。拜拜啦",
       "highlight": true,
-      "highlight_level": "subtle"
+      "highlight_level": "trace"
     },
     {
       "date": "2026-07-28",
       "text": "这里已经要从周报变成节气报了（指两周写一次（（（（（",
       "highlight": true,
-      "highlight_level": "soft"
+      "highlight_level": "subtle"
     },
     {
       "date": "2026-08-03",
       "text": "添加了扇区01-四岔道口。添加了扇区05-画集",
       "highlight": true,
-      "highlight_level": "medium"
+      "highlight_level": "soft"
     },
     {
       "date": "2026-08-15",
       "text": "换色了",
+      "highlight": true,
+      "highlight_level": "medium"
+    },
+    {
+      "date": "2026-08-23",
+      "text": "更新了扇区01-四岔道口的内容",
       "highlight": true,
       "highlight_level": "full"
     }
