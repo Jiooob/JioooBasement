@@ -6,8 +6,16 @@
     <description>地址内容查看器</description>
     <language>zh-CN</language>
     <generator>JioooBasement site_builder.py</generator>
-    <lastBuildDate>Tue, 25 Aug 2026 03:38:28 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 12:41:02 GMT</lastBuildDate>
     <atom:link href="https://jiooobasement.generaltechstudio.com/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在出生那一天</title>
+      <link>https://jiooobasement.generaltechstudio.com/sector-01/26.%E5%BC%80%E5%AD%A6%E6%97%B6.html</link>
+      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/26.%E5%BC%80%E5%AD%A6%E6%97%B6.html</guid>
+      <pubDate>Tue, 22 Sep 2026 12:00:00 +0800</pubDate>
+      <description />
+      <category>sector-01</category>
+    </item>
     <item>
       <title>四岔道口</title>
       <link>https://jiooobasement.generaltechstudio.com/sector-01/25.%E5%9B%9B%E5%B2%94%E9%81%93%E5%8F%A3.html</link>
@@ -239,14 +247,6 @@
       <pubDate>Mon, 20 Oct 2025 12:00:00 +0800</pubDate>
       <description>藉由一台移动终端展开漫游，从90s的网络空间到大西洋的马尾藻海；邂逅形形色色的生命——宇宙人、机械修道士，以及地球的最后一只恐龙。</description>
       <category>sector-01</category>
-    </item>
-    <item>
-      <title>图片插入测试</title>
-      <link>https://jiooobasement.generaltechstudio.com/sector-04/img_test.html</link>
-      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-04/img_test.html</guid>
-      <pubDate>Sun, 19 Oct 2025 12:00:00 +0800</pubDate>
-      <description>只是测试一下插入图片是否正常</description>
-      <category>sector-04</category>
     </item>
   </channel>
 </rss>
