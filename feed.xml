@@ -6,8 +6,16 @@
     <description>地址内容查看器</description>
     <language>zh-CN</language>
     <generator>JioooBasement site_builder.py</generator>
-    <lastBuildDate>Tue, 22 Sep 2026 12:41:02 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 14 Oct 2026 16:07:07 GMT</lastBuildDate>
     <atom:link href="https://jiooobasement.generaltechstudio.com/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>前路漫漫 道阻且长</title>
+      <link>https://jiooobasement.generaltechstudio.com/sector-01/27.%E5%9C%A8%E6%B4%97%E5%AE%8C%E6%BE%A1%E4%B8%8D%E5%86%8D%E5%87%BA%E6%B1%97%E7%9A%84%E6%97%A5%E5%AD%90%E9%87%8C.html</link>
+      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/27.%E5%9C%A8%E6%B4%97%E5%AE%8C%E6%BE%A1%E4%B8%8D%E5%86%8D%E5%87%BA%E6%B1%97%E7%9A%84%E6%97%A5%E5%AD%90%E9%87%8C.html</guid>
+      <pubDate>Wed, 14 Oct 2026 12:00:00 +0800</pubDate>
+      <description>在没有讲述的日子里</description>
+      <category>sector-01</category>
+    </item>
     <item>
       <title>在出生那一天</title>
       <link>https://jiooobasement.generaltechstudio.com/sector-01/26.%E5%BC%80%E5%AD%A6%E6%97%B6.html</link>
@@ -238,14 +246,6 @@
       <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/2.%E5%89%8D%E6%97%A5%E8%B0%88.html</guid>
       <pubDate>Fri, 24 Oct 2025 12:00:00 +0800</pubDate>
       <description>前文</description>
-      <category>sector-01</category>
-    </item>
-    <item>
-      <title>1，蓝，极致体验和互联网21世纪黄金时代</title>
-      <link>https://jiooobasement.generaltechstudio.com/sector-01/1.%E7%BE%A4%E9%9D%92%E8%89%B2%E7%9A%84%E7%BD%91%E7%BB%9C%E4%B9%8B%E6%A2%A6.html</link>
-      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/1.%E7%BE%A4%E9%9D%92%E8%89%B2%E7%9A%84%E7%BD%91%E7%BB%9C%E4%B9%8B%E6%A2%A6.html</guid>
-      <pubDate>Mon, 20 Oct 2025 12:00:00 +0800</pubDate>
-      <description>藉由一台移动终端展开漫游，从90s的网络空间到大西洋的马尾藻海；邂逅形形色色的生命——宇宙人、机械修道士，以及地球的最后一只恐龙。</description>
       <category>sector-01</category>
     </item>
   </channel>
