@@ -201,17 +201,36 @@ body::-webkit-scrollbar {
 
 /* 模块一：Hero Section 布局 */
 .hero {
+    /* Hero 图片层：调整透明度、缩放方式和位置。 */
+    --hero-image-opacity: 0.3;
+    --hero-image-size: contain;
+    --hero-image-position: center center;
+
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
     position: relative;
+    isolation: isolate;
     padding-left: 50px;
     padding-right: 50px;
     background:
         radial-gradient(circle at 50% 0%, rgba(var(--primary-accent-rgb), var(--opacity-14)), transparent 52%),
         linear-gradient(to bottom, var(--surface-2), var(--bg-primary) 76%);
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("../images/世界中心呼唤爱.jpg");
+    background-repeat: no-repeat;
+    background-size: var(--hero-image-size);
+    background-position: var(--hero-image-position);
+    opacity: var(--hero-image-opacity);
 }
 
 /* 模块二：文章列表区的间距 */
