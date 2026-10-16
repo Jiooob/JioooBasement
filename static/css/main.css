@@ -10,6 +10,8 @@
 
   /* -- Layout -- */
   --sector-card-gap: 35px;
+  --homepage-max-width: 1600px;
+  --homepage-inline-padding: 50px;
 }
 
 /* 2. 全局字体调整 */
@@ -203,7 +205,7 @@ body::-webkit-scrollbar {
 .hero {
     /* Hero 图片层：调整透明度、缩放方式和位置。 */
     --hero-image-opacity: 0.3;
-    --hero-image-size: contain;
+    --hero-image-size: 100% auto;
     --hero-image-position: center center;
 
     height: 100vh;
@@ -213,8 +215,8 @@ body::-webkit-scrollbar {
     align-items: stretch;
     position: relative;
     isolation: isolate;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: var(--homepage-inline-padding);
+    padding-right: var(--homepage-inline-padding);
     background:
         radial-gradient(circle at 50% 0%, rgba(var(--primary-accent-rgb), var(--opacity-14)), transparent 52%),
         linear-gradient(to bottom, var(--surface-2), var(--bg-primary) 76%);
@@ -223,7 +225,10 @@ body::-webkit-scrollbar {
 .hero::before {
     content: "";
     position: absolute;
-    inset: 0;
+    /* 与主内容区两侧卡片的外边界共用宽度和留白。 */
+    inset: 0 var(--homepage-inline-padding);
+    max-width: calc(var(--homepage-max-width) - var(--homepage-inline-padding) * 2);
+    margin-inline: auto;
     z-index: -1;
     pointer-events: none;
     background-image: url("../images/世界中心呼唤爱.jpg");
@@ -482,15 +487,7 @@ body {
     min-height: 84px;
     padding: 10px 3px;
     border: 1px solid rgba(var(--indicator-accent-rgb), var(--opacity-28));
-    background:
-        linear-gradient(180deg, rgba(var(--surface-2-rgb), var(--opacity-96)), rgba(var(--surface-1-rgb), var(--opacity-98))),
-        repeating-linear-gradient(
-            to bottom,
-            rgba(var(--text-primary-rgb), var(--opacity-2-5)) 0,
-            rgba(var(--text-primary-rgb), var(--opacity-2-5)) 1px,
-            transparent 1px,
-            transparent 4px
-        );
+    background: linear-gradient(180deg, rgba(var(--surface-2-rgb), var(--opacity-96)), rgba(var(--surface-1-rgb), var(--opacity-98)));
     box-shadow:
         0 8px 20px rgba(var(--shadow-rgb), var(--opacity-34)),
         0 0 0 1px rgba(var(--indicator-accent-rgb), var(--opacity-5));
@@ -696,35 +693,6 @@ body.homepage-effect {
     cursor: none;
 }
 
-body.homepage-effect::after {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(var(--text-primary-rgb), var(--opacity-2)),
-        rgba(var(--text-primary-rgb), var(--opacity-2)) 1px,
-        transparent 1px,
-        transparent 2px
-    );
-    background-size: 100% 2px;
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.42;
-    animation: noise 0.5s infinite linear;
-}
-
-@keyframes noise {
-    0% { transform: translateY(0); }
-    25% { transform: translateY(-1px); }
-    50% { transform: translateY(1px); }
-    75% { transform: translateY(-2px); }
-    100% { transform: translateY(0); }
-}
-
 .homepage-effect .cursor-dot {
     position: fixed;
     width: 8px;
@@ -759,8 +727,8 @@ body.homepage-effect::after {
 
 .main-content-grid {
     display: flex;
-    padding: 80px 50px;
-    max-width: 1600px;
+    padding: 80px var(--homepage-inline-padding);
+    max-width: var(--homepage-max-width);
     margin: 0 auto;
     box-sizing: border-box; 
     min-height: 100vh;
@@ -855,13 +823,6 @@ body.homepage-effect::after {
             rgba(var(--accent-warm-rgb), calc(var(--announcement-highlight-opacity) * var(--opacity-13))),
             rgba(var(--accent-warm-rgb), calc(var(--announcement-highlight-opacity) * var(--opacity-3-5))) 58%,
             transparent
-        ),
-        repeating-linear-gradient(
-            to bottom,
-            rgba(var(--text-primary-rgb), calc(var(--announcement-highlight-opacity) * var(--opacity-2-5))) 0,
-            rgba(var(--text-primary-rgb), calc(var(--announcement-highlight-opacity) * var(--opacity-2-5))) 1px,
-            transparent 1px,
-            transparent 6px
         );
     box-shadow:
         -12px 0 24px rgba(var(--accent-warm-rgb), calc(var(--announcement-highlight-opacity) * var(--opacity-4))),
@@ -1084,7 +1045,6 @@ body.homepage-effect::after {
         cursor: auto !important;
     }
     
-    body.homepage-effect::after,
     .homepage-effect .cursor-dot {
         display: none !important;
     }
