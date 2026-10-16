@@ -6,7 +6,7 @@
     <description>地址内容查看器</description>
     <language>zh-CN</language>
     <generator>JioooBasement site_builder.py</generator>
-    <lastBuildDate>Fri, 16 Oct 2026 06:34:54 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 16 Oct 2026 07:13:05 GMT</lastBuildDate>
     <atom:link href="https://jiooobasement.generaltechstudio.com/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>前路漫漫 道阻且长</title>
@@ -42,7 +42,7 @@
     </item>
     <item>
       <title>Yansk City</title>
-      <link>https://yanskcity.generaltechstudio.com/</link>
+      <link>https://yanskcity.generaltech</link>
       <guid isPermaLink="false">urn:jiooobasement:link:sector-05:yansk-city</guid>
       <pubDate>Mon, 03 Aug 2026 12:00:00 +0800</pubDate>
       <description>这是扬斯克城的设定，理论上说，这个基地是在扬斯克的底部下钻探而成的。</description>
