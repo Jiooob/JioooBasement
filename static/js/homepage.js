@@ -1324,7 +1324,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 history.scrollRestoration = 'manual';
             }
 
-            window.scrollTo(0, savedScrollPosition);
+            window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
         }
     }
 
@@ -1340,7 +1340,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alignArticleContainers();
             layoutSectorDepths();
             performUpdates();
-            restoreSavedScrollPosition();
             updateDepthIndicator();
         });
     }
@@ -1604,4 +1603,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('resize', restoreArticleDockWidth);
 
     scheduleLayout();
+    // 仅在首次布局后恢复进度；缩放和后续重排不再拉回旧位置。
+    window.requestAnimationFrame(restoreSavedScrollPosition);
 });
