@@ -681,16 +681,48 @@ body {
     --cursor-y: 50vh;
 }
 
+html {
+    background-color: var(--bg-darker);
+}
+
 body.homepage-effect {
-    background: radial-gradient(
-        circle at var(--cursor-x) var(--cursor-y),
-        rgba(var(--primary-accent-rgb), var(--opacity-14)) 0%,
-        rgba(var(--primary-accent-rgb), var(--opacity-0)) 12px,
-        var(--bg-primary) 12px
-    );
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    position: relative;
+    isolation: isolate;
+    background: transparent;
     cursor: none;
+}
+
+body.homepage-effect::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: calc(100vw + 80px);
+    height: calc(100vh + 80px);
+    transform: translate(-50%, -50%);
+    z-index: -2;
+    pointer-events: none;
+    background-image: url("../images/世界中心呼唤爱.jpg");
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    filter: blur(28px) saturate(0.7);
+    opacity: 0.32;
+}
+
+body.homepage-effect::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at var(--cursor-x) var(--cursor-y),
+            rgba(var(--primary-accent-rgb), var(--opacity-14)) 0%,
+            rgba(var(--primary-accent-rgb), var(--opacity-0)) 80px
+        ),
+        rgba(var(--bg-primary-rgb), 0.72);
 }
 
 .homepage-effect .cursor-dot {
@@ -1041,7 +1073,7 @@ body.homepage-effect {
 
 @media (hover: none) {
     body.homepage-effect {
-        background: var(--bg-darker) !important;
+        background: transparent !important;
         cursor: auto !important;
     }
     

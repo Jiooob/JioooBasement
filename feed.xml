@@ -6,8 +6,24 @@
     <description>地址内容查看器</description>
     <language>zh-CN</language>
     <generator>JioooBasement site_builder.py</generator>
-    <lastBuildDate>Fri, 16 Oct 2026 07:24:50 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2026 17:03:57 GMT</lastBuildDate>
     <atom:link href="https://jiooobasement.generaltechstudio.com/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在走在夜路上会变成白雾的日子里</title>
+      <link>https://jiooobasement.generaltechstudio.com/sector-01/28.%E5%9C%A8%E8%B5%B0%E5%9C%A8%E5%A4%9C%E8%B7%AF%E4%B8%8A%E4%BC%9A%E5%8F%98%E6%88%90%E7%99%BD%E9%9B%BE%E7%9A%84%E6%97%A5%E5%AD%90%E9%87%8C.html</link>
+      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/28.%E5%9C%A8%E8%B5%B0%E5%9C%A8%E5%A4%9C%E8%B7%AF%E4%B8%8A%E4%BC%9A%E5%8F%98%E6%88%90%E7%99%BD%E9%9B%BE%E7%9A%84%E6%97%A5%E5%AD%90%E9%87%8C.html</guid>
+      <pubDate>Fri, 06 Nov 2026 12:00:00 +0800</pubDate>
+      <description>在逐渐加速的日子里</description>
+      <category>sector-01</category>
+    </item>
+    <item>
+      <title>丑陋之人</title>
+      <link>https://jiooobasement.generaltechstudio.com/sector-05/%E4%B8%91%E9%99%8B%E4%B9%8B%E4%BA%BA.html</link>
+      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-05/%E4%B8%91%E9%99%8B%E4%B9%8B%E4%BA%BA.html</guid>
+      <pubDate>Mon, 26 Oct 2026 12:00:00 +0800</pubDate>
+      <description>记一次突发奇想</description>
+      <category>sector-05</category>
+    </item>
     <item>
       <title>前路漫漫 道阻且长</title>
       <link>https://jiooobasement.generaltechstudio.com/sector-01/27.%E5%9C%A8%E6%B4%97%E5%AE%8C%E6%BE%A1%E4%B8%8D%E5%86%8D%E5%87%BA%E6%B1%97%E7%9A%84%E6%97%A5%E5%AD%90%E9%87%8C.html</link>
@@ -230,22 +246,6 @@
       <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/4.%E5%B9%B3%E6%B7%A1%E4%B8%80%E5%91%A8.html</guid>
       <pubDate>Sun, 16 Nov 2025 12:00:00 +0800</pubDate>
       <description>我控制我的死亡</description>
-      <category>sector-01</category>
-    </item>
-    <item>
-      <title>老大回来了</title>
-      <link>https://jiooobasement.generaltechstudio.com/sector-01/3.%E8%80%81%E5%A4%A7%E5%9B%9E%E6%9D%A5%E4%BA%86.html</link>
-      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/3.%E8%80%81%E5%A4%A7%E5%9B%9E%E6%9D%A5%E4%BA%86.html</guid>
-      <pubDate>Sun, 02 Nov 2025 12:00:00 +0800</pubDate>
-      <description>记录老大回来和第一次喝醉的残留记忆</description>
-      <category>sector-01</category>
-    </item>
-    <item>
-      <title>前日谈：基地的开始</title>
-      <link>https://jiooobasement.generaltechstudio.com/sector-01/2.%E5%89%8D%E6%97%A5%E8%B0%88.html</link>
-      <guid isPermaLink="true">https://jiooobasement.generaltechstudio.com/sector-01/2.%E5%89%8D%E6%97%A5%E8%B0%88.html</guid>
-      <pubDate>Fri, 24 Oct 2025 12:00:00 +0800</pubDate>
-      <description>前文</description>
       <category>sector-01</category>
     </item>
   </channel>
