@@ -20,12 +20,12 @@
       "target_id": "sector-5-line",
       "depth_meters": 130,
       "title_primary": "扇区-05",
-      "title_secondary": "拙劣之作",
-      "description": "小巧思？小勾式！",
+      "title_secondary": "我自己弄的一些东西",
+      "description": "不介意的话随便看看吧",
       "right_panel": {
         "display_text": "拙",
         "display_columns": {
-          "left": "屎啊",
+          "left": "一般",
           "center": "呃呃",
           "right": "拙"
         }
@@ -35,14 +35,14 @@
       "target_id": "sector-9-line",
       "depth_meters": 130,
       "title_primary": "扇区-09",
-      "title_secondary": "这里也许可以拿来放爱听的音乐收藏架",
-      "description": "",
+      "title_secondary": "比较有意思的东西",
+      "description": "其实好多都没写过来",
       "right_panel": {
         "display_text": "音",
         "display_columns": {
-          "left": "",
+          "left": "玩",
           "center": "音",
-          "right": ""
+          "right": "好"
         }
       }
     },
@@ -51,7 +51,7 @@
       "depth_meters": 130,
       "title_primary": "扇区-03",
       "title_secondary": "胡思乱想",
-      "description": "你凑合着看吧",
+      "description": "我应该不是个会想很多的人吧？",
       "right_panel": {
         "display_text": "思",
         "display_columns": {
